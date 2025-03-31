@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import path, { resolve } from 'path';
 
 import react from '@vitejs/plugin-react';
 import autoprefixer from 'autoprefixer';
 import svgr from 'vite-plugin-svgr';
-// import prefixWrap from 'postcss-prefixwrap';
+import prefixWrap from 'postcss-prefixwrap';
+import { watchAndRun } from 'vite-plugin-watch-and-run';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,6 +14,15 @@ export default defineConfig({
     svgr({
       svgrOptions: { ref: true },
     }),
+    watchAndRun([
+      {
+        name: 'SVG icon types',
+        watchKind: ['add', 'unlink'],
+        watch: path.resolve('lib/assets/icons/**/*.svg'),
+        run: 'scripts/svg-icons.sh',
+        delay: 1000,
+      },
+    ]),
   ],
   build: {
     sourcemap: true,
@@ -24,14 +34,14 @@ export default defineConfig({
         // For an embedded app include #root scope to all
         // style rules to minimize the impact of external styles.
         // Remove this when building a stand alone app.
-        // prefixWrap(':global(#root)', {
-        //   whitelist: ['[.]module[.](css|scss)$'],
-        //   ignoredSelectors: [':global(#root)'],
-        // }),
-        // prefixWrap('#root', {
-        //   whitelist: ['(?<!.module)[.](css|scss)$'],
-        //   ignoredSelectors: ['#root'],
-        // }),
+        prefixWrap(':global(#root)', {
+          whitelist: ['[.]module[.](css|scss)$'],
+          ignoredSelectors: [':global(#root)'],
+        }),
+        prefixWrap('#root', {
+          whitelist: ['(?<!.module)[.](css|scss)$'],
+          ignoredSelectors: ['#root'],
+        }),
       ],
     },
     modules: {

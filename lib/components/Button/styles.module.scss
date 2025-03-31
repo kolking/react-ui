@@ -1,0 +1,154 @@
+@use '../../styles/utils' as *;
+
+// ---------------------------
+// COLOR SCHEMES
+// ---------------------------
+
+$schemes: (default: 'accent', negative: 'red', positive: 'green', warning: 'orange');
+
+@each $scheme, $color in $schemes {
+  .#{$scheme} {
+    --color-focus: var(--color-#{$color}-400);
+
+    --primary-text-color: var(--color-white);
+    --primary-border-color: var(--color-#{$color}-500);
+    --primary-background-color: var(--color-#{$color}-500);
+
+    --secondary-text-color: var(--color-#{$color}-500);
+    --secondary-border-color: var(--color-#{$color}-200);
+    --secondary-background-color: var(--color-#{$color}-100);
+
+    --tertiary-text-color: var(--color-#{$color}-500);
+
+    &:hover {
+      --primary-border-color: var(--color-#{$color}-600);
+      --primary-background-color: var(--color-#{$color}-600);
+
+      --secondary-text-color: var(--color-#{$color}-600);
+      --secondary-border-color: var(--color-#{$color}-200);
+      --secondary-background-color: var(--color-#{$color}-200);
+
+      --tertiary-text-color: var(--color-#{$color}-600);
+    }
+  }
+}
+
+// ---------------------------
+// BASE STYLE
+// ---------------------------
+
+.button {
+  --gap: 0.375em;
+  --max-width: none;
+  --min-width: 2.5em;
+  --min-height: 2.5em;
+  --border-width: 1px;
+  --icon-size: 1.25em;
+  --padding-block: 0.5em;
+  --padding-inline: 0.75em;
+  --padding: var(--padding-block) var(--padding-inline);
+  --font-family: inherit;
+  --font-weight: var(--font-weight-medium);
+  --line-height: var(--line-height-sm);
+  --border-radius: var(--border-radius-sm);
+
+  --size: var(--size-md);
+  --size-xs: var(--font-size-xs);
+  --size-sm: var(--font-size-sm);
+  --size-md: var(--font-size-md);
+  --size-lg: var(--font-size-lg);
+  --size-xl: var(--font-size-xl);
+
+  flex-shrink: 0;
+  gap: var(--gap);
+  appearance: none;
+  user-select: none;
+  vertical-align: top;
+  align-items: center;
+  display: inline-flex;
+  text-decoration: none;
+  justify-content: center;
+  font-size: var(--size);
+  padding: var(--padding);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+  min-height: var(--min-height);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+  line-height: var(--line-height);
+  border-radius: var(--border-radius);
+  border: var(--border-width) solid transparent;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: color 0.2s, background-color 0.2s, border-color 0.2s, outline 0.1s;
+  }
+
+  &[disabled] {
+    --primary-text-color: var(--color-gray-100);
+    --primary-border-color: var(--color-gray-400);
+    --primary-background-color: var(--color-gray-400);
+
+    --secondary-text-color: var(--color-gray-400);
+    --secondary-border-color: var(--color-gray-200);
+    --secondary-background-color: var(--color-gray-100);
+
+    --tertiary-text-color: var(--color-gray-400);
+  }
+
+  &[data-busy] {
+    pointer-events: none;
+
+    > :not([data-spinner]) {
+      visibility: hidden;
+    }
+  }
+
+  &:has(> svg:only-child) {
+    --padding-inline: 0;
+  }
+
+  [data-icon] {
+    --height: var(--icon-size);
+  }
+
+  [data-spinner] {
+    --color: currentColor;
+    --overlay-color: transparent;
+  }
+
+  > span {
+    @extend %truncate-text;
+  }
+}
+
+// ---------------------------
+// VARIANTS
+// ---------------------------
+
+.primary {
+  @extend .button;
+  color: var(--primary-text-color);
+  border-color: var(--primary-border-color);
+  background-color: var(--primary-background-color);
+}
+
+.secondary {
+  @extend .button;
+  color: var(--secondary-text-color);
+  border-color: var(--secondary-border-color);
+  background-color: var(--secondary-background-color);
+}
+
+.tertiary {
+  @extend .button;
+  --padding: 0;
+  --min-width: auto;
+  --min-height: auto;
+  --border-width: unset;
+  --border-radius: 1px;
+
+  background: none;
+  outline-offset: 5px;
+  justify-content: unset;
+  color: var(--tertiary-text-color);
+}

@@ -1,0 +1,120 @@
+@use '../../styles/utils' as *;
+
+.dialog {
+  --width: var(--width-md);
+  --width-xs: 23em; // 368px
+  --width-sm: 25em; // 400px
+  --width-md: 28em; // 448px
+  --width-lg: 32em; // 516px
+  --width-xl: 37em; // 592px
+
+  border: 0;
+  opacity: 0;
+  max-width: 90vw;
+  width: var(--width);
+  color: var(--color-fg);
+  padding: var(--spacing-md);
+  box-shadow: var(--drop-shadow);
+  background: var(--color-dialog);
+  border-radius: var(--border-radius-md);
+  will-change: opacity, transform;
+  transform: scale3d(0.8,0.8,1);
+
+  &[open] {
+    opacity: 1;
+    transform: scale3d(1,1,1);
+
+    &::backdrop {
+      opacity: 1;
+    }
+
+    @starting-style {
+      opacity: 0;
+      transform: scale3d(0.8,0.8,1);
+
+      &::backdrop {
+        opacity: 0;
+      }
+    }
+  }
+
+  &::backdrop {
+    opacity: 0;
+    will-change: opacity;
+    backdrop-filter: blur(3px);
+    background-color: rgb(from var(--color-black) r g b / 50%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      opacity 0.3s,
+      transform 0.4s,
+      overlay 0.4s allow-discrete,
+      display 0.4s allow-discrete;
+
+    &[open] {
+      transition:
+        opacity 0.2s,
+        overlay 0.4s allow-discrete,
+        display 0.4s allow-discrete,
+        transform 0.4s var(--ease-out-bounce);
+    }
+
+    &::backdrop {
+      transition: opacity 0.4s;
+    }
+  }
+
+  @media screen and (prefers-color-scheme: dark) {
+    --input-background-color: var(--color-gray-100);
+  }
+}
+
+.title {
+  @extend %truncate-text;
+  margin: 0 0 1.25rem 0;
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.content {
+  margin-bottom: 1.25rem;
+}
+
+.footer {
+  gap: 0.75em;
+  display: flex;
+  justify-content: end;
+
+  [data-button] {
+    --min-width: 5.625em;
+  }
+}
+
+.close {
+  --min-width: 2em;
+  --min-height: 2em;
+  --border-radius: 50%;
+  --tertiary-text-color: var(--color-gray-500);
+
+  top: 0.5em;
+  right: 0.5em;
+  position: absolute;
+  justify-content: center;
+
+  &:hover,
+  &:focus-visible {
+    --icon-size: 1.5em;
+    --tertiary-text-color: var(--color-fg);
+    outline-offset: 0;
+
+    [data-icon] path {
+      stroke-width: 2px;
+    }
+  }
+
+  [data-icon] path {
+    stroke-width: 1.5px;
+  }
+}

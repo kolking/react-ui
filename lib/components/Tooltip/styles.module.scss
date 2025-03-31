@@ -1,0 +1,52 @@
+.tooltip {
+  --min-width: auto;
+  --max-width: 350px;
+  --text-align: left;
+  --padding: 0.75em 1em;
+  --color: var(--color-bg);
+  --font-size: var(--font-size-xs);
+  --background-color: var(--color-fg);
+  --line-height: var(--line-height-sm);
+  --border-radius: var(--border-radius-sm);
+
+  outline: 0;
+  z-index: 5;
+  white-space: normal;
+  color: var(--color);
+  //text-wrap: balance;
+  word-wrap: break-word;
+  padding: var(--padding);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+  font-size: var(--font-size);
+  text-align: var(--text-align);
+  line-height: var(--line-height);
+  border-radius: var(--border-radius);
+  background-color: var(--background-color);
+}
+
+.arrow {
+  fill: var(--background-color);
+}
+
+.content {
+  p, ul, ol {
+    margin-block: 0.5em 0;
+
+    &:first-child {
+      margin-top: 0.125em;
+    }
+
+    &:last-child {
+      margin-bottom: 0.125em;
+    }
+  }
+
+  ul, ol {
+    padding-left: 1em;
+  }
+
+  li {
+    margin: 0;
+  }
+}

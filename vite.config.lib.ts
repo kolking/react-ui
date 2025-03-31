@@ -7,6 +7,7 @@ import react from '@vitejs/plugin-react';
 import autoprefixer from 'autoprefixer';
 import svgr from 'vite-plugin-svgr';
 import dts from 'vite-plugin-dts';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -17,6 +18,10 @@ export default defineConfig({
     }),
     dts({
       tsconfigPath: resolve(__dirname, 'tsconfig.lib.json'),
+    }),
+    // Copy SCSS files to dist/styles
+    viteStaticCopy({
+      targets: [{ src: 'lib/styles/*.scss', dest: 'styles' }],
     }),
   ],
   build: {

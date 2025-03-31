@@ -1,0 +1,176 @@
+@use '../../../styles/utils' as *;
+
+:root {
+  --input-padding: 0.5em;
+  --input-min-height: 2.5em;
+  --input-border-width: 1px;
+  --input-font-family: inherit;
+  --input-placeholder-opacity: 0.4;
+  --input-text-color: var(--color-fg);
+  --input-background-color: var(--color-bg);
+  --input-border-color: var(--color-gray-400);
+  --input-border-radius: var(--border-radius-sm);
+  --input-font-weight: var(--font-weight-normal);
+  --input-line-height: var(--line-height-sm);
+  
+  --input-disabled-text-color: var(--color-gray-500);
+  --input-disabled-border-color: var(--color-gray-400);
+  --input-disabled-background-color: var(--color-gray-100);
+
+  --input-invalid-focus-color: var(--color-red-400);
+  --input-invalid-border-color: var(--color-red-400);
+  --input-invalid-background-color: var(--color-red-100);
+
+  @media screen and (prefers-color-scheme: dark) {
+    --input-background-color: var(--color-gray-50);
+  }
+
+  @media print {
+    --input-border-color: black;
+    --input-disabled-border-color: black;
+    --input-invalid-border-color: black;
+  }
+}
+
+// ---------------------------
+// BASE STYLE
+// ---------------------------
+
+.input {
+  --width: 100%;
+  --text-color: var(--input-text-color);
+  --border-color: var(--input-border-color);
+  --background-color: var(--input-background-color);
+
+  --size: var(--size-md);
+  --size-xs: var(--font-size-xs);
+  --size-sm: var(--font-size-sm);
+  --size-md: var(--font-size-md);
+  --size-lg: var(--font-size-lg);
+  --size-xl: var(--font-size-xl);
+
+  width: var(--width);
+  font-size: var(--size);
+  color: var(--text-color);
+  padding: var(--input-padding);
+  outline-color: var(--color-focus);
+  min-height: var(--input-min-height);
+  font-family: var(--input-font-family);
+  font-weight: var(--input-font-weight);
+  line-height: var(--input-line-height);
+  border-radius: var(--input-border-radius);
+  background-color: var(--background-color);
+  border: var(--input-border-width) solid var(--border-color);
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: background-color 0.2s, border-color 0.2s, outline 0.1s;
+  }
+
+  &:invalid,
+  &[data-invalid] {
+    --color-focus: var(--input-invalid-focus-color);
+    --border-color: var(--input-invalid-border-color);
+    --background-color: var(--input-invalid-background-color);
+  }
+
+  &[disabled] {
+    --text-color: var(--input-disabled-text-color);
+    --border-color: var(--input-disabled-border-color);
+    --background-color: var(--input-disabled-background-color);
+  }
+
+  &::placeholder {
+    color: inherit;
+    opacity: var(--input-placeholder-opacity);
+  }
+}
+
+.tooltip {
+  --color: var(--color-white);
+  --background-color: var(--color-red-500);
+}
+
+// ---------------------------
+// VARIANTS
+// ---------------------------
+
+.select {
+  @extend .input;
+  appearance: unset;
+  padding-right: calc(var(--input-padding) * 2.5 + 10px);
+  background-repeat: no-repeat;
+  background-position: center right calc(var(--input-padding) * 1.5);
+  background-image: svg-uri(10, 10, '<path fill="none" stroke="gray" stroke-linecap="round" stroke-width="2" d="M1 3.5L5 6.5 9 3.5"/>');
+
+  &[data-placeholder] {
+    color: color-mix(in srgb, var(--input-text-color), transparent 60%);
+  }
+
+  &:disabled {
+    opacity: unset;
+  }
+}
+
+.textarea {
+  @extend .input;
+  display: block;
+  resize: vertical;
+
+  &[data-autosize] {
+    resize: none;
+  }
+}
+
+.number {
+  @extend .input;
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    opacity: 1;
+  }
+}
+
+.search {
+  @extend .input;
+  &::-webkit-search-cancel-button {
+    margin: 0;
+    width: 1em;
+    height: 1em;
+    appearance: none;
+    align-self: center;
+    background-size: 100%;
+    background-image: svg-uri(16, 16, '<path fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m11.5 4.5-7 7m0-7 7 7"/>');
+  }
+}
+
+.date, .time {
+  @extend .input;
+  &::-webkit-calendar-picker-indicator {
+    padding: 0;
+    width: 1em;
+    height: 1em;
+    appearance: none;
+    border-radius: 1px;
+    background-size: 100%;
+
+    &:focus-visible {
+      @include focus-visible();
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: outline 0.1s;
+    }
+  }
+}
+
+.date::-webkit-calendar-picker-indicator {
+  background-image: svg-uri(16, 16, '<path fill="gray" d="M12 0a1 1 0 0 1 1 1v1h.5A1.5 1.5 0 0 1 15 3.5V14a2 2 0 0 1-1.85 1.995L13 16H3a2 2 0 0 1-1.995-1.85L1 14V3.5A1.5 1.5 0 0 1 2.5 2H3V1a1 1 0 1 1 2 0v1h6V1a1 1 0 0 1 1-1Zm2 6H2v8a1 1 0 0 0 .883.993L3 15h10a1 1 0 0 0 .993-.883L14 14V6Zm-8 5v2H4v-2h2Zm3 0v2H7v-2h2Zm3 0v2h-2v-2h2ZM6 8v2H4V8h2Zm3 0v2H7V8h2Zm3 0v2h-2V8h2Z"/>');
+}
+
+.time::-webkit-calendar-picker-indicator {
+  background-image: svg-uri(16, 16, '<path fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 14.75a6.75 6.75 0 1 0 0-13.5 6.75 6.75 0 0 0 0 13.5ZM8 3.903V8l2.607 1.862"/>');
+}
+
+.range {
+  margin: 0;
+  width: 100%;
+}

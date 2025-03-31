@@ -26,7 +26,13 @@
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@floating-ui/react": "^0.27.5",
+    "@react-aria/utils": "^3.28.1",
+    "classnames": "^2.5.1",
+    "focus-trap-react": "^11.0.3",
+    "react-textarea-autosize": "^8.5.8"
+  },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@types/node": "^22.13.11",
@@ -52,6 +58,8 @@
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0",
     "vite-plugin-dts": "^4.5.3",
-    "vite-plugin-svgr": "^4.3.0"
+    "vite-plugin-static-copy": "^2.3.0",
+    "vite-plugin-svgr": "^4.3.0",
+    "vite-plugin-watch-and-run": "^1.7.4"
   }
 }

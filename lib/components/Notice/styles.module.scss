@@ -1,0 +1,105 @@
+@use '../../styles/utils' as *;
+
+// ---------------------------
+// COLOR SCHEMES
+// ---------------------------
+
+$schemes: (info: 'blue', error: 'red', success: 'green', warning: 'orange', neutral: 'gray');
+
+@each $scheme, $color in $schemes {
+  .#{$scheme} {
+    --icon-color: var(--color-#{$color}-500);
+    --text-color: var(--color-#{$color}-600);
+    --background-color: var(--color-#{$color}-100);
+  }
+}
+
+// ---------------------------
+// BASE STYLE
+// ---------------------------
+
+.container {
+  --margin: 1.25em 0;
+  --padding: 1.25em;
+  --icon-size: 1.25em;
+  --border-radius: var(--border-radius-sm);
+
+  --size: var(--size-md);
+  --size-xs: var(--font-size-xs);
+  --size-sm: var(--font-size-sm);
+  --size-md: var(--font-size-md);
+  --size-lg: var(--font-size-lg);
+  --size-xl: var(--font-size-xl);
+
+  gap: 1em;
+  display: flex;
+  align-items: flex-start;
+  margin: var(--margin);
+  padding: var(--padding);
+  color: var(--text-color);
+  font-size: var(--size);
+  line-height: var(--line-height-sm);  
+  border-radius: var(--border-radius);
+  background: var(--background-color);
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.content {
+  gap: 0.5em;
+  min-width: 0;
+  display: flex;
+  flex: 1 1 auto;
+  align-self: center;
+
+  [data-icon] {
+    --height: var(--icon-size);
+    --color: var(--icon-color);
+  }
+}
+
+.message {
+  align-self: center;
+  overflow-wrap: anywhere;
+
+  p {
+    margin: 0.25em 0 0 0;
+  }
+
+  p:first-child {
+    margin: 0;
+  }
+}
+
+.accessory {
+  gap: 0.5em;
+  display: flex;
+  align-items: center;
+}
+
+// ---------------------------
+// VARIANTS
+// ---------------------------
+
+.vertical {
+  --icon-size: 2em;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  .content {
+    max-width: 32em;
+    flex-grow: unset;
+    text-wrap: balance;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+
+.subtle {
+  --padding: 0;
+  --background-color: none;
+}

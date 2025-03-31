@@ -1,0 +1,135 @@
+@use '../../../styles/utils' as *;
+
+.quantity {
+  --size: var(--size-md);
+  --size-xs: var(--font-size-xs);
+  --size-sm: var(--font-size-sm);
+  --size-md: var(--font-size-md);
+  --size-lg: var(--font-size-lg);
+  --size-xl: var(--font-size-xl);
+
+  display: grid;
+  overflow: clip;
+  font-size: var(--size);
+  min-height: var(--input-min-height);
+  border-radius: var(--input-border-radius);
+  background-color: var(--input-background-color);
+  border: var(--input-border-width) solid var(--input-border-color);
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: background-color 0.2s, border-color 0.2s, outline 0.1s;
+  }
+
+  &:focus-within {
+    @include focus-visible();
+  }
+
+  &[data-invalid] {
+    --color-focus: var(--input-invalid-focus-color);
+    border-color: var(--input-invalid-border-color);
+    background-color: var(--input-invalid-background-color);
+  }
+
+  &[data-disabled] {
+    color: var(--input-disabled-text-color);
+    border-color: var(--input-disabled-border-color);
+    background-color: var(--input-disabled-background-color);
+  }
+
+  input {
+    border: 0;
+    font: inherit;
+    outline: none;
+    color: inherit;
+    min-width: 2em;
+    background: none;
+    padding: var(--input-padding);
+    line-height: var(--input-line-height);
+    -moz-appearance: textfield; // remove spin buttons in Firefox
+
+    &::-webkit-inner-spin-button {
+      display: none;
+    }
+  }
+
+  button {
+    border: 0;
+    padding: 0;
+    display: flex;
+    outline: none;
+    font: inherit;
+
+    svg {
+      margin: auto;
+      width: 0.375em; // 6px
+      height: 0.3125em; // 5px
+    }
+  }
+
+  @media (hover: hover) {
+    grid-template-columns: auto auto;
+
+    input {
+      grid-row: 1 / span 2;
+    }
+
+    button {
+      min-width: 1em;
+      color: var(--color-gray-600);
+      border: 0 solid var(--color-gray-300);
+      background-color: var(--color-gray-100);
+
+      &:hover,
+      &:focus-visible {
+        color: var(--color-fg);
+        background-color: var(--color-gray-300);
+      }
+    }
+
+    .increase {
+      border-width: 0 0 1px 1px;
+    }
+
+    .decrease {
+      border-width: 0 0 0 1px;
+    }
+  }
+
+  @media (hover: none) {
+    border-radius: 1.5em;
+    grid-template-columns: repeat(3, auto);
+
+    input {
+      grid-row: 1;
+      grid-column: 2;
+      text-align: center;
+      padding-inline: 0;
+    }
+
+    button {
+      grid-row: 1;
+      min-width: 2em;
+      background: none;
+      color: var(--color-accent-500);
+
+      &[disabled] {
+        color: var(--color-gray-400);
+      }
+
+      svg {
+        width: 0.625em; // 10px
+        height: 0.5em; // 8px
+      }
+    }
+
+    .increase {
+      grid-column: 3;
+      padding-right: 0.375em;
+    }
+
+    .decrease {
+      grid-column: 1;
+      padding-left: 0.375em;
+    }
+  }
+}

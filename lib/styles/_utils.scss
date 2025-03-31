@@ -1,0 +1,118 @@
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:color';
+@use 'sass:string';
+
+// Define CSS variables recursively from a map
+@mixin vars($map, $prefix: null) {
+  @each $name, $value in $map {
+    @if meta.type-of($value) == map {
+      $new-prefix: $prefix;
+      @if string.slice($name, 1, 1) != '-' {
+        $new-prefix: if($prefix, #{$prefix}-#{$name}, #{$name});
+      }
+      @include vars($value, $new-prefix);
+    } @else {
+      $var-name: if($prefix, --#{$prefix}-#{$name}, --#{$name});
+      #{$var-name}: #{$value};
+    }
+  }
+}
+
+// Define tints/shades for colors in a palette
+// $palette map must contain 'colors' and 'tints' keys
+@function color-palette($palette, $bg, $fg) {
+  $output: ();
+  @each $name, $color in map.get($palette, colors) {
+    @each $level, $amount in map.get($palette, tints) {
+      $var-name: #{$name}-#{$level};
+      $mix-with: if($amount > 0, $bg, $fg);
+      $mixed-color: color.mix($mix-with, $color, math.abs($amount), $method: rgb);
+      $output: map.set($output, $var-name, to-hex($mixed-color));
+    }
+  }
+  @return $output;
+}
+
+// Generate colors map for building a theme
+// $colors map must contain 'bg' and 'fg' keys
+// $palette map must contain 'colors' and 'tints' keys
+@function colors-map($colors, $palette) {
+  $bg: map.get($colors, 'bg');
+  $fg: map.get($colors, 'fg');
+  @return map.merge($colors, color-palette($palette, $bg, $fg));
+}
+
+// Shortcut to set an opacity for a CSS variable
+@function color-opacity($hex, $opacity) {
+  @return color-mix(in srgb, $hex $opacity, transparent);
+}
+
+// Display SVG as background image
+@function svg-uri($width, $height, $svg) {
+  $encoded: '';
+  $slice: 2000;
+  $index: 0;
+  $svg: '<svg xmlns="http://www.w3.org/2000/svg" width="#{$width}" height="#{$height}" viewBox="0 0 #{$width} #{$height}">#{$svg}</svg>';
+  $loops: math.ceil(calc(string.length($svg) / $slice));
+  @for $i from 1 through $loops {
+    $chunk: string.slice($svg, $index, $index + $slice - 1);
+    $chunk: str-replace($chunk, '"', "'");
+    $chunk: str-replace($chunk, '<', '%3C');
+    $chunk: str-replace($chunk, '>', '%3E');
+    $chunk: str-replace($chunk, '&', '%26');
+    $chunk: str-replace($chunk, '#', '%23');
+    $encoded: #{$encoded}#{$chunk};
+    $index: $index + $slice;
+  }
+  @return url("data:image/svg+xml;charset=utf8,#{$encoded}");
+}
+
+// Replace string
+@function str-replace($string, $search, $replace: '') {
+  $index: string.index($string, $search);
+  @if $index {
+    @return string.slice($string, 1, $index - 1) + $replace + str-replace(string.slice($string, $index + string.length($search)), $search, $replace);
+  }
+  @return $string;
+}
+
+// Convert color to #HEX
+@function to-hex($color) {
+  $ie-hex: color.ie-hex-str($color);
+  @return string.unquote('#' + string.slice($ie-hex, 4));
+}
+
+@mixin focus-visible($color: var(--color-focus)) {
+  outline-width: 3px;
+  outline-offset: 2px;
+  outline-style: solid;
+  outline-color: $color;
+}
+
+@mixin required-sign($symbol: var(--required-symbol), $color: var(--required-color)) {
+  color: $color;
+  line-height: 0;
+  font-size: 125%;
+  content: $symbol;
+  margin-inline: 1px;
+  vertical-align: middle;
+}
+
+%truncate-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+%absolute-fill {
+  inset: 0;
+  position: absolute;
+}
+
+%flex-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

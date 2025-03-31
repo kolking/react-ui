@@ -1,0 +1,79 @@
+@use '../../styles/utils' as *;
+
+// ---------------------------
+// BASE STYLE
+// ---------------------------
+
+.container {
+  --size: 1.25em;
+  --thickness: 10px;
+  --radius: calc(50% - var(--thickness) / 2);
+  --circumference: calc(2 * 3.1415926 * var(--radius));
+  --color: var(--color-accent-500);
+  --track-color: color-mix(in srgb, var(--color) 15%, transparent);
+  --overlay-color: color-mix(in srgb, var(--color-bg) 50%, transparent);
+
+  line-height: 0;
+  display: inline-block;
+  vertical-align: text-bottom;
+
+  &[data-overlay] {
+    @extend %absolute-fill, %flex-centered;
+    background-color: var(--overlay-color);
+  }
+}
+
+:global :has(> [data-spinner][data-overlay]) {
+  position: relative;
+}  
+
+.spinner {
+  width: var(--size);
+  height: var(--size);
+  vertical-align: top;
+  animation: rotate 2.5s linear infinite;
+}
+
+.track,
+.range {
+  cx: 50%;
+  cy: 50%;
+  r: var(--radius);
+  stroke-width: var(--thickness);
+}
+
+.track {
+  stroke: var(--track-color);
+}
+
+.range {
+  stroke: var(--color);
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center center;
+  animation: spin 2.0s linear infinite;
+}
+
+// ---------------------------
+// ANIMATION
+// ---------------------------
+
+@keyframes rotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% {
+    stroke-dasharray: 0, var(--circumference);
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: var(--circumference), var(--circumference);
+    stroke-dashoffset: calc(var(--circumference) / -2);
+  }
+  100% {
+    stroke-dasharray: var(--circumference), var(--circumference);
+    stroke-dashoffset: calc(var(--circumference) / -1);
+  }
+}

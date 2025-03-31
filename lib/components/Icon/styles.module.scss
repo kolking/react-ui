@@ -1,0 +1,23 @@
+// ---------------------------
+// BASE STYLE
+// ---------------------------
+
+.icon {
+  --width: auto;
+  --height: 1.25em;
+  --color: currentColor;
+
+  flex-shrink: 0;
+  color: var(--color);
+  width: var(--width);
+  height: var(--height);
+  vertical-align: text-bottom;
+
+  &[data-icon=info-circle] {
+    border-radius: 50%;
+
+    &:focus:not(:focus-visible) {
+      outline: none;
+    }
+  }
+}

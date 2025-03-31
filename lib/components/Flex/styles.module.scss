@@ -1,0 +1,35 @@
+// ---------------------------
+// BASE STYLE
+// ---------------------------
+
+.flex {
+  --wrap: nowrap;
+  --align: normal;
+  --direction: row;
+  --justify: normal;
+  --margin-start: 0;
+  --margin-end: 0;
+  --margin: var(--margin-start) var(--margin-end);
+
+  --gap: var(--gap-md) var(--gap-sm);
+  --gap-2xs: 0.25rem;  // 4
+  --gap-xs:  0.50rem;  // 8
+  --gap-sm:  0.75rem;  // 12
+  --gap-md:  1.00rem;  // 16
+  --gap-lg:  1.25rem;  // 20
+  --gap-xl:  1.50rem;  // 24
+  --gap-2xl: 1.75rem;  // 28
+  --gap-3xl: 2.00rem;  // 32
+
+  display: flex;
+  gap: var(--gap);
+  flex-wrap: var(--wrap);
+  align-items: var(--align);
+  margin-block: var(--margin);
+  justify-content: var(--justify);
+  flex-direction: var(--direction);
+
+  &[data-flex^='row'] {
+    --align: center;
+  }
+}

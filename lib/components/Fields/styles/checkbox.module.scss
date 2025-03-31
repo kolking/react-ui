@@ -1,0 +1,119 @@
+@use '../../../styles/utils' as *;
+
+// ---------------------------
+// BASE STYLE
+// ---------------------------
+
+.checkbox,
+.radio {
+  --gap: 0.375em;
+  --font-family: inherit;
+  --font-weight: var(--font-weight-normal);
+  --line-height: var(--line-height-sm);
+
+  --size: var(--size-md);
+  --size-xs: var(--font-size-xs);
+  --size-sm: var(--font-size-sm);
+  --size-md: var(--font-size-md);
+  --size-lg: var(--font-size-lg);
+  --size-xl: var(--font-size-xl);
+
+  gap: var(--gap);
+  text-align: left;
+  display: inline-flex;
+  font-size: var(--size);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+  line-height: var(--line-height);
+
+  &[data-required] .label::after {
+    @include required-sign();
+  }
+
+  .input {
+    font-size: inherit;
+  }
+}
+
+.label {
+  align-self: center;
+
+  p, ul, ol {
+    margin: 0.75em 0 0 0;
+  }
+}
+
+.input {
+  --height: 1.25em;
+
+  --size: var(--size-md);
+  --size-xs: var(--font-size-xs);
+  --size-sm: var(--font-size-sm);
+  --size-md: var(--font-size-md);
+  --size-lg: var(--font-size-lg);
+  --size-xl: var(--font-size-xl);
+
+  --border-width: var(--input-border-width);
+  --border-color: var(--input-border-color);
+  --border-radius: var(--border-radius-xs);
+  --background-color: var(--input-background-color);
+
+  --checked-color: var(--color-accent-500);
+  --invalid-checked-color: var(--color-red-500);
+  --disabled-checked-color: var(--color-gray-400);
+
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+  appearance: none;
+  width: var(--height);
+  height: var(--height);
+  font-size: var(--size);
+  border-radius: var(--border-radius);
+  background-color: var(--background-color);
+  border: var(--border-width) solid var(--border-color);
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: outline 0.1s;
+  }
+
+  &:invalid,
+  &[data-invalid] {
+    --color-focus: var(--input-invalid-focus-color);
+    --border-color: var(--input-invalid-border-color);
+    --checked-color: var(--invalid-checked-color);
+    --background-color: var(--input-invalid-background-color);
+  }
+
+  &[disabled] {
+    --border-color: var(--input-disabled-border-color);
+    --checked-color: var(--disabled-checked-color);
+    --background-color: var(--input-disabled-background-color);
+  }
+
+  &:checked,
+  &[type=checkbox]:indeterminate {
+    --border-color: var(--checked-color);
+    --background-color: var(--checked-color);
+
+    background-size: 100%;
+    background-image: svg-uri(20, 20, '<path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5.5 10 9 13.5 15.5 7"/>');
+  }
+
+  &[type=checkbox]:indeterminate {
+    background-image: svg-uri(20, 20, '<path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 10 14 10"/>');
+  }
+
+  &[type=radio] {
+    border-radius: 50%;
+
+    &:checked {
+      background-image: svg-uri(20, 20, '<circle fill="white" cx="10" cy="10" r="5" />');
+    }
+  }
+
+  @media print {
+    --checked-color: black;
+    --invalid-checked-color: black;
+  }
+}
