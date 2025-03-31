@@ -20,7 +20,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Library alias */
+    "paths": {
+      "@lib": ["./lib/index"],
+    },
   },
   "include": ["src"]
 }

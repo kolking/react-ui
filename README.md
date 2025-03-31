@@ -1,4 +1,6 @@
-# React + TypeScript + Vite
+# React Components
+
+Vite's library mode setup based on this guide: https://dev.to/receter/how-to-create-a-react-component-library-using-vites-library-mode-4lma
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
