@@ -1,0 +1,63 @@
+@use 'sass:meta';
+@use '@lib/styles/utils';
+@use '@lib/styles/theme' with (
+  $light-colors: (
+    brand: #F565A5,
+  ),
+  $light-palette: (
+    colors: (
+      accent: #5856D6,
+    ),
+  ),
+  $dark-palette: (
+    colors: (
+      accent: #5E5CE6,
+    ),
+  ),
+);
+
+:root {
+  @include utils.vars(theme.$variables);
+  @include utils.vars(theme.$light-colors, 'color');
+
+  @media screen and (prefers-color-scheme: dark) {
+    @include utils.vars(theme.$dark-colors, 'color');
+  }
+}
+
+#root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+  color: var(--color-fg);
+  font-size: var(--font-size-em);
+  background: var(--color-bg);
+  font-family: var(--font-family-body);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-md);
+  -webkit-tap-highlight-color: transparent;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+// Reset global styles
+button, input, select, textarea, header {
+  all: revert;
+  box-sizing: border-box;
+}
+
+button, select, summary {
+  cursor: pointer;
+}
+
+:focus-visible {
+  @include utils.focus-visible();
+}
+
+main {
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 1080px;
+}

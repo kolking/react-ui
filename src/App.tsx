@@ -1,21 +1,50 @@
-import { useCallback, useState } from 'react';
-import SvgLogo from './assets/react.svg?react';
+import { Button, Flex, Heading, Icon, Spinner } from '@lib';
 
-import { Button } from '@lib';
-// import '@lib/styles/style.css';
+import { Palette } from './components/Palette';
+import { Form } from './components/Form';
+import { Buttons } from './components/Buttons';
+import { Progress } from './components/Progress';
+import { Dialogs } from './components/Dialogs';
+import { DropMenu } from './components/DropMenu';
+import { Icons } from './components/Icons';
+import { Notices } from './components/Notices';
+import { SegmentedList } from './components/Segmented';
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  const handleClick = useCallback(() => {
-    setCount((count) => count + 1);
-  }, []);
-
   return (
     <main>
-      <SvgLogo className="logo" />
-      <h1>Component Library</h1>
-      <Button title={`Count is ${count}`} onClick={handleClick} />
+      <Palette />
+      <Heading title="Form components" size="h1">
+        <Button
+          variant="tertiary"
+          title="Action"
+          icon={<Icon name="disclosure" />}
+          iconPosition="end"
+        />
+      </Heading>
+      <Form />
+      <Heading title="Spinners" />
+      <Flex gap="3xl">
+        <Spinner />
+        <Spinner size={30} color="var(--color-red-500)" />
+        <Spinner size={40} color="var(--color-purple-500)" />
+        <Spinner size={50} color="var(--color-teal-500)" />
+        <Spinner size="3.5em" color="var(--color-green-500)" />
+      </Flex>
+      <Heading title="Buttons" />
+      <Buttons />
+      <Heading title="Progress" />
+      <Progress />
+      <Heading title="Dialog" />
+      <Dialogs />
+      <Heading title="Drop Menu" />
+      <DropMenu />
+      <Heading title="Icons" />
+      <Icons />
+      <Heading title="Notice" />
+      <Notices />
+      <Heading title="Segmented" />
+      <SegmentedList />
     </main>
   );
 }
