@@ -1,17 +1,17 @@
 {
-  "name": "@kolking/react-components",
+  "name": "@kolking/react-ui",
   "version": "0.0.1",
   "private": true,
   "description": "Common react components for building user interfaces",
   "author": "Nick Seryakov (https://github.com/kolking)",
   "license": "MIT",
-  "homepage": "https://github.com/kolking/react-components#readme",
+  "homepage": "https://github.com/kolking/react-ui#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://kolking@github.com/kolking/react-components.git"
+    "url": "git+https://kolking@github.com/kolking/react-ui.git"
   },
   "bugs": {
-    "url": "https://github.com/kolking/react-components/issues"
+    "url": "https://github.com/kolking/react-ui/issues"
   },
   "type": "module",
   "main": "dist/index.js",

@@ -28,7 +28,7 @@ export default defineConfig({
     copyPublicDir: false,
     lib: {
       entry: resolve(__dirname, 'lib/index.ts'),
-      name: 'react-components',
+      name: 'react-ui',
       fileName: 'index',
       cssFileName: 'styles/style',
       formats: ['es'],
