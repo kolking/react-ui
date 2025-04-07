@@ -1,6 +1,5 @@
-import { useObjectRef } from '@react-aria/utils';
 import cn from 'classnames';
-import React, { useEffect } from 'react';
+import React, { useEffect, useImperativeHandle, useRef } from 'react';
 
 import { cssProps } from '../../utils/helpers';
 import { ValidationTooltip } from './ValidationTooltip';
@@ -38,14 +37,16 @@ export type InputProps<T = React.InputHTMLAttributes<HTMLInputElement>> = Omit<T
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ size, error, type = 'text', className, style, indeterminate, ...props }, ref) => {
-    const domRef = useObjectRef(ref);
     const checked = props.checked;
+    const innerRef = useRef<HTMLInputElement>(null);
+
+    useImperativeHandle(ref, () => innerRef.current!);
 
     useEffect(() => {
-      if (indeterminate != null && domRef.current != null) {
-        domRef.current.indeterminate = !checked && indeterminate;
+      if (indeterminate != null && innerRef.current != null) {
+        innerRef.current.indeterminate = !checked && indeterminate;
       }
-    }, [domRef, indeterminate, checked]);
+    }, [innerRef, indeterminate, checked]);
 
     if (['button', 'reset', 'submit'].includes(type)) {
       console.warn(`Input type "${type}" is not supported, use <Button>`);
@@ -55,7 +56,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <ValidationTooltip content={error}>
         <input
           {...props}
-          ref={domRef}
+          ref={innerRef}
           type={type}
           data-input={type}
           data-invalid={error ? true : undefined}
