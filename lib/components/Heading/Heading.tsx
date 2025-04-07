@@ -6,10 +6,10 @@ import styles from './styles.module.scss';
 
 type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
-export type HeadingProps = React.HTMLAttributes<HTMLHeadingElement> & {
+export type HeadingProps = Omit<React.HTMLAttributes<HTMLHeadingElement>, 'title'> & {
   as?: HeadingElement;
   size?: HeadingElement;
-  title: string;
+  title: React.ReactNode;
   margin?: React.CSSProperties['margin'];
   marginStart?: React.CSSProperties['marginBlockStart'];
   marginEnd?: React.CSSProperties['marginBlockEnd'];
@@ -33,6 +33,7 @@ export const Heading = ({
     return (
       <Element
         {...props}
+        data-heading={Element}
         className={cn(styles[Element], className)}
         style={{
           ...style,
