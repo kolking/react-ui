@@ -15,6 +15,7 @@ import {
   useFocus,
   useHover,
   useInteractions,
+  useMergeRefs,
   useRole,
 } from '@floating-ui/react';
 
@@ -82,6 +83,12 @@ export const Tooltip = ({
     useClick(context, { enabled: trigger.includes('click') }),
   ]);
 
+  // Preserve child component's ref
+  const ref = useMergeRefs([
+    refs.setReference,
+    'ref' in children ? (children.ref as React.Ref<Element>) : null,
+  ]);
+
   useEffect(() => {
     // Find the closest parent with the data-floating-root attribute
     const floatingRoot = refs.domReference.current?.closest('[data-floating-root]') as HTMLElement;
@@ -96,10 +103,7 @@ export const Tooltip = ({
 
   return (
     <>
-      {React.cloneElement(children, {
-        ref: refs.setReference,
-        ...getReferenceProps(props),
-      })}
+      {React.cloneElement(children, getReferenceProps({ ref, ...children.props }))}
       {open && (
         <FloatingPortal root={portalRef}>
           <div
