@@ -15,11 +15,11 @@
   
   --input-disabled-text-color: var(--color-gray-500);
   --input-disabled-border-color: var(--color-gray-400);
-  --input-disabled-background-color: var(--color-gray-100);
+  --input-disabled-background-color: var(--color-gray-50);
 
   --input-invalid-focus-color: var(--color-red-400);
   --input-invalid-border-color: var(--color-red-400);
-  --input-invalid-background-color: var(--color-red-100);
+  --input-invalid-background-color: var(--color-red-50);
 
   @media screen and (prefers-color-scheme: dark) {
     --input-background-color: var(--color-gray-50);
