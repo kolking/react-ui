@@ -1,0 +1,40 @@
+@use 'sass:map';
+@use './utils' as *;
+@use './theme-default' as default;
+
+$font-family: () !default;
+$font-weight: () !default;
+$font-size: () !default;
+$line-height: () !default;
+$border-radius: () !default;
+$spacing: () !default;
+$drop-shadow: default.$drop-shadow !default;
+$ease-out-cubic: default.$ease-out-cubic !default;
+$ease-out-bounce: default.$ease-out-bounce !default;
+
+$light-colors: () !default;
+$light-palette: () !default;
+$dark-colors: () !default;
+$dark-palette: () !default;
+
+$variables: (
+  font-family: map.merge(default.$font-family, $font-family),
+  font-weight: map.merge(default.$font-weight, $font-weight),
+  font-size: map.merge(default.$font-size, $font-size),
+  line-height: map.merge(default.$line-height, $line-height),
+  border-radius: map.merge(default.$border-radius, $border-radius),
+  spacing: map.merge(default.$spacing, $spacing),
+  drop-shadow: $drop-shadow,
+  ease-out-cubic: $ease-out-cubic,
+  ease-out-bounce: $ease-out-bounce,
+);
+
+$light-colors: colors-map(
+  map.merge(default.$light-colors, $light-colors),
+  map.deep-merge(default.$light-palette, $light-palette),
+);
+
+$dark-colors: colors-map(
+  map.merge(default.$dark-colors, $dark-colors),
+  map.deep-merge(default.$dark-palette, $dark-palette),
+);
