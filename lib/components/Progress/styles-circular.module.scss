@@ -18,6 +18,9 @@
   --font-size: calc(var(--size) / 4);
 
   line-height: 0;
+  user-select: none;
+  width: var(--size);
+  height: var(--size);
   margin: var(--margin);
   display: inline-block;
   vertical-align: text-bottom;
@@ -38,8 +41,8 @@
 }
 
 .progress {
-  width: var(--size);
-  height: var(--size);
+  width: inherit;
+  height: inherit;
   vertical-align: top;
 }
 
