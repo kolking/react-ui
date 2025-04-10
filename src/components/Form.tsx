@@ -1,12 +1,31 @@
-import { Checkbox, Field, Flex, Input, Quantity, Radio, Select, Textarea } from '@lib';
+import {
+  Checkbox,
+  Field,
+  Flex,
+  Icon,
+  Input,
+  Quantity,
+  Radio,
+  Select,
+  Textarea,
+  Tooltip,
+} from '@lib';
 
 export const Form = () => (
   <Flex as="form" direction="column" gap="xl">
     <Flex>
-      <Field label="Text label" required tooltip="This is a tooltip">
+      <Field
+        label="Text label"
+        required
+        labelAccessory={
+          <Tooltip content="This is a tooltip" placement="top-end">
+            <Icon name="help-circle" size="1em" color="var(--color-gray-400)" tabIndex={0} />
+          </Tooltip>
+        }
+      >
         <Input placeholder="Placeholder" />
       </Field>
-      <Field label="Text label" required tooltip="This is a tooltip">
+      <Field label="Text label" required>
         <Input defaultValue="Read only" readOnly />
       </Field>
       <Field label="Text label" required>

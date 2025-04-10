@@ -34,6 +34,7 @@ const icons = [
   'cross',
   'delete-outline',
   'delete',
+  'denied',
   'disclosure',
   'download',
   'dropdown',

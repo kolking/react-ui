@@ -30,6 +30,7 @@ const e = [
   "cross",
   "delete-outline",
   "delete",
+  "denied",
   "disclosure",
   "download",
   "dropdown",

@@ -2,28 +2,53 @@ import cn from 'classnames';
 import React from 'react';
 
 import { cssProps } from '../../utils/helpers';
-import { Icon } from '../Icon';
-import { Tooltip } from '../Tooltip';
 import styles from './styles/field.module.scss';
 
 export interface FieldConfig {
   id?: string;
   label?: React.ReactNode;
+  labelAccessory?: React.ReactNode;
   help?: React.ReactNode;
-  tooltip?: React.ReactNode;
   required?: boolean;
   className?: string;
   minWidth?: React.CSSProperties['minWidth'];
   maxWidth?: React.CSSProperties['maxWidth'];
 }
 
+export type FieldLabelProps = React.LabelHTMLAttributes<HTMLLabelElement> & {
+  label?: React.ReactNode;
+  required?: boolean;
+};
+
+export const FieldLabel = ({ label, required, className, children, ...props }: FieldLabelProps) => (
+  <div data-field-header className={styles.header}>
+    <label
+      {...props}
+      data-field-label
+      data-required={required}
+      className={cn(styles.label, className)}
+    >
+      {label}
+    </label>
+    {children}
+  </div>
+);
+
+export type FieldHelpProps = React.HTMLAttributes<HTMLDivElement>;
+
+export const FieldHelp = ({ className, children, ...props }: FieldHelpProps) => (
+  <small {...props} data-field-help className={cn(styles.help, className)}>
+    {children}
+  </small>
+);
+
 export type FieldProps = React.HTMLAttributes<HTMLDivElement> & FieldConfig;
 
 export const Field = ({
   id,
   label,
+  labelAccessory,
   help,
-  tooltip,
   required,
   minWidth,
   maxWidth,
@@ -38,18 +63,11 @@ export const Field = ({
     style={{ ...props.style, ...cssProps({ minWidth, maxWidth }) }}
   >
     {label && (
-      <div className={styles.header}>
-        <label htmlFor={id} data-required={required || undefined} className={styles.label}>
-          {label}
-        </label>
-        {tooltip && (
-          <Tooltip content={tooltip} placement="top-end">
-            <Icon name="help-circle" tabIndex={0} />
-          </Tooltip>
-        )}
-      </div>
+      <FieldLabel htmlFor={id} label={label} required={required}>
+        {labelAccessory}
+      </FieldLabel>
     )}
     {children}
-    {help && <small className={styles.help}>{help}</small>}
+    {help && <FieldHelp>{help}</FieldHelp>}
   </div>
 );

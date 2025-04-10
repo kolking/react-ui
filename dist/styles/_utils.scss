@@ -91,7 +91,7 @@
   outline-color: $color;
 }
 
-@mixin required-sign($symbol: var(--required-symbol), $color: var(--required-color)) {
+@mixin required-sign($symbol: var(--field-required-symbol), $color: var(--field-required-color)) {
   color: $color;
   line-height: 0;
   font-size: 125%;
