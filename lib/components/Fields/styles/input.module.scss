@@ -21,6 +21,9 @@
   --input-invalid-border-color: var(--color-red-400);
   --input-invalid-background-color: var(--color-red-50);
 
+  --validation-tooltip-color: var(--color-white);
+  --validation-tooltip-background-color: var(--color-red-500);
+
   @media screen and (prefers-color-scheme: dark) {
     --input-background-color: var(--color-gray-50);
   }
@@ -86,8 +89,8 @@
 }
 
 .tooltip {
-  --color: var(--color-white);
-  --background-color: var(--color-red-500);
+  --color: var(--validation-tooltip-color);
+  --background-color: var(--validation-tooltip-background-color);
 }
 
 // ---------------------------
