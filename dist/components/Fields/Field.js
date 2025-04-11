@@ -1,50 +1,52 @@
-import { jsxs as h, jsx as t } from "react/jsx-runtime";
-import { c as i } from "../../index-DyIdU--j.js";
-import { cssProps as p } from "../../utils/helpers.js";
-const _ = "styles_field_hqzKT", y = "styles_header_Iwsz6", b = "styles_label_zRVTS", u = "styles_help_pL5KF", d = {
-  field: _,
-  header: y,
+import { jsxs as i, jsx as c } from "react/jsx-runtime";
+import { c as d } from "../../index-DyIdU--j.js";
+import y from "react";
+import { cssProps as _ } from "../../utils/helpers.js";
+const p = "styles_field_hqzKT", u = "styles_header_Iwsz6", b = "styles_label_zRVTS", F = "styles_accessory_S4ccn", N = "styles_help_pL5KF", t = {
+  field: p,
+  header: u,
   label: b,
-  help: u
-}, F = ({ label: e, required: l, className: s, children: a, ...r }) => /* @__PURE__ */ h("div", { "data-field-header": !0, className: d.header, children: [
-  /* @__PURE__ */ t(
+  accessory: F,
+  help: N
+}, v = ({ label: e, required: l, className: s, children: a, ...r }) => /* @__PURE__ */ i("div", { "data-field-header": !0, className: t.header, children: [
+  /* @__PURE__ */ c(
     "label",
     {
       ...r,
       "data-field-label": !0,
       "data-required": l,
-      className: i(d.label, s),
+      className: d(t.label, s),
       children: e
     }
   ),
-  a
-] }), N = ({ className: e, children: l, ...s }) => /* @__PURE__ */ t("small", { ...s, "data-field-help": !0, className: i(d.help, e), children: l }), q = ({
+  y.Children.toArray(a).length > 0 && /* @__PURE__ */ c("div", { "data-field-accessory": !0, className: t.accessory, children: a })
+] }), x = ({ className: e, children: l, ...s }) => /* @__PURE__ */ c("small", { ...s, "data-field-help": !0, className: d(t.help, e), children: l }), L = ({
   id: e,
   label: l,
   labelAccessory: s,
   help: a,
   required: r,
-  minWidth: o,
+  minWidth: h,
   maxWidth: n,
   className: m,
   children: f,
-  ...c
-}) => /* @__PURE__ */ h(
+  ...o
+}) => /* @__PURE__ */ i(
   "div",
   {
-    ...c,
+    ...o,
     "data-field": e || !0,
-    className: i(d.field, m),
-    style: { ...c.style, ...p({ minWidth: o, maxWidth: n }) },
+    className: d(t.field, m),
+    style: { ...o.style, ..._({ minWidth: h, maxWidth: n }) },
     children: [
-      l && /* @__PURE__ */ t(F, { htmlFor: e, label: l, required: r, children: s }),
+      l && /* @__PURE__ */ c(v, { htmlFor: e, label: l, required: r, children: s }),
       f,
-      a && /* @__PURE__ */ t(N, { children: a })
+      a && /* @__PURE__ */ c(x, { children: a })
     ]
   }
 );
 export {
-  q as Field,
-  N as FieldHelp,
-  F as FieldLabel
+  L as Field,
+  x as FieldHelp,
+  v as FieldLabel
 };

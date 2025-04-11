@@ -56,7 +56,9 @@ export const Heading = ({
       }}
     >
       <Element>{title}</Element>
-      <div className={styles.aside}>{children}</div>
+      <div data-heading-accessory className={styles.accessory}>
+        {children}
+      </div>
     </header>
   );
 };

@@ -15,9 +15,10 @@ function App() {
     <main>
       <Palette />
       <Heading title="Form components" size="h1">
+        <Button variant="tertiary" title="Action" />
         <Button
           variant="tertiary"
-          title="Action"
+          title="See more"
           icon={<Icon name="disclosure" />}
           iconPosition="end"
         />

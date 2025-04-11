@@ -30,7 +30,11 @@ export const FieldLabel = ({ label, required, className, children, ...props }: F
     >
       {label}
     </label>
-    {children}
+    {React.Children.toArray(children).length > 0 && (
+      <div data-field-accessory className={styles.accessory}>
+        {children}
+      </div>
+    )}
   </div>
 );
 

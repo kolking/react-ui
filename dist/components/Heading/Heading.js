@@ -1,57 +1,57 @@
-import { jsx as h, jsxs as j } from "react/jsx-runtime";
-import { c as r } from "../../index-DyIdU--j.js";
+import { jsx as a, jsxs as f } from "react/jsx-runtime";
+import { c as g } from "../../index-DyIdU--j.js";
 import { cssProps as H } from "../../utils/helpers.js";
-const p = "Heading_h1_jZARG", u = "Heading_heading_OG4PS", x = "Heading_h2_juB1Q", y = "Heading_h3_tZEj0", G = "Heading_h4_X927D", v = "Heading_h5_047wq", z = "Heading_h6_52sKy", N = "Heading_aside_GCjl7", a = {
-  h1: p,
+const j = "Heading_h1_jZARG", u = "Heading_heading_OG4PS", p = "Heading_h2_juB1Q", x = "Heading_h3_tZEj0", v = "Heading_h4_X927D", z = "Heading_h5_047wq", B = "Heading_h6_52sKy", G = "Heading_accessory_VOBHY", h = {
+  h1: j,
   heading: u,
-  h2: x,
-  h3: y,
-  h4: G,
-  h5: v,
-  h6: z,
-  aside: N
-}, q = ({
+  h2: p,
+  h3: x,
+  h4: v,
+  h5: z,
+  h6: B,
+  accessory: G
+}, Z = ({
   as: s = "h2",
-  size: f = s,
-  title: d,
-  margin: i,
-  marginStart: n,
+  size: y = s,
+  title: c,
+  margin: n,
+  marginStart: o,
   marginEnd: e,
-  className: o,
-  children: c,
-  style: _,
+  className: d,
+  children: i,
+  style: r,
   ...t
 }) => {
-  const g = `var(--font-size-${f})`;
-  return c ? /* @__PURE__ */ j(
+  const _ = `var(--font-size-${y})`;
+  return i ? /* @__PURE__ */ f(
     "header",
     {
       ...t,
       "data-heading": s,
-      className: r(a.heading, o),
+      className: g(h.heading, d),
       style: {
-        ..._,
-        ...H({ fontSize: g, margin: i, marginStart: n, marginEnd: e })
+        ...r,
+        ...H({ fontSize: _, margin: n, marginStart: o, marginEnd: e })
       },
       children: [
-        /* @__PURE__ */ h(s, { children: d }),
-        /* @__PURE__ */ h("div", { className: a.aside, children: c })
+        /* @__PURE__ */ a(s, { children: c }),
+        /* @__PURE__ */ a("div", { "data-heading-accessory": !0, className: h.accessory, children: i })
       ]
     }
-  ) : /* @__PURE__ */ h(
+  ) : /* @__PURE__ */ a(
     s,
     {
       ...t,
       "data-heading": s,
-      className: r(a[s], o),
+      className: g(h[s], d),
       style: {
-        ..._,
-        ...H({ fontSize: g, margin: i, marginStart: n, marginEnd: e })
+        ...r,
+        ...H({ fontSize: _, margin: n, marginStart: o, marginEnd: e })
       },
-      children: d
+      children: c
     }
   );
 };
 export {
-  q as Heading
+  Z as Heading
 };

@@ -1,4 +1,5 @@
 import {
+  Button,
   Checkbox,
   Field,
   Flex,
@@ -18,9 +19,12 @@ export const Form = () => (
         label="Text label"
         required
         labelAccessory={
-          <Tooltip content="This is a tooltip" placement="top-end">
-            <Icon name="help-circle" size="1em" color="var(--color-gray-400)" tabIndex={0} />
-          </Tooltip>
+          <>
+            <Button title="Action" variant="tertiary" size="sm" />
+            <Tooltip content="This is a tooltip" placement="top-end">
+              <Icon name="help-circle" size="1em" color="var(--color-gray-400)" tabIndex={0} />
+            </Tooltip>
+          </>
         }
       >
         <Input placeholder="Placeholder" />
