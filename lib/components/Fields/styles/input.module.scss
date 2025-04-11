@@ -116,7 +116,7 @@
   display: block;
   resize: vertical;
 
-  &[data-autosize] {
+  &[data-autosize=true] {
     resize: none;
   }
 }

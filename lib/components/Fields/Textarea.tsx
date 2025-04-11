@@ -16,8 +16,9 @@ export type TextareaProps = InputProps<TextareaAutosizeProps> & {
 };
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ autosize, size, error, className, style, ...props }, ref) => {
+  ({ autosize = true, size, error, className, style, ...rest }, ref) => {
     const Component = autosize ? TextareaAutosize : 'textarea';
+    const props = autosize ? { minRows: 2, ...rest } : rest;
 
     return (
       <ValidationTooltip content={error}>
@@ -25,7 +26,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
           ref={ref}
           data-textarea
-          data-autosize={autosize || undefined}
+          data-autosize={autosize}
           data-invalid={error ? true : undefined}
           className={cn(styles.textarea, className)}
           style={{ ...style, ...cssProps({ size }) } as Style}
