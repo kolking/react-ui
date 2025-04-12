@@ -17,13 +17,13 @@
   display: inline-block;
   vertical-align: text-bottom;
 
-  &[data-overlay] {
+  &[data-overlay=true] {
     @extend %absolute-fill, %flex-centered;
     background-color: var(--overlay-color);
   }
 }
 
-:has(> [data-spinner][data-overlay]) {
+:has(> [data-spinner][data-overlay=true]) {
   position: relative;
 }  
 

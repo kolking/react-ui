@@ -1,4 +1,4 @@
-import { jsxs as i, jsx as B, Fragment as g } from "react/jsx-runtime";
+import { jsxs as i, jsx as v, Fragment as g } from "react/jsx-runtime";
 import { c as b } from "../../index-DyIdU--j.js";
 import { fixedForwardRef as w, wrapNode as u, cssProps as j } from "../../utils/helpers.js";
 import { Spinner as x } from "../Spinner/Spinner.js";
@@ -21,31 +21,31 @@ function S({
   maxWidth: l,
   busy: t,
   title: r,
-  icon: o,
-  iconPosition: e = "start",
+  icon: e,
+  iconPosition: o = "start",
   children: a,
   className: y,
   style: f,
   ...s
-}, v) {
+}, B) {
   return /* @__PURE__ */ i(
     c ?? "button",
     {
       ...s,
-      ref: v,
+      ref: B,
       "data-button": n,
-      "data-busy": t || void 0,
+      "data-busy": t,
       "aria-disabled": s.disabled,
       "aria-live": t ? "polite" : void 0,
       className: b(d[n], d[m], y),
       style: { ...f, ...j({ size: p, minWidth: _, maxWidth: l }) },
       children: [
         a ? u(a, "span") : /* @__PURE__ */ i(g, { children: [
-          e === "start" && o,
+          o === "start" && e,
           r && u(r, "span"),
-          e === "end" && o
+          o === "end" && e
         ] }),
-        t && /* @__PURE__ */ B(x, { overlay: !0 })
+        t && /* @__PURE__ */ v(x, { overlay: !0 })
       ]
     }
   );

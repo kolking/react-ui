@@ -53,7 +53,7 @@ function render<T extends React.ElementType = 'button'>(
       {...props}
       ref={ref}
       data-button={variant}
-      data-busy={busy || undefined}
+      data-busy={busy}
       aria-disabled={props.disabled}
       aria-live={busy ? 'polite' : undefined}
       className={cn(styles[variant], styles[scheme], className)}

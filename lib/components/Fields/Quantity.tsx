@@ -34,7 +34,7 @@ export const Quantity = React.forwardRef<HTMLInputElement, QuantityProps>(
       <ValidationTooltip content={error}>
         <div
           data-input="quantity"
-          data-disabled={props.disabled ? true : undefined}
+          data-disabled={props.disabled}
           data-invalid={error ? true : undefined}
           className={cn(styles.quantity, className)}
           style={{ ...style, ...cssProps({ size }) }}

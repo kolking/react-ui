@@ -19,7 +19,7 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
       role="status"
       aria-label="loading"
       data-spinner
-      data-overlay={overlay || undefined}
+      data-overlay={overlay}
       className={cn(styles.container, className)}
       style={{ ...style, ...cssProps({ size, color, overlayColor }) }}
     >

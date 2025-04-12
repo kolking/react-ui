@@ -95,7 +95,7 @@ $schemes: (default: 'accent', negative: 'red', positive: 'green', warning: 'oran
     --tertiary-text-color: var(--color-gray-400);
   }
 
-  &[data-busy] {
+  &[data-busy=true] {
     pointer-events: none;
 
     > :not([data-spinner]) {

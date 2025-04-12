@@ -13,7 +13,8 @@
   height: var(--height);
   vertical-align: text-bottom;
 
-  &[data-icon=info-circle] {
+  // Affects all *-circle icons
+  &[data-icon$=-circle] {
     border-radius: 50%;
 
     &:focus:not(:focus-visible) {

@@ -24,13 +24,13 @@
     @include focus-visible();
   }
 
-  &[data-invalid] {
+  &[data-invalid=true] {
     --color-focus: var(--input-invalid-focus-color);
     border-color: var(--input-invalid-border-color);
     background-color: var(--input-invalid-background-color);
   }
 
-  &[data-disabled] {
+  &[data-disabled=true] {
     color: var(--input-disabled-text-color);
     border-color: var(--input-disabled-border-color);
     background-color: var(--input-disabled-background-color);

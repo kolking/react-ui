@@ -69,8 +69,8 @@
     transition: background-color 0.2s, border-color 0.2s, outline 0.1s;
   }
 
-  &:invalid,
-  &[data-invalid] {
+  //&:invalid,
+  &[data-invalid=true] {
     --color-focus: var(--input-invalid-focus-color);
     --border-color: var(--input-invalid-border-color);
     --background-color: var(--input-invalid-background-color);

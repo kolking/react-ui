@@ -13,7 +13,7 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
   ({ size, error, label, className, style, required, ...props }, ref) => (
     <label
       data-input="radio"
-      data-required={required || undefined}
+      data-required={required}
       className={cn(styles.radio, className)}
       style={{ ...style, ...cssProps({ size }) }}
     >
