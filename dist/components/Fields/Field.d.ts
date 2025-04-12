@@ -14,7 +14,7 @@ export type FieldLabelProps = React.LabelHTMLAttributes<HTMLLabelElement> & {
     required?: boolean;
 };
 export declare const FieldLabel: ({ label, required, className, children, ...props }: FieldLabelProps) => import("react/jsx-runtime").JSX.Element;
-export type FieldHelpProps = React.HTMLAttributes<HTMLDivElement>;
-export declare const FieldHelp: ({ className, children, ...props }: FieldHelpProps) => import("react/jsx-runtime").JSX.Element;
+export type FieldDescriptionProps = React.HTMLAttributes<HTMLDivElement>;
+export declare const FieldDescription: ({ className, children, ...props }: FieldDescriptionProps) => import("react/jsx-runtime").JSX.Element;
 export type FieldProps = React.HTMLAttributes<HTMLDivElement> & FieldConfig;
 export declare const Field: ({ id, label, labelAccessory, help, required, minWidth, maxWidth, className, children, ...props }: FieldProps) => import("react/jsx-runtime").JSX.Element;

@@ -38,10 +38,10 @@ export const FieldLabel = ({ label, required, className, children, ...props }: F
   </div>
 );
 
-export type FieldHelpProps = React.HTMLAttributes<HTMLDivElement>;
+export type FieldDescriptionProps = React.HTMLAttributes<HTMLDivElement>;
 
-export const FieldHelp = ({ className, children, ...props }: FieldHelpProps) => (
-  <small {...props} data-field-help className={cn(styles.help, className)}>
+export const FieldDescription = ({ className, children, ...props }: FieldDescriptionProps) => (
+  <small {...props} data-field-description className={cn(styles.description, className)}>
     {children}
   </small>
 );
@@ -72,6 +72,6 @@ export const Field = ({
       </FieldLabel>
     )}
     {children}
-    {help && <FieldHelp>{help}</FieldHelp>}
+    {help && <FieldDescription>{help}</FieldDescription>}
   </div>
 );
