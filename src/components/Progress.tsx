@@ -22,7 +22,7 @@ export const Progress = () => (
       <ProgressCircular value={65} linecap="round" size={64} thickness={4}>
         <Button variant="tertiary" icon={<Icon name="playback-stop" />} />
       </ProgressCircular>
-      <ProgressCircular min={0} max={5} value={3} size="4em" thickness={3}>
+      <ProgressCircular countdown min={0} max={5} value={3} size="4em" thickness={3}>
         3/5
       </ProgressCircular>
     </Flex>

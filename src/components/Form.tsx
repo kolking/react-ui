@@ -19,17 +19,18 @@ export const Form = () => (
         label="Text label"
         required
         labelAccessory={
-          <>
-            <Button title="Action" variant="tertiary" size="sm" />
-            <Tooltip content="This is a tooltip" placement="top-end">
-              <Icon name="help-circle" size="1em" color="var(--color-gray-400)" tabIndex={0} />
-            </Tooltip>
-          </>
+          <Tooltip content="This is a tooltip" placement="top-end">
+            <Icon name="help-circle" size="1em" color="var(--color-gray-400)" tabIndex={0} />
+          </Tooltip>
         }
       >
         <Input placeholder="Placeholder" />
       </Field>
-      <Field label="Text label" required>
+      <Field
+        label="Text label"
+        required
+        labelAccessory={<Button title="Action" variant="tertiary" size="sm" />}
+      >
         <Input defaultValue="Read only" readOnly />
       </Field>
       <Field label="Text label" required>
