@@ -17,6 +17,7 @@ export type ProgressCircularProps = React.HTMLAttributes<HTMLDivElement> & {
   max?: number;
   value: number | null;
   size?: string | number;
+  countdown?: boolean;
   thickness?: number;
   linecap?: 'round';
   color?: string;
@@ -31,6 +32,7 @@ export const ProgressCircular = React.forwardRef<HTMLDivElement, ProgressCircula
       max = 100,
       value,
       size,
+      countdown,
       thickness,
       linecap,
       color,
@@ -54,6 +56,7 @@ export const ProgressCircular = React.forwardRef<HTMLDivElement, ProgressCircula
         aria-valuemax={max}
         aria-valuenow={progress}
         data-progress="circular"
+        data-countdown={countdown}
         data-progress-value={progress ?? 'indeterminate'}
         className={cn(styles.container, className)}
         style={{

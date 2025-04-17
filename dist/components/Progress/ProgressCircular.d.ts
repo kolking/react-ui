@@ -4,6 +4,7 @@ export type ProgressCircularProps = React.HTMLAttributes<HTMLDivElement> & {
     max?: number;
     value: number | null;
     size?: string | number;
+    countdown?: boolean;
     thickness?: number;
     linecap?: 'round';
     color?: string;
@@ -15,6 +16,7 @@ export declare const ProgressCircular: React.ForwardRefExoticComponent<React.HTM
     max?: number;
     value: number | null;
     size?: string | number;
+    countdown?: boolean;
     thickness?: number;
     linecap?: "round";
     color?: string;

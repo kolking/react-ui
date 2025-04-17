@@ -1,56 +1,58 @@
 import { jsxs as c, jsx as n } from "react/jsx-runtime";
-import P from "react";
-import { c as j } from "../../index-DyIdU--j.js";
-import { cssProps as N, clamp as k } from "../../utils/helpers.js";
-const w = "Progress_inner_Zoiac", b = "Progress_container_tFVew", h = "Progress_progress_MHEjj", x = "Progress_range_uqjFb", y = "Progress_track_jWvrX", a = {
-  inner: w,
-  container: b,
-  progress: h,
+import j from "react";
+import { c as N } from "../../index-DyIdU--j.js";
+import { cssProps as k, clamp as w } from "../../utils/helpers.js";
+const b = "Progress_inner_Zoiac", h = "Progress_container_tFVew", x = "Progress_range_uqjFb", y = "Progress_progress_MHEjj", C = "Progress_track_jWvrX", a = {
+  inner: b,
+  container: h,
   range: x,
-  track: y
+  progress: y,
+  track: C
 };
-function C(r, s, e) {
+function F(r, s, e) {
   return e !== void 0 ? ((e - r) / (s - r) * 100).toString() : e;
 }
-const E = P.forwardRef(
+const H = j.forwardRef(
   ({
     min: r = 0,
     max: s = 100,
     value: e,
     size: i,
-    thickness: l,
-    linecap: g,
-    color: u,
+    countdown: l,
+    thickness: g,
+    linecap: u,
+    color: d,
     trackColor: p,
-    margin: d,
-    className: m,
-    style: _,
+    margin: m,
+    className: _,
+    style: f,
     children: t,
-    ...f
-  }, v) => {
-    const o = e !== null ? k(e, r, s) : void 0;
+    ...v
+  }, P) => {
+    const o = e !== null ? w(e, r, s) : void 0;
     return /* @__PURE__ */ c(
       "div",
       {
-        ...f,
-        ref: v,
+        ...v,
+        ref: P,
         role: "progressbar",
         "aria-valuemin": r,
         "aria-valuemax": s,
         "aria-valuenow": o,
         "data-progress": "circular",
+        "data-countdown": l,
         "data-progress-value": o ?? "indeterminate",
-        className: j(a.container, m),
+        className: N(a.container, _),
         style: {
-          ..._,
-          ...N({
+          ...f,
+          ...k({
             size: i,
-            thickness: l,
-            linecap: g,
-            color: u,
+            thickness: g,
+            linecap: u,
+            color: d,
             trackColor: p,
-            margin: d,
-            value: C(r, s, o)
+            margin: m,
+            value: F(r, s, o)
           })
         },
         children: [
@@ -65,5 +67,5 @@ const E = P.forwardRef(
   }
 );
 export {
-  E as ProgressCircular
+  H as ProgressCircular
 };

@@ -28,6 +28,7 @@
 }  
 
 .spinner {
+  overflow: visible;
   width: var(--size);
   height: var(--size);
   vertical-align: top;

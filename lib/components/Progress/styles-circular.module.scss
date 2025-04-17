@@ -29,12 +29,17 @@
     position: relative;
   }
 
+  &[data-countdown=true] .range {
+    transform: rotate(90deg) scaleX(-1);
+  }
+
   &[data-progress-value=indeterminate] {
     .progress {
       animation: rotate 2.5s linear infinite;
     }
 
     .range {
+      transform: rotate(-90deg); // To override data-countdown=true
       animation: spin 2.0s linear infinite;
     }
   }
@@ -43,6 +48,7 @@
 .progress {
   width: inherit;
   height: inherit;
+  overflow: visible;
   vertical-align: top;
 }
 
