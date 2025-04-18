@@ -52,11 +52,12 @@ function render<T extends React.ElementType = 'button'>(
     <Element
       {...props}
       ref={ref}
-      data-button={variant}
       data-busy={busy}
+      data-button={variant}
+      data-scheme={scheme}
       aria-disabled={props.disabled}
       aria-live={busy ? 'polite' : undefined}
-      className={cn(styles[variant], styles[scheme], className)}
+      className={cn(styles.button, styles[`${variant}-${scheme}`], className)}
       style={{ ...style, ...cssProps({ size, minWidth, maxWidth }) }}
     >
       {children ? (

@@ -1,56 +1,62 @@
-import { jsxs as i, jsx as v, Fragment as g } from "react/jsx-runtime";
+import { jsxs as u, jsx as v, Fragment as B } from "react/jsx-runtime";
 import { c as b } from "../../index-DyIdU--j.js";
-import { fixedForwardRef as w, wrapNode as u, cssProps as j } from "../../utils/helpers.js";
-import { Spinner as x } from "../Spinner/Spinner.js";
-const h = "Button_button_WuG2z", E = "Button_primary_C3UKh", F = "Button_secondary_UFzjV", N = "Button_tertiary_qqSEt", q = "Button_negative_j0hVQ", z = "Button_positive_HcpPm", Q = "Button_warning_tNrmu", d = {
+import { fixedForwardRef as w, wrapNode as d, cssProps as x } from "../../utils/helpers.js";
+import { Spinner as N } from "../Spinner/Spinner.js";
+const h = "Button_button_WuG2z", y = {
   button: h,
-  primary: E,
-  secondary: F,
-  tertiary: N,
-  default: "Button_default_Q-4IY",
-  negative: q,
-  positive: z,
-  warning: Q
+  "primary-default": "Button_primary-default_lVt-V",
+  "secondary-default": "Button_secondary-default_yggNH",
+  "tertiary-default": "Button_tertiary-default_qSFa6",
+  "primary-negative": "Button_primary-negative_AupXJ",
+  "secondary-negative": "Button_secondary-negative_bZbAE",
+  "tertiary-negative": "Button_tertiary-negative_7Dh-3",
+  "primary-positive": "Button_primary-positive_4Mnfc",
+  "secondary-positive": "Button_secondary-positive_h1UJg",
+  "tertiary-positive": "Button_tertiary-positive_oTrM5",
+  "primary-warning": "Button_primary-warning_9A3NY",
+  "secondary-warning": "Button_secondary-warning_mbIUl",
+  "tertiary-warning": "Button_tertiary-warning_gM2um"
 };
-function S({
-  as: c,
-  variant: n = "primary",
-  scheme: m = "default",
+function A({
+  as: _,
+  variant: r = "primary",
+  scheme: a = "default",
   size: p,
-  minWidth: _,
+  minWidth: m,
   maxWidth: l,
   busy: t,
-  title: r,
-  icon: e,
-  iconPosition: o = "start",
-  children: a,
-  className: y,
-  style: f,
+  title: e,
+  icon: n,
+  iconPosition: i = "start",
+  children: o,
+  className: c,
+  style: g,
   ...s
-}, B) {
-  return /* @__PURE__ */ i(
-    c ?? "button",
+}, f) {
+  return /* @__PURE__ */ u(
+    _ ?? "button",
     {
       ...s,
-      ref: B,
-      "data-button": n,
+      ref: f,
       "data-busy": t,
+      "data-button": r,
+      "data-scheme": a,
       "aria-disabled": s.disabled,
       "aria-live": t ? "polite" : void 0,
-      className: b(d[n], d[m], y),
-      style: { ...f, ...j({ size: p, minWidth: _, maxWidth: l }) },
+      className: b(y.button, y[`${r}-${a}`], c),
+      style: { ...g, ...x({ size: p, minWidth: m, maxWidth: l }) },
       children: [
-        a ? u(a, "span") : /* @__PURE__ */ i(g, { children: [
-          o === "start" && e,
-          r && u(r, "span"),
-          o === "end" && e
+        o ? d(o, "span") : /* @__PURE__ */ u(B, { children: [
+          i === "start" && n,
+          e && d(e, "span"),
+          i === "end" && n
         ] }),
-        t && /* @__PURE__ */ v(x, { overlay: !0 })
+        t && /* @__PURE__ */ v(N, { overlay: !0 })
       ]
     }
   );
 }
-const I = w(S);
+const S = w(A);
 export {
-  I as Button
+  S as Button
 };

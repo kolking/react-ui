@@ -1,39 +1,6 @@
 @use '../../styles/utils' as *;
 
 // ---------------------------
-// COLOR SCHEMES
-// ---------------------------
-
-$schemes: (default: 'accent', negative: 'red', positive: 'green', warning: 'orange');
-
-@each $scheme, $color in $schemes {
-  .#{$scheme} {
-    --color-focus: var(--color-#{$color}-400);
-
-    --primary-text-color: var(--color-white);
-    --primary-border-color: var(--color-#{$color}-500);
-    --primary-background-color: var(--color-#{$color}-500);
-
-    --secondary-text-color: var(--color-#{$color}-500);
-    --secondary-border-color: var(--color-#{$color}-200);
-    --secondary-background-color: var(--color-#{$color}-100);
-
-    --tertiary-text-color: var(--color-#{$color}-500);
-
-    &:hover {
-      --primary-border-color: var(--color-#{$color}-600);
-      --primary-background-color: var(--color-#{$color}-600);
-
-      --secondary-text-color: var(--color-#{$color}-600);
-      --secondary-border-color: var(--color-#{$color}-200);
-      --secondary-background-color: var(--color-#{$color}-200);
-
-      --tertiary-text-color: var(--color-#{$color}-600);
-    }
-  }
-}
-
-// ---------------------------
 // BASE STYLE
 // ---------------------------
 
@@ -70,6 +37,7 @@ $schemes: (default: 'accent', negative: 'red', positive: 'green', warning: 'oran
   justify-content: center;
   font-size: var(--size);
   padding: var(--padding);
+  color: var(--text-color);
   min-width: var(--min-width);
   max-width: var(--max-width);
   min-height: var(--min-height);
@@ -77,22 +45,11 @@ $schemes: (default: 'accent', negative: 'red', positive: 'green', warning: 'oran
   font-weight: var(--font-weight);
   line-height: var(--line-height);
   border-radius: var(--border-radius);
-  border: var(--border-width) solid transparent;
+  background-color: var(--background-color, transparent);
+  border: var(--border-width) solid var(--border-color, transparent);
 
   @media (prefers-reduced-motion: no-preference) {
     transition: color 0.2s, background-color 0.2s, border-color 0.2s, outline 0.1s;
-  }
-
-  &[disabled] {
-    --primary-text-color: var(--color-gray-100);
-    --primary-border-color: var(--color-gray-400);
-    --primary-background-color: var(--color-gray-400);
-
-    --secondary-text-color: var(--color-gray-400);
-    --secondary-border-color: var(--color-gray-200);
-    --secondary-background-color: var(--color-gray-100);
-
-    --tertiary-text-color: var(--color-gray-400);
   }
 
   &[data-busy=true] {
@@ -122,33 +79,72 @@ $schemes: (default: 'accent', negative: 'red', positive: 'green', warning: 'oran
 }
 
 // ---------------------------
-// VARIANTS
+// VARIANTS / COLOR SCHEMES
 // ---------------------------
 
-.primary {
-  @extend .button;
-  color: var(--primary-text-color);
-  border-color: var(--primary-border-color);
-  background-color: var(--primary-background-color);
-}
+$schemes: (
+  default:  'accent',
+  negative: 'red',
+  positive: 'green',
+  warning:  'orange',
+);
 
-.secondary {
-  @extend .button;
-  color: var(--secondary-text-color);
-  border-color: var(--secondary-border-color);
-  background-color: var(--secondary-background-color);
-}
+@each $scheme, $color in $schemes {
+  .primary-#{$scheme} {
+    --color-focus: var(--color-#{$color}-400);
+    --text-color: var(--color-white);
+    --border-color: var(--color-#{$color}-500);
+    --background-color: var(--color-#{$color}-500);
 
-.tertiary {
-  @extend .button;
-  --padding: 0;
-  --min-width: auto;
-  --min-height: auto;
-  --border-width: unset;
-  --border-radius: 1px;
+    &:hover {
+      --border-color: var(--color-#{$color}-600);
+      --background-color: var(--color-#{$color}-600);
+    }
 
-  background: none;
-  outline-offset: 5px;
-  justify-content: unset;
-  color: var(--tertiary-text-color);
+    &[disabled] {
+      --text-color: var(--color-gray-100);
+      --border-color: var(--color-gray-400);
+      --background-color: var(--color-gray-400);  
+    }
+  }
+
+  .secondary-#{$scheme} {
+    --color-focus: var(--color-#{$color}-400);
+    --text-color: var(--color-#{$color}-500);
+    --border-color: var(--color-#{$color}-200);
+    --background-color: var(--color-#{$color}-100);
+
+    &:hover {
+      --text-color: var(--color-#{$color}-600);
+      --border-color: var(--color-#{$color}-200);
+      --background-color: var(--color-#{$color}-200);
+    }
+
+    &[disabled] {
+      --text-color: var(--color-gray-400);
+      --border-color: var(--color-gray-200);
+      --background-color: var(--color-gray-100);
+    }
+  }
+
+  .tertiary-#{$scheme} {
+    --padding: 0;
+    --min-width: auto;
+    --min-height: auto;
+    --border-width: unset;
+    --border-radius: 1px;
+    --color-focus: var(--color-#{$color}-400);
+    --text-color: var(--color-#{$color}-500);
+  
+    outline-offset: 5px;
+    justify-content: unset;
+    
+    &:hover {
+      --text-color: var(--color-#{$color}-600);
+    }
+
+    &[disabled] {
+      --text-color: var(--color-gray-400);
+    }
+  }
 }
