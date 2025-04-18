@@ -35,11 +35,11 @@ $line-height: (
 );
 
 $border-radius: (
-  xs: 3px,
-  sm: 5px,
-  md: 10px,
-  lg: 15px,
-  xl: 20px,
+  xs: 0.1875rem, // 3px
+  sm: 0.3125rem, // 5px
+  md: 0.5000rem, // 8px
+  lg: 0.7500rem, // 12px
+  xl: 1.1250rem, // 18px
 );
 
 $spacing: (
