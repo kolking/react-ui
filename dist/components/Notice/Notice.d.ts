@@ -3,7 +3,7 @@ type Scheme = 'info' | 'warning' | 'error' | 'success' | 'neutral';
 export type NoticeProps = React.HTMLAttributes<HTMLDivElement> & {
     error?: unknown;
     scheme?: Scheme;
-    variant?: 'default' | 'subtle';
+    variant?: 'default' | 'plain';
     layout?: 'horizontal' | 'vertical';
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     icon?: React.ReactElement | null;

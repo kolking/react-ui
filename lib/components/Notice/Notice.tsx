@@ -18,7 +18,7 @@ const icons: { [key: string]: IconProps['name'] } = {
 export type NoticeProps = React.HTMLAttributes<HTMLDivElement> & {
   error?: unknown;
   scheme?: Scheme;
-  variant?: 'default' | 'subtle';
+  variant?: 'default' | 'plain';
   layout?: 'horizontal' | 'vertical';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   icon?: React.ReactElement | null;
@@ -45,6 +45,7 @@ export const Notice = ({
   <div
     {...props}
     data-notice={scheme}
+    data-layout={layout}
     className={cn(styles.container, styles[scheme], styles[layout], styles[variant], className)}
     style={{ ...style, ...cssProps({ size, margin, padding }) }}
   >

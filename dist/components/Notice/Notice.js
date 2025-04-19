@@ -1,52 +1,53 @@
-import { jsxs as r, jsx as t } from "react/jsx-runtime";
+import { jsxs as i, jsx as e } from "react/jsx-runtime";
 import { c as v } from "../../index-DyIdU--j.js";
-import { cssProps as y, getErrorMessage as p } from "../../utils/helpers.js";
+import { cssProps as p, getErrorMessage as y } from "../../utils/helpers.js";
 import { Icon as w } from "../Icon/Icon.js";
-const h = "Notice_info_tgW7c", z = "Notice_error_ClIfR", b = "Notice_success_-vXfu", j = "Notice_warning_zFUFN", x = "Notice_neutral_Vryzr", C = "Notice_container_d9QoU", I = "Notice_content_cvC5c", Q = "Notice_message_hI1yz", k = "Notice_accessory_AjvqC", F = "Notice_vertical_DsMZQ", M = "Notice_subtle_5QLvc", c = {
+const h = "Notice_info_tgW7c", z = "Notice_error_ClIfR", j = "Notice_success_-vXfu", x = "Notice_warning_zFUFN", C = "Notice_neutral_Vryzr", F = "Notice_container_d9QoU", I = "Notice_content_cvC5c", k = "Notice_message_hI1yz", M = "Notice_accessory_AjvqC", Q = "Notice_vertical_DsMZQ", U = "Notice_plain_l9FV5", c = {
   info: h,
   error: z,
-  success: b,
-  warning: j,
-  neutral: x,
-  container: C,
+  success: j,
+  warning: x,
+  neutral: C,
+  container: F,
   content: I,
-  message: Q,
-  accessory: k,
-  vertical: F,
-  subtle: M
-}, i = {
+  message: k,
+  accessory: M,
+  vertical: Q,
+  plain: U
+}, a = {
   info: "info-circle",
   warning: "warning",
   error: "error-circle",
   success: "checkmark-circle",
   neutral: "info-outline"
 }, E = ({
-  error: o,
-  scheme: e = o ? "error" : "neutral",
-  layout: a = "horizontal",
+  error: n,
+  scheme: o = n ? "error" : "neutral",
+  layout: t = "horizontal",
   variant: l = "default",
   size: _,
   icon: s,
-  accessory: n,
+  accessory: r,
   margin: N,
   padding: m,
-  className: u,
+  className: d,
   style: f,
-  children: d,
-  ...g
-}) => /* @__PURE__ */ r(
+  children: g,
+  ...u
+}) => /* @__PURE__ */ i(
   "div",
   {
-    ...g,
-    "data-notice": e,
-    className: v(c.container, c[e], c[a], c[l], u),
-    style: { ...f, ...y({ size: _, margin: N, padding: m }) },
+    ...u,
+    "data-notice": o,
+    "data-layout": t,
+    className: v(c.container, c[o], c[t], c[l], d),
+    style: { ...f, ...p({ size: _, margin: N, padding: m }) },
     children: [
-      /* @__PURE__ */ r("div", { className: c.content, children: [
-        s !== void 0 ? s : i[e] && /* @__PURE__ */ t(w, { name: i[e] }),
-        /* @__PURE__ */ t("div", { className: c.message, children: o ? p(o) : d })
+      /* @__PURE__ */ i("div", { className: c.content, children: [
+        s !== void 0 ? s : a[o] && /* @__PURE__ */ e(w, { name: a[o] }),
+        /* @__PURE__ */ e("div", { className: c.message, children: n ? y(n) : g })
       ] }),
-      n && /* @__PURE__ */ t("div", { className: c.accessory, children: n })
+      r && /* @__PURE__ */ e("div", { className: c.accessory, children: r })
     ]
   }
 );
