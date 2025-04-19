@@ -14,11 +14,11 @@
   width: var(--width);
   color: var(--color-fg);
   padding: var(--spacing-md);
-  box-shadow: var(--drop-shadow);
-  background: var(--color-dialog);
-  border-radius: var(--border-radius-lg);
-  will-change: opacity, transform;
   transform: scale3d(0.8,0.8,1);
+  background: var(--color-dialog);
+  will-change: opacity, transform;
+  border-radius: var(--border-radius-lg);
+  box-shadow: rgb(0 0 0 / 8%) 0 40px 40px, rgb(0 0 0 / 5%) 0 20px 20px;
 
   &[open] {
     opacity: 1;
@@ -42,7 +42,7 @@
     opacity: 0;
     will-change: opacity;
     backdrop-filter: blur(3px);
-    background-color: rgb(from var(--color-black) r g b / 50%);
+    background-color: var(--color-backdrop);
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -63,10 +63,6 @@
     &::backdrop {
       transition: opacity 0.4s;
     }
-  }
-
-  @media screen and (prefers-color-scheme: dark) {
-    --input-background-color: var(--color-gray-100);
   }
 }
 

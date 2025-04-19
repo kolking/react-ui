@@ -52,10 +52,10 @@ $spacing: (
 
 $drop-shadow: (
   rgb(0 0 0 / 10%) 0 0 0 1px,
-  rgb(0 0 0 / 5%) 0 90px 80px,
-  rgb(0 0 0 / 4%) 0 40px 35px,
-  rgb(0 0 0 / 3%) 0 24px 20px,
-  rgb(0 0 0 / 2%) 0 12px 10px
+  rgb(0 0 0 / 5%) 0 80px 80px,
+  rgb(0 0 0 / 4%) 0 40px 40px,
+  rgb(0 0 0 / 3%) 0 20px 20px,
+  rgb(0 0 0 / 2%) 0 10px 10px
 );
 
 $ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -68,6 +68,8 @@ $light-colors: (
   bg:         #FFFFFF,
   popup:      #FFFFFF,
   dialog:     #FFFFFF,
+  input:      #FFFFFF,
+  backdrop:   rgb(0 0 0 / 50%),
   focus:      var(--color-accent-400),
   link:       var(--color-blue-500),
   link-hover: var(--color-blue-600),
@@ -78,7 +80,9 @@ $dark-colors: (
   fg:         #E6E6E6,
   bg:         #161616,
   popup:      #262626,
-  dialog:     #1A1A1A,
+  dialog:     #191919,
+  input:      #101010,
+  backdrop:   rgb(0 0 0 / 65%),
 );
 
 $light-palette: (

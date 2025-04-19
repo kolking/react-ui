@@ -7,7 +7,7 @@
   --input-font-family: inherit;
   --input-placeholder-opacity: 0.4;
   --input-text-color: var(--color-fg);
-  --input-background-color: var(--color-bg);
+  --input-background-color: var(--color-input);
   --input-border-color: var(--color-gray-400);
   --input-border-radius: var(--border-radius-sm);
   --input-font-weight: var(--font-weight-normal);
@@ -23,10 +23,6 @@
 
   --validation-tooltip-color: var(--color-white);
   --validation-tooltip-background-color: var(--color-red-500);
-
-  @media screen and (prefers-color-scheme: dark) {
-    --input-background-color: var(--color-gray-50);
-  }
 
   @media print {
     --input-border-color: black;
