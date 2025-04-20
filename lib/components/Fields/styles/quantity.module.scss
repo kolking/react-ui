@@ -25,9 +25,9 @@
   }
 
   &[data-invalid=true] {
-    --color-focus: var(--input-invalid-focus-color);
-    border-color: var(--input-invalid-border-color);
-    background-color: var(--input-invalid-background-color);
+    --color-focus: var(--input-error-focus-color);
+    border-color: var(--input-error-border-color);
+    background-color: var(--input-error-background-color);
   }
 
   &[data-disabled=true] {

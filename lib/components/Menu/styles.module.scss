@@ -4,7 +4,12 @@
 // COLOR SCHEMES
 // ---------------------------
 
-$schemes: (default: 'accent', negative: 'red', positive: 'green', warning: 'orange');
+$schemes: (
+  default: 'accent',
+  negative: 'red',
+  positive: 'green',
+  warning: 'orange',
+);
 
 @each $scheme, $color in $schemes {
   .#{$scheme} {

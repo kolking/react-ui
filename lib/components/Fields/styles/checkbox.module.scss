@@ -53,14 +53,11 @@
   --size-lg: var(--font-size-lg);
   --size-xl: var(--font-size-xl);
 
+  --checked-color: var(--color-accent-500);
   --border-width: var(--input-border-width);
   --border-color: var(--input-border-color);
   --border-radius: var(--border-radius-xs);
   --background-color: var(--input-background-color);
-
-  --checked-color: var(--color-accent-500);
-  --invalid-checked-color: var(--color-red-500);
-  --disabled-checked-color: var(--color-gray-400);
 
   margin: 0;
   padding: 0;
@@ -79,15 +76,15 @@
 
   //&:invalid,
   &[data-invalid=true] {
-    --color-focus: var(--input-invalid-focus-color);
-    --border-color: var(--input-invalid-border-color);
-    --checked-color: var(--invalid-checked-color);
-    --background-color: var(--input-invalid-background-color);
+    --checked-color: var(--color-red-500);
+    --color-focus: var(--input-error-focus-color);
+    --border-color: var(--input-error-border-color);
+    --background-color: var(--input-error-background-color);
   }
 
   &[disabled] {
+    --checked-color: var(--color-gray-400);
     --border-color: var(--input-disabled-border-color);
-    --checked-color: var(--disabled-checked-color);
     --background-color: var(--input-disabled-background-color);
   }
 

@@ -3,31 +3,28 @@
 :root {
   --input-padding: 0.5em;
   --input-min-height: 2.5em;
-  --input-border-width: 1px;
   --input-font-family: inherit;
-  --input-placeholder-opacity: 0.4;
-  --input-text-color: var(--color-fg);
-  --input-background-color: var(--color-input);
-  --input-border-color: var(--color-gray-400);
-  --input-border-radius: var(--border-radius-sm);
   --input-font-weight: var(--font-weight-normal);
   --input-line-height: var(--line-height-sm);
+  --input-text-color: var(--color-fg);
+  --input-border-width: 1px;
+  --input-border-color: var(--color-gray-400);
+  --input-border-radius: var(--border-radius-sm);
+  --input-background-color: var(--color-input);
+  --input-placeholder-opacity: 0.4;
   
   --input-disabled-text-color: var(--color-gray-500);
   --input-disabled-border-color: var(--color-gray-400);
   --input-disabled-background-color: var(--color-gray-50);
 
-  --input-invalid-focus-color: var(--color-red-400);
-  --input-invalid-border-color: var(--color-red-400);
-  --input-invalid-background-color: var(--color-red-50);
-
-  --validation-tooltip-color: var(--color-white);
-  --validation-tooltip-background-color: var(--color-red-500);
+  --input-error-focus-color: var(--color-red-400);
+  --input-error-border-color: var(--color-red-400);
+  --input-error-background-color: var(--color-red-50);
 
   @media print {
     --input-border-color: black;
     --input-disabled-border-color: black;
-    --input-invalid-border-color: black;
+    --input-error-border-color: black;
   }
 }
 
@@ -67,9 +64,9 @@
 
   //&:invalid,
   &[data-invalid=true] {
-    --color-focus: var(--input-invalid-focus-color);
-    --border-color: var(--input-invalid-border-color);
-    --background-color: var(--input-invalid-background-color);
+    --color-focus: var(--input-error-focus-color);
+    --border-color: var(--input-error-border-color);
+    --background-color: var(--input-error-background-color);
   }
 
   &[disabled] {
@@ -85,8 +82,8 @@
 }
 
 .tooltip {
-  --color: var(--validation-tooltip-color);
-  --background-color: var(--validation-tooltip-background-color);
+  --color: var(--color-white);
+  --background-color: var(--color-red-500);
 }
 
 // ---------------------------
@@ -137,7 +134,7 @@
     appearance: none;
     align-self: center;
     background-size: 100%;
-    background-image: svg-uri(16, 16, '<path fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m11.5 4.5-7 7m0-7 7 7"/>');
+    background-image: svg-uri(16, 16, '<path fill="none" stroke="gray" stroke-linecap="round" stroke-width="2" d="m11.5 4.5-7 7m0-7 7 7"/>');
   }
 }
 
