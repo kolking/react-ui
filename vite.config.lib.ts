@@ -9,6 +9,9 @@ import svgr from 'vite-plugin-svgr';
 import dts from 'vite-plugin-dts';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
+// Library mode config is based on the guide:
+// https://dev.to/receter/how-to-create-a-react-component-library-using-vites-library-mode-4lma
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
