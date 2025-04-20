@@ -88,11 +88,12 @@ export const Form = () => (
       </Field>
     </Flex>
     <Flex gap="lg">
-      <Input type="checkbox" />
+      <Input type="checkbox" size="xl" />
       <Checkbox label="Checkbox" />
       <Checkbox label="Checked" defaultChecked />
       <Checkbox label="Disabled" defaultChecked disabled />
       <Checkbox label="Invalid" error="This field is not valid" />
+      <Checkbox label="Indeterminate" indeterminate />
     </Flex>
     <Flex gap="lg">
       <Input type="radio" size="xl" />

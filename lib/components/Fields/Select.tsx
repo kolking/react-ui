@@ -2,12 +2,12 @@ import cn from 'classnames';
 import React from 'react';
 
 import { cssProps } from '../../utils/helpers';
-import { InputProps } from './Input';
+import { BaseInputProps } from './Input';
 import { ValidationTooltip } from './ValidationTooltip';
 
 import styles from './styles/input.module.scss';
 
-export type SelectProps = InputProps<React.SelectHTMLAttributes<HTMLSelectElement>>;
+export type SelectProps = BaseInputProps<React.SelectHTMLAttributes<HTMLSelectElement>>;
 
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ size, error, className, style, ...props }, ref) => (

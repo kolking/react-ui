@@ -2,6 +2,7 @@ import cn from 'classnames';
 import React, { useCallback, useImperativeHandle, useRef } from 'react';
 
 import { cssProps } from '../../utils/helpers';
+import { BaseInputProps } from './Input';
 import { ValidationTooltip } from './ValidationTooltip';
 
 import SvgDecrease from '../../assets/fields/quantity-decrease.svg?react';
@@ -9,10 +10,7 @@ import SvgIncrease from '../../assets/fields/quantity-increase.svg?react';
 
 import styles from './styles/quantity.module.scss';
 
-export type QuantityProps<T = React.InputHTMLAttributes<HTMLInputElement>> = Omit<T, 'size'> & {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  error?: string;
-};
+export type QuantityProps = BaseInputProps;
 
 export const Quantity = React.forwardRef<HTMLInputElement, QuantityProps>(
   ({ size, error, className, style, ...props }, ref) => {

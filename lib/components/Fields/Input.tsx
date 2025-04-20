@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import React, { useEffect, useImperativeHandle, useRef } from 'react';
+import React from 'react';
 
 import { cssProps } from '../../utils/helpers';
 import { ValidationTooltip } from './ValidationTooltip';
@@ -23,32 +23,25 @@ function getClassName(type: React.HTMLInputTypeAttribute) {
     case 'search':
     case 'range':
     case 'hidden':
+    case 'button':
+    case 'submit':
+    case 'reset':
+    case 'image':
+    case 'file':
       return inputStyles[type];
     default:
       return inputStyles.input;
   }
 }
 
-export type InputProps<T = React.InputHTMLAttributes<HTMLInputElement>> = Omit<T, 'size'> & {
+export type BaseInputProps<T = React.InputHTMLAttributes<HTMLInputElement>> = Omit<T, 'size'> & {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   error?: string;
-  indeterminate?: boolean;
 };
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ size, error, type = 'text', className, style, indeterminate, ...props }, ref) => {
-    const checked = props.checked;
-    const innerRef = useRef<HTMLInputElement>(null);
-
-    useImperativeHandle(ref, () => innerRef.current!);
-
-    useEffect(() => {
-      if (indeterminate != null && innerRef.current != null) {
-        innerRef.current.indeterminate = !checked && indeterminate;
-      }
-    }, [innerRef, indeterminate, checked]);
-
-    if (['button', 'reset', 'submit'].includes(type)) {
+export const Input = React.forwardRef<HTMLInputElement, BaseInputProps>(
+  ({ size, error, type = 'text', className, style, ...props }, ref) => {
+    if (['button', 'reset', 'submit', 'image'].includes(type)) {
       console.warn(`Input type "${type}" is not supported, use <Button>`);
     }
 
@@ -56,7 +49,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <ValidationTooltip content={error}>
         <input
           {...props}
-          ref={innerRef}
+          ref={ref}
           type={type}
           data-input={type}
           data-invalid={error ? true : undefined}

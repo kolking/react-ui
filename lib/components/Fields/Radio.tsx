@@ -2,10 +2,10 @@ import cn from 'classnames';
 import React from 'react';
 
 import { cssProps } from '../../utils/helpers';
-import { Input, InputProps } from './Input';
+import { Input, BaseInputProps } from './Input';
 import styles from './styles/checkbox.module.scss';
 
-export type RadioProps = InputProps<React.InputHTMLAttributes<HTMLInputElement>> & {
+export type RadioProps = BaseInputProps & {
   label?: React.ReactNode;
 };
 

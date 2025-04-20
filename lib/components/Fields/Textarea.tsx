@@ -3,7 +3,7 @@ import React from 'react';
 import TextareaAutosize, { TextareaAutosizeProps } from 'react-textarea-autosize';
 
 import { cssProps } from '../../utils/helpers';
-import { InputProps } from './Input';
+import { BaseInputProps } from './Input';
 import { ValidationTooltip } from './ValidationTooltip';
 import styles from './styles/input.module.scss';
 
@@ -11,7 +11,7 @@ type Style = React.CSSProperties & {
   height?: number;
 };
 
-export type TextareaProps = InputProps<TextareaAutosizeProps> & {
+export type TextareaProps = BaseInputProps<TextareaAutosizeProps> & {
   autosize?: boolean;
 };
 
