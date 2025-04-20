@@ -170,3 +170,54 @@
   margin: 0;
   width: 100%;
 }
+
+// ---------------------------
+// WRAPPED INPUT
+// ---------------------------
+
+.wrapper {
+  @extend .input;
+  padding: 0;
+  display: flex;
+
+  &:has([data-input]:focus-visible) {
+    @include focus-visible();
+  }
+
+  &[data-disabled] {
+    --border-color: var(--input-disabled-border-color);
+    --background-color: var(--input-disabled-background-color);
+  }
+
+  &_prefix {
+    gap: 0.375em;
+    display: flex;
+    align-items: center;
+    color: var(--color-gray-600);
+    padding-left: var(--input-padding);
+  }
+
+  &_accessory {
+    gap: 0.375em;
+    display: flex;
+    align-items: center;
+    padding-right: var(--input-padding);
+  }
+
+  [data-input] {
+    --size: var(--size);
+    --input-min-height: auto;
+    --input-border-width: 0;
+    --input-border-radius: 0;
+    --input-background-color: transparent;
+    outline: none;
+  }
+
+  [data-button] {
+    --size: var(--size);
+    --min-height: auto;
+    --border-radius: 0;
+    --border-width: 0;
+    align-self: stretch;
+  }
+}

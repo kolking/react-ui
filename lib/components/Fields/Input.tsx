@@ -7,6 +7,21 @@ import { ValidationTooltip } from './ValidationTooltip';
 import checkboxStyles from './styles/checkbox.module.scss';
 import inputStyles from './styles/input.module.scss';
 
+function allowWrap(type: React.HTMLInputTypeAttribute) {
+  return ![
+    'button',
+    'checkbox',
+    'color',
+    'file',
+    'hidden',
+    'image',
+    'radio',
+    'range',
+    'reset',
+    'submit',
+  ].includes(type);
+}
+
 function getClassName(type: React.HTMLInputTypeAttribute) {
   switch (type) {
     case 'checkbox':
@@ -27,6 +42,7 @@ function getClassName(type: React.HTMLInputTypeAttribute) {
     case 'submit':
     case 'reset':
     case 'image':
+    case 'color':
     case 'file':
       return inputStyles[type];
     default:
@@ -39,14 +55,40 @@ export type BaseInputProps<T = React.InputHTMLAttributes<HTMLInputElement>> = Om
   error?: string;
 };
 
-export const Input = React.forwardRef<HTMLInputElement, BaseInputProps>(
-  ({ size, error, type = 'text', className, style, ...props }, ref) => {
-    if (['button', 'reset', 'submit', 'image'].includes(type)) {
-      console.warn(`Input type "${type}" is not supported, use <Button>`);
-    }
+export type InputProps = Omit<BaseInputProps, 'prefix'> & {
+  prefix?: React.ReactNode;
+};
 
-    return (
-      <ValidationTooltip content={error}>
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ size, error, type = 'text', className, style, prefix, children, ...props }, ref) => {
+    const content =
+      allowWrap(type) && (prefix || children) ? (
+        <div
+          data-input-wrapper
+          data-disabled={props.disabled}
+          data-invalid={error ? true : undefined}
+          className={cn(inputStyles.wrapper, className)}
+          style={{ ...style, ...cssProps({ size }) }}
+        >
+          {prefix && (
+            <div data-input-prefix className={inputStyles.wrapper_prefix}>
+              {prefix}
+            </div>
+          )}
+          <input
+            {...props}
+            ref={ref}
+            type={type}
+            data-input={type}
+            className={getClassName(type)}
+          />
+          {children && (
+            <div data-input-accessory className={inputStyles.wrapper_accessory}>
+              {children}
+            </div>
+          )}
+        </div>
+      ) : (
         <input
           {...props}
           ref={ref}
@@ -56,7 +98,8 @@ export const Input = React.forwardRef<HTMLInputElement, BaseInputProps>(
           className={cn(getClassName(type), className)}
           style={{ ...style, ...cssProps({ size }) }}
         />
-      </ValidationTooltip>
-    );
+      );
+
+    return <ValidationTooltip content={error}>{content}</ValidationTooltip>;
   },
 );

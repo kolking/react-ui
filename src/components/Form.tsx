@@ -20,7 +20,7 @@ export const Form = () => (
         required
         labelAccessory={
           <Tooltip content="This is a tooltip" placement="top-end">
-            <Icon name="help-circle" size="1em" color="var(--color-gray-400)" tabIndex={0} />
+            <Icon name="help-circle" size="1em" scheme="neutral" tabIndex={0} />
           </Tooltip>
         }
       >
@@ -49,10 +49,17 @@ export const Form = () => (
     </Flex>
     <Flex>
       <Field label="Search">
-        <Input type="search" defaultValue="Search" />
+        <Input
+          type="search"
+          defaultValue="Keyword"
+          prefix={<Icon name="search" />}
+          error="This is an error"
+        >
+          <Button title="GO" variant="tertiary" />
+        </Input>
       </Field>
       <Field label="Numeric" maxWidth={100}>
-        <Input type="number" step={10} />
+        <Input type="number" step={10} prefix="$" />
       </Field>
       <Field label="Quantity" maxWidth={100}>
         <Quantity type="number" step={10} />
@@ -63,6 +70,18 @@ export const Form = () => (
           <option>two</option>
           <option>three</option>
         </Select>
+      </Field>
+    </Flex>
+    <Flex>
+      <Field label="Website">
+        <Input type="url" defaultValue="domain.com" prefix="https://">
+          <Button variant="tertiary" icon={<Icon name="arrow-right-circle" />} />
+        </Input>
+      </Field>
+      <Field label="Username">
+        <Input type="text" placeholder="Search" prefix={<Icon name="profile" scheme="neutral" />}>
+          <Icon name="checkmark-circle" scheme="success" />
+        </Input>
       </Field>
     </Flex>
     <Flex>
