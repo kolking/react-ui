@@ -184,7 +184,7 @@
     @include focus-visible();
   }
 
-  &[data-disabled] {
+  &[data-disabled=true] {
     --border-color: var(--input-disabled-border-color);
     --background-color: var(--input-disabled-background-color);
   }
