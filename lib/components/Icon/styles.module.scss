@@ -1,14 +1,31 @@
 // ---------------------------
+// COLOR SCHEMES
+// ---------------------------
+
+$schemes: (
+  info: 'blue',
+  error: 'red',
+  success: 'green',
+  warning: 'orange',
+  neutral: 'gray',
+);
+
+@each $scheme, $color in $schemes {
+  .#{$scheme} {
+    --color: var(--color-#{$color}-500);
+  }
+}
+
+// ---------------------------
 // BASE STYLE
 // ---------------------------
 
 .icon {
   --width: auto;
   --height: 1.25em;
-  --color: currentColor;
 
   flex-shrink: 0;
-  color: var(--color);
+  color: var(--color, currentColor);
   width: var(--width);
   height: var(--height);
   vertical-align: text-bottom;
