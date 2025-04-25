@@ -8,6 +8,7 @@ export const DropMenu = () => (
       <MenuItem title="Third action" scheme="negative" />
     </Menu>
     <Menu
+      placement="bottom-end"
       trigger={
         <Button
           title="Icons menu"
