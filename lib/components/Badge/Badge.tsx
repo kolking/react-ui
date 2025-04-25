@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import { cssProps } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
-export type BadgeProps = React.HTMLAttributes<HTMLDivElement> & {
+export type BadgeProps = React.HTMLAttributes<HTMLSpanElement> & {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   value?: number | string | boolean;
   maxValue?: number;
@@ -67,7 +67,7 @@ export const Badge = ({
   const showMaxValue = typeof value === 'number' && maxValue > 0 && value > maxValue;
 
   return (
-    <div
+    <span
       {...props}
       ref={ref}
       data-badge={scheme}
@@ -76,6 +76,6 @@ export const Badge = ({
       style={{ ...style, ...cssProps({ size }) }}
     >
       {showMaxValue ? `${maxValue}+` : value}
-    </div>
+    </span>
   );
 };

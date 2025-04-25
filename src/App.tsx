@@ -42,7 +42,7 @@ function App() {
       <Dialogs />
       <Heading title="Drop Menu" />
       <DropMenu />
-      <Heading title="Badge" />
+      <Heading title="Badges" />
       <Badges />
       <Heading title="Avatars" />
       <Avatars />
