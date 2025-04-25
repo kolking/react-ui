@@ -37,7 +37,15 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        '@floating-ui/react',
+        'classnames',
+        'focus-trap-react',
+        'react-textarea-autosize',
+      ],
       input: Object.fromEntries(
         glob
           .sync('lib/**/*.{ts,tsx}', {
