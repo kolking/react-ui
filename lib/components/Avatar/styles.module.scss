@@ -1,0 +1,39 @@
+.avatar {
+  --size: 50px;
+  --border-radius: 50%;
+  --text-color: var(--color-white);
+  --background-color: var(--color-gray-400);
+
+  width: var(--size);
+  height: var(--size);
+  position: relative;
+  vertical-align: top;
+  display: inline-flex;
+  color: var(--text-color);
+  background: var(--background-color);
+  border-radius: var(--border-radius);
+}
+
+.image {
+  width: inherit;
+  height: inherit;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.name {
+  margin: auto;
+  line-height: 1;
+  text-align: center;
+  font-size: calc(var(--size) * 0.4);
+  font-weight: var(--font-weight-medium);
+}
+
+.default {
+  padding: 4%;
+  opacity: 0.8;
+  width: inherit;
+  height: inherit;
+  overflow: hidden;
+  border-radius: inherit;
+}

@@ -10,6 +10,7 @@ import { Icons } from './components/Icons';
 import { Notices } from './components/Notices';
 import { SegmentedList } from './components/Segmented';
 import { Badges } from './components/Badges';
+import { Avatars } from './components/Avatars';
 
 function App() {
   return (
@@ -43,6 +44,8 @@ function App() {
       <DropMenu />
       <Heading title="Badge" />
       <Badges />
+      <Heading title="Avatars" />
+      <Avatars />
       <Heading title="Icons" />
       <Icons />
       <Heading title="Notice" />
