@@ -1,0 +1,54 @@
+import { useCallback, useState } from 'react';
+import { Badge, Button, Flex, Icon } from '@lib';
+
+const colors = [
+  'gray',
+  'red',
+  'orange',
+  'yellow',
+  'green',
+  'teal',
+  'cyan',
+  'blue',
+  'indigo',
+  'purple',
+  'brown',
+  'accent',
+] as const;
+
+export const Badges = () => {
+  const [badge, setBadge] = useState<number>(0);
+
+  const toggleBadge = useCallback(() => {
+    setBadge(badge === 15 ? 0 : badge + 3);
+  }, [badge]);
+
+  return (
+    <Flex gap="lg" direction="column">
+      <Flex>
+        <Badge size="xs" placement={null} value={3} />
+        <Badge size="sm" placement={null} value={3} />
+        <Badge size="md" placement={null} value={3} />
+        <Badge size="lg" placement={null} value={3} />
+        <Badge size="xl" placement={null} value={3} />
+        {colors.map((color) => (
+          <Badge key={color} placement={null} value={35} scheme={color} />
+        ))}
+      </Flex>
+      <Flex>
+        <Button variant="secondary" onClick={toggleBadge}>
+          <span>Click me</span>
+          <Badge value={badge} />
+        </Button>
+        <Button variant="secondary" onClick={toggleBadge}>
+          <span>Click me</span>
+          <Badge value={Boolean(badge)} />
+        </Button>
+        <div style={{ borderRadius: '50%' }}>
+          <Icon name="profile" size={50} scheme="neutral" />
+          <Badge value={badge} scheme="accent" />
+        </div>
+      </Flex>
+    </Flex>
+  );
+};
