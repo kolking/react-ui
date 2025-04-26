@@ -11,6 +11,7 @@ import { Notices } from './components/Notices';
 import { SegmentedList } from './components/Segmented';
 import { Badges } from './components/Badges';
 import { Avatars } from './components/Avatars';
+import { Tags } from './components/Tags';
 
 function App() {
   return (
@@ -44,6 +45,8 @@ function App() {
       <DropMenu />
       <Heading title="Badges" />
       <Badges />
+      <Heading title="Tags" />
+      <Tags />
       <Heading title="Avatars" />
       <Avatars />
       <Heading title="Icons" />
