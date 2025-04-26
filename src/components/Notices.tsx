@@ -1,4 +1,4 @@
-import { Button, Icon, Notice } from '@lib';
+import { Button, Icon, Notice, palette } from '@lib';
 
 export const Notices = () => (
   <>
@@ -8,7 +8,7 @@ export const Notices = () => (
     <Notice scheme="success">Some success message</Notice>
     <Notice
       layout="vertical"
-      icon={<Icon name="bug" size={40} color="var(--color-accent-500)" />}
+      icon={<Icon name="bug" size={40} color={palette.accent[500]} />}
       accessory={<Button variant="tertiary" title="Confirm" />}
     >
       <p>

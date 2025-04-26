@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Icon, Spinner } from '@lib';
+import { Button, Flex, Heading, Icon, palette, Spinner } from '@lib';
 
 import { Palette } from './components/Palette';
 import { Form } from './components/Form';
@@ -30,10 +30,10 @@ function App() {
       <Heading title="Spinners" />
       <Flex gap="3xl">
         <Spinner />
-        <Spinner size={30} color="var(--color-red-500)" />
-        <Spinner size={40} color="var(--color-purple-500)" />
-        <Spinner size={50} color="var(--color-teal-500)" />
-        <Spinner size="3.5em" color="var(--color-green-500)" />
+        <Spinner size={30} color={palette.red[500]} />
+        <Spinner size={40} color={palette.purple[500]} />
+        <Spinner size={50} color={palette.teal[500]} />
+        <Spinner size="3.5em" color={palette.green[500]} />
       </Flex>
       <Heading title="Buttons" />
       <Buttons />
