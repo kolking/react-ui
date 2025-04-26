@@ -1,23 +1,30 @@
 import { useCallback, useState } from 'react';
-import { Button, Dialog, DialogContent, DialogFooter, DialogTitle, Flex, useDialog } from '@lib';
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+  Flex,
+  palette,
+  PaletteColor,
+  useDialog,
+} from '@lib';
 
-import { palette } from './Palette';
 import { DialogForm } from './DialogForm';
 import { DeleteDialog } from './DeleteDialog';
 import styles from './styles.module.scss';
 
 export const Dialogs = () => {
-  const [colors, setColors] = useState(palette.colors);
+  const [colors, setColors] = useState(Object.keys(palette) as PaletteColor[]);
 
   const dialog = useDialog({
     onCancel: () => console.log('Dialog cancelled'),
     onConfirm: () => console.log('Dialog confirmed'),
   });
 
-  const deleteColor = useCallback((index?: number) => {
-    if (index !== undefined) {
-      setColors((state) => state.filter((v, i) => i !== index));
-    }
+  const deleteColor = useCallback((color: string) => {
+    setColors((state) => state.filter((c) => c !== color));
   }, []);
 
   return (
@@ -43,17 +50,14 @@ export const Dialogs = () => {
       <DeleteDialog width="xs" onConfirm={deleteColor}>
         {(dialog) => (
           <Flex gap="xs" wrap="wrap">
-            {colors.map((color, index) => (
+            {colors.map((color) => (
               <Button
-                key={index}
+                key={color}
                 type="button"
                 variant="tertiary"
-                onClick={() => dialog.show({ index, colors })}
+                onClick={() => dialog.show({ color, colors })}
               >
-                <div
-                  className={styles.swatch}
-                  style={{ backgroundColor: `var(--color-${color}-500)` }}
-                />
+                <div className={styles.swatch} style={{ backgroundColor: palette[color][500] }} />
               </Button>
             ))}
           </Flex>
