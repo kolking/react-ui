@@ -84,6 +84,11 @@
   @return string.unquote('#' + string.slice($ie-hex, 4));
 }
 
+// Convert color to string
+@function to-string($color) {
+  @return $color + '';
+}
+
 @mixin focus-visible($color: var(--color-focus)) {
   outline-width: 3px;
   outline-offset: 2px;
