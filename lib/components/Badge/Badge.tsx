@@ -2,34 +2,23 @@ import cn from 'classnames';
 import React, { useEffect, useRef } from 'react';
 
 import { cssProps } from '../../utils/helpers';
+import { PaletteColor } from '../../utils/colors';
 import styles from './styles.module.scss';
 
 export type BadgeProps = React.HTMLAttributes<HTMLSpanElement> & {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  scheme?: PaletteColor;
+  placement?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | null;
   value?: number | string | boolean;
   maxValue?: number;
-  placement?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | null;
-  scheme?:
-    | 'gray'
-    | 'red'
-    | 'yellow'
-    | 'orange'
-    | 'green'
-    | 'teal'
-    | 'cyan'
-    | 'blue'
-    | 'indigo'
-    | 'purple'
-    | 'brown'
-    | 'accent';
 };
 
 export const Badge = ({
   size,
+  scheme = 'red',
+  placement = 'top-right',
   value,
   maxValue = 99,
-  placement = 'top-right',
-  scheme = 'red',
   className,
   style,
   ...props

@@ -1,20 +1,7 @@
 import { useCallback, useState } from 'react';
-import { Badge, Button, Flex, Icon } from '@lib';
+import { Badge, Button, Flex, Icon, palette, PaletteColor } from '@lib';
 
-const colors = [
-  'gray',
-  'red',
-  'orange',
-  'yellow',
-  'green',
-  'teal',
-  'cyan',
-  'blue',
-  'indigo',
-  'purple',
-  'brown',
-  'accent',
-] as const;
+const colors = Object.keys(palette) as PaletteColor[];
 
 export const Badges = () => {
   const [badge, setBadge] = useState<number>(0);

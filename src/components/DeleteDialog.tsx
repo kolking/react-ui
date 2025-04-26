@@ -10,19 +10,19 @@ import {
 } from '@lib';
 
 type Props = {
-  index: number;
+  color: string;
   colors: string[];
 };
 
-type DialogProps = WithDialogProps<Props, number>;
+type DialogProps = WithDialogProps<Props, string>;
 
-const Dialog = ({ dialog, index, colors }: DialogProps) => {
-  const [selected, setSelected] = useState(index);
+const Dialog = ({ dialog, color, colors }: DialogProps) => {
+  const [selected, setSelected] = useState(color);
 
-  useEffect(() => setSelected(index), [index]);
+  useEffect(() => setSelected(color), [color]);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelected(parseInt(e.target.value));
+    setSelected(e.target.value);
   }, []);
 
   const handleDelete = useCallback(() => {
@@ -35,8 +35,8 @@ const Dialog = ({ dialog, index, colors }: DialogProps) => {
       <DialogContent>
         <p>Select a color to delete:</p>
         <Select value={selected} onChange={handleChange}>
-          {colors.map((color, colorIndex) => (
-            <option key={colorIndex} value={colorIndex}>
+          {colors.map((color) => (
+            <option key={color} value={color}>
               {color}
             </option>
           ))}
@@ -50,4 +50,4 @@ const Dialog = ({ dialog, index, colors }: DialogProps) => {
   );
 };
 
-export const DeleteDialog = withDialog<Props, number>(Dialog);
+export const DeleteDialog = withDialog<Props, string>(Dialog);
