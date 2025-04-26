@@ -24,7 +24,7 @@ export const Avatars = () => {
   }, [image]);
 
   return (
-    <Flex>
+    <Flex wrap="wrap">
       <Avatar style={{ borderRadius: 15 }} />
       <Avatar src={images[0]} />
       <Avatar email="jasonsmith@mailto.plus" onClick={toggleBadge}>

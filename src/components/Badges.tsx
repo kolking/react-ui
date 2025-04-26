@@ -25,7 +25,7 @@ export const Badges = () => {
 
   return (
     <Flex gap="lg" direction="column">
-      <Flex>
+      <Flex wrap="wrap">
         <Badge size="xs" placement={null} value={3} />
         <Badge size="sm" placement={null} value={3} />
         <Badge size="md" placement={null} value={3} />

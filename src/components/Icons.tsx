@@ -1,30 +1,42 @@
-import { Flex, Icon, Tooltip } from '@lib';
+import { Flex, Icon, IconProps, Tooltip } from '@lib';
 import icons from '../../lib/components/Icon/icons';
 import SvgIcon from '../assets/react.svg?react';
 
+const schemes: {
+  name: IconProps['scheme'];
+  icon: IconProps['name'];
+}[] = [
+  {
+    name: 'neutral',
+    icon: 'help-circle',
+  },
+  {
+    name: 'info',
+    icon: 'info-circle',
+  },
+  {
+    name: 'error',
+    icon: 'error-circle',
+  },
+  {
+    name: 'success',
+    icon: 'checkmark-circle',
+  },
+  {
+    name: 'warning',
+    icon: 'warning',
+  },
+];
+
 export const Icons = () => (
   <Flex direction="column" gap="2xl">
-    <Flex wrap="wrap" gap="xl">
-      <Flex>
-        <Icon name="help-circle" size={40} scheme="neutral" />
-        <span>Neutral</span>
-      </Flex>
-      <Flex>
-        <Icon name="info-circle" size={40} scheme="info" />
-        <span>Info</span>
-      </Flex>
-      <Flex>
-        <Icon name="error-circle" size={40} scheme="error" />
-        <span>Error</span>
-      </Flex>
-      <Flex>
-        <Icon name="checkmark-circle" size={40} scheme="success" />
-        <span>Success</span>
-      </Flex>
-      <Flex>
-        <Icon name="warning" size={40} scheme="warning" />
-        <span>Warning</span>
-      </Flex>
+    <Flex wrap="wrap" gap="lg">
+      {schemes.map(({ name, icon }) => (
+        <Flex key={name} gap="xs">
+          <Icon name={icon} size={30} scheme={name} />
+          <span>{name}</span>
+        </Flex>
+      ))}
     </Flex>
     <Flex wrap="wrap" gap="xl">
       {icons.map((icon, index) => (
