@@ -44,6 +44,7 @@ export default defineConfig({
         '@floating-ui/react',
         'classnames',
         'focus-trap-react',
+        'js-md5',
         'react-textarea-autosize',
       ],
       input: Object.fromEntries(
