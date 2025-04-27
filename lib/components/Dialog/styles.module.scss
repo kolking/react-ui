@@ -90,28 +90,27 @@
 }
 
 .close {
+  --inset: 0.5em;
   --min-width: 2em;
   --min-height: 2em;
   --border-radius: 50%;
+  --icon-stroke: 1.5px;
   --text-color: var(--color-gray-500);
 
-  top: 0.5em;
-  right: 0.5em;
+  top: var(--inset);
+  right: var(--inset);
   position: absolute;
   justify-content: center;
 
-  &:hover,
-  &:focus-visible {
+  &:not([disabled]):hover,
+  &:not([disabled]):focus-visible {
     --icon-size: 1.5em;
+    --icon-stroke: 2px;
     --text-color: var(--color-fg);
     outline-offset: 0;
-
-    [data-icon] path {
-      stroke-width: 2px;
-    }
   }
 
   [data-icon] path {
-    stroke-width: 1.5px;
+    stroke-width: var(--icon-stroke);
   }
 }

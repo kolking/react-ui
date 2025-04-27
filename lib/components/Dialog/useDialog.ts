@@ -18,31 +18,39 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
 
   refOptions.current = options;
 
-  const handleShow = useCallback((values: T) => {
+  const show = useCallback((values: T) => {
     setData(values);
     setOpen(true);
     refOptions.current?.onShow?.(values);
   }, []);
 
-  const handleHide = useCallback(
+  const close = useCallback(
     (result?: R) => {
-      if (open) {
-        setOpen(false);
-        ref.current?.addEventListener(
-          'transitionend',
-          () => {
-            if (result !== undefined) {
-              refOptions.current?.onConfirm?.(result);
-            } else {
-              refOptions.current?.onCancel?.();
-            }
-            setData(undefined);
-          },
-          { once: true },
-        );
+      if (disabled) {
+        return;
       }
+
+      setOpen((open) => {
+        if (open) {
+          ref.current?.addEventListener('transitionend', function callback(e: TransitionEvent) {
+            // Skip transitionend from child elements
+            if (e.target === ref.current) {
+              if (result !== undefined) {
+                refOptions.current?.onConfirm?.(result);
+              } else {
+                refOptions.current?.onCancel?.();
+              }
+
+              setData(undefined);
+              this.removeEventListener('transitionend', callback);
+            }
+          });
+        }
+
+        return false;
+      });
     },
-    [open],
+    [disabled],
   );
 
   useEffect(() => {
@@ -56,44 +64,40 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   useEffect(() => {
     const dialog = ref.current;
 
-    // Hide when clicked outside
-    function handleClick(e: MouseEvent) {
-      if (e.target === e.currentTarget && !disabled) {
-        handleHide();
-      }
-    }
-
-    // Disable closing via escape if disabled
-    function handleEscape(e: KeyboardEvent) {
-      if (e.key === 'Escape' && disabled) {
-        e.preventDefault();
-      }
-    }
-
-    function handleCancel() {
-      handleHide();
-    }
-
     if (dialog) {
+      // Hide when clicked outside
+      function handleClick(e: MouseEvent) {
+        if (e.target === e.currentTarget) {
+          close();
+        }
+      }
+
+      // Hide when escape pressed
+      function handleEscape(e: KeyboardEvent) {
+        if (e.key === 'Escape') {
+          e.stopPropagation();
+          e.preventDefault();
+          close();
+        }
+      }
+
       dialog.addEventListener('click', handleClick);
-      dialog.addEventListener('cancel', handleCancel);
       dialog.addEventListener('keydown', handleEscape);
 
       return () => {
         dialog.removeEventListener('click', handleClick);
-        dialog.removeEventListener('cancel', handleCancel);
         dialog.removeEventListener('keydown', handleEscape);
       };
     }
-  }, [disabled, handleHide]);
+  }, [close]);
 
   return {
     props: { ref, open },
     data,
     disabled,
-    show: handleShow,
+    show,
     disable: setDisabled,
-    confirm: useCallback((values: R) => handleHide(values), [handleHide]),
-    cancel: useCallback(() => handleHide(), [handleHide]),
+    cancel: useCallback(() => close(), [close]),
+    confirm: useCallback((values: R) => close(values), [close]),
   };
 }
