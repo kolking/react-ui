@@ -32,7 +32,7 @@ type Props = {
 };
 
 export const DialogForm = ({ children }: Props) => {
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState({ name: 'User Name', email: 'user@email.com' });
   const [errors, setErrors] = useState(initialData);
   const dialog = useDialog({
     onConfirm: (result) => {
