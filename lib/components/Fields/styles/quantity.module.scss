@@ -67,7 +67,7 @@
   }
 
   @media (hover: hover) {
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr auto;
 
     input {
       grid-row: 1 / span 2;
@@ -97,7 +97,7 @@
 
   @media (hover: none) {
     border-radius: 1.5em;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: auto 1fr auto;
 
     input {
       grid-row: 1;

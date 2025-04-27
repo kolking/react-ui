@@ -28,6 +28,7 @@
 
   flex-shrink: 0;
   gap: var(--gap);
+  cursor: pointer;
   appearance: none;
   user-select: none;
   vertical-align: top;
@@ -50,6 +51,10 @@
 
   @media (prefers-reduced-motion: no-preference) {
     transition: color 0.2s, background-color 0.2s, border-color 0.2s, outline 0.1s;
+  }
+
+  &[disabled] {
+    cursor: default;
   }
 
   &[data-busy=true] {

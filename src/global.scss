@@ -47,10 +47,6 @@ button, input, select, textarea, header {
   box-sizing: border-box;
 }
 
-button, select, summary {
-  cursor: pointer;
-}
-
 :focus-visible {
   @include utils.focus-visible();
 }
