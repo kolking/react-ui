@@ -1,5 +1,4 @@
 @use 'sass:map';
-@use 'sass:string';
 @use '../../styles/utils' as *;
 @use '../../styles/theme-default' as theme;
 
@@ -34,8 +33,8 @@
 
   > span {
     @extend %truncate-text;
+    line-height: 1;
     font-size: var(--font-size);
-    line-height: var(--line-height-xs);
   }
 
   [data-icon] {
@@ -48,16 +47,16 @@
 // VARIANTS / COLOR SCHEMES
 // ---------------------------
 
-$colors: map.keys(map.get(theme.$light-palette, 'colors'));
+$colors: string-keys(map.get(theme.$light-palette, 'colors'));
 
 @each $color, $hex in $colors {
-  .default-#{to-string($color)} {
+  .default-#{$color} {
     --icon-color: var(--color-#{$color}-500);
     --text-color: var(--color-#{$color}-600);
     --background-color: var(--color-#{$color}-100);
   }
 
-  .solid-#{to-string($color)} {
+  .solid-#{$color} {
     --text-color: var(--color-white);
     --background-color: var(--color-#{$color}-500);
   }

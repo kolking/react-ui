@@ -1,6 +1,7 @@
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:meta';
+@use 'sass:list';
 @use 'sass:color';
 @use 'sass:string';
 
@@ -44,6 +45,17 @@
   @return map.merge($colors, color-palette($palette, $bg, $fg));
 }
 
+// Returns a list of keys converted into strings,
+// mainly used to get a palette color names as strings
+// to avoid sass interpolation warnings
+@function string-keys($map) {
+  $output: ();
+  @each $key in map.keys($map) {
+    $output: list.append($output, $key + '');
+  }
+  @return $output;
+}
+
 // Shortcut to set an opacity for a CSS variable
 @function color-opacity($hex, $opacity) {
   @return color-mix(in srgb, $hex $opacity, transparent);
@@ -82,11 +94,6 @@
 @function to-hex($color) {
   $ie-hex: color.ie-hex-str($color);
   @return string.unquote('#' + string.slice($ie-hex, 4));
-}
-
-// Convert color to string
-@function to-string($color) {
-  @return $color + '';
 }
 
 @mixin focus-visible($color: var(--color-focus)) {

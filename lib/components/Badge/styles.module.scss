@@ -69,10 +69,10 @@
 // COLOR SCHEMES
 // ---------------------------
 
-$colors: map.keys(map.get(theme.$light-palette, 'colors'));
+$colors: string-keys(map.get(theme.$light-palette, 'colors'));
 
 @each $color in $colors {
-  .#{to-string($color)} {
+  .#{$color} {
     --text-color: var(--color-white);
     --background-color: var(--color-#{$color}-500);
   }
