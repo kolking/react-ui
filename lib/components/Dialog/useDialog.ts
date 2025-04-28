@@ -12,46 +12,49 @@ export type DialogType<T, R> = ReturnType<typeof useDialog<T, R>>;
 export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   const ref = useRef<HTMLDialogElement>(null);
   const refOptions = useRef(options);
-  const [disabled, setDisabled] = useState(false);
+  const refDisabled = useRef(false);
   const [open, setOpen] = useState(options?.defaultOpen ?? false);
   const [data, setData] = useState<T>();
 
   refOptions.current = options;
 
   const show = useCallback((values: T) => {
+    if (refDisabled.current) {
+      return;
+    }
+
     setData(values);
     setOpen(true);
     refOptions.current?.onShow?.(values);
   }, []);
 
-  const close = useCallback(
-    (result?: R) => {
-      if (disabled) {
-        return;
+  const close = useCallback((result?: R) => {
+    if (refDisabled.current) {
+      return;
+    }
+
+    setOpen((open) => {
+      if (open) {
+        refDisabled.current = true;
+        ref.current?.addEventListener('transitionend', function callback(e) {
+          // Ignore transitionend event from child elements
+          if (e.target === ref.current) {
+            if (result !== undefined) {
+              refOptions.current?.onConfirm?.(result);
+            } else {
+              refOptions.current?.onCancel?.();
+            }
+
+            setData(undefined);
+            refDisabled.current = false;
+            this.removeEventListener('transitionend', callback);
+          }
+        });
       }
 
-      setOpen((open) => {
-        if (open) {
-          ref.current?.addEventListener('transitionend', function callback(e: TransitionEvent) {
-            // Skip transitionend from child elements
-            if (e.target === ref.current) {
-              if (result !== undefined) {
-                refOptions.current?.onConfirm?.(result);
-              } else {
-                refOptions.current?.onCancel?.();
-              }
-
-              setData(undefined);
-              this.removeEventListener('transitionend', callback);
-            }
-          });
-        }
-
-        return false;
-      });
-    },
-    [disabled],
-  );
+      return false;
+    });
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -91,13 +94,26 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
     }
   }, [close]);
 
+  const cancel = useCallback(() => close(), [close]);
+
+  const confirm = useCallback((values: R) => close(values), [close]);
+
+  const preventClose = useCallback(async <T>(promise: Promise<T>) => {
+    refDisabled.current = true;
+
+    try {
+      return await promise;
+    } finally {
+      refDisabled.current = false;
+    }
+  }, []);
+
   return {
     props: { ref, open },
     data,
-    disabled,
     show,
-    disable: setDisabled,
-    cancel: useCallback(() => close(), [close]),
-    confirm: useCallback((values: R) => close(values), [close]),
+    cancel,
+    confirm,
+    preventClose,
   };
 }

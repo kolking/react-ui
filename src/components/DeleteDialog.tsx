@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
   Button,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogTitle,
+  Notice,
   Select,
   withDialog,
   WithDialogProps,
@@ -12,11 +14,14 @@ import {
 type Props = {
   color: string;
   colors: string[];
+  deleteColor: (color: string) => void;
 };
 
 type DialogProps = WithDialogProps<Props, string>;
 
-const Dialog = ({ dialog, color, colors }: DialogProps) => {
+const Dialog = ({ dialog, color, colors, deleteColor }: DialogProps) => {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
   const [selected, setSelected] = useState(color);
 
   useEffect(() => setSelected(color), [color]);
@@ -25,14 +30,32 @@ const Dialog = ({ dialog, color, colors }: DialogProps) => {
     setSelected(e.target.value);
   }, []);
 
-  const handleDelete = useCallback(() => {
-    dialog?.confirm(selected);
-  }, [dialog, selected]);
+  const handleDelete = useCallback(async () => {
+    setBusy(true);
+
+    await dialog.preventClose<void>(
+      new Promise((resolve, reject) =>
+        setTimeout(() => {
+          setBusy(false);
+          if (selected === 'red') {
+            setError('Failed to delete red color');
+            reject();
+          } else {
+            deleteColor(selected);
+            resolve();
+          }
+        }, 5000),
+      ),
+    );
+
+    dialog.confirm(selected);
+  }, [dialog, selected, deleteColor]);
 
   return (
     <>
       <DialogTitle>Delete color</DialogTitle>
       <DialogContent>
+        {error && <Notice error={error} variant="plain" />}
         <p>Select a color to delete:</p>
         <Select value={selected} onChange={handleChange}>
           {colors.map((color) => (
@@ -43,9 +66,16 @@ const Dialog = ({ dialog, color, colors }: DialogProps) => {
         </Select>
       </DialogContent>
       <DialogFooter>
-        <Button type="button" title="Dismiss" variant="secondary" onClick={dialog?.cancel} />
-        <Button type="button" title="Delete" scheme="negative" onClick={handleDelete} />
+        <Button
+          type="button"
+          title="Dismiss"
+          variant="secondary"
+          disabled={busy}
+          onClick={dialog.cancel}
+        />
+        <Button type="button" title="Delete" scheme="negative" busy={busy} onClick={handleDelete} />
       </DialogFooter>
+      <DialogClose disabled={busy} onClick={dialog.cancel} />
     </>
   );
 };
