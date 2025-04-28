@@ -49,11 +49,7 @@ export const DialogForm = ({ children }: Props) => {
   const handleSubmit = useCallback(() => {
     const { valid, errors } = validate(data);
     if (valid) {
-      dialog.disable(true);
-      setTimeout(() => {
-        dialog.disable(false);
-        dialog.confirm(data);
-      }, 5000);
+      dialog.confirm(data);
     } else {
       setErrors(errors);
     }
@@ -71,7 +67,6 @@ export const DialogForm = ({ children }: Props) => {
               <Input
                 type="text"
                 name="name"
-                disabled={dialog.disabled}
                 value={data.name}
                 error={errors.name}
                 onChange={handleChange}
@@ -81,7 +76,6 @@ export const DialogForm = ({ children }: Props) => {
               <Input
                 type="email"
                 name="email"
-                disabled={dialog.disabled}
                 value={data.email}
                 error={errors.email}
                 onChange={handleChange}
@@ -90,16 +84,10 @@ export const DialogForm = ({ children }: Props) => {
           </Flex>
         </DialogContent>
         <DialogFooter>
-          <Button
-            type="button"
-            variant="secondary"
-            title="Dismiss"
-            disabled={dialog.disabled}
-            onClick={dialog.cancel}
-          />
-          <Button type="button" title="Submit" busy={dialog.disabled} onClick={handleSubmit} />
+          <Button type="button" variant="secondary" title="Dismiss" onClick={dialog.cancel} />
+          <Button type="button" title="Submit" onClick={handleSubmit} />
         </DialogFooter>
-        <DialogClose disabled={dialog.disabled} onClick={dialog.cancel} />
+        <DialogClose onClick={dialog.cancel} />
       </Dialog>
     </>
   );

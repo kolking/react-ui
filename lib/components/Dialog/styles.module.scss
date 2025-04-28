@@ -1,5 +1,3 @@
-@use '../../styles/utils' as *;
-
 .dialog {
   --width: var(--width-md);
   --width-xs: 23em; // 368px
@@ -14,7 +12,6 @@
   max-width: 90vw;
   width: var(--width);
   color: var(--color-fg);
-  padding: var(--spacing-md);
   transform: scale3d(0.8,0.8,1);
   background: var(--color-dialog);
   will-change: opacity, transform;
@@ -67,8 +64,11 @@
   }
 }
 
+.wrapper {
+  padding: var(--spacing-md);
+}
+
 .title {
-  @extend %truncate-text;
   margin: 0 0 1.25rem 0;
   font-size: var(--font-size-h4);
   line-height: var(--line-height-xs);
@@ -90,7 +90,7 @@
 }
 
 .close {
-  --inset: 0.5em;
+  --inset: 0.375em;
   --min-width: 2em;
   --min-height: 2em;
   --border-radius: 50%;

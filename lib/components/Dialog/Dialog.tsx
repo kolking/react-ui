@@ -22,7 +22,9 @@ export const Dialog = React.forwardRef<HTMLDialogElement, DialogProps>(
         className={cn(styles.dialog, className)}
         style={{ ...style, ...cssProps({ width }) }}
       >
-        {children}
+        <div data-dialog-wrapper className={styles.wrapper}>
+          {children}
+        </div>
       </dialog>
     </DialogFocusTrap>
   ),
