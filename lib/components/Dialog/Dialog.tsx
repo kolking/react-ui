@@ -7,12 +7,13 @@ import { DialogFocusTrap } from './DialogFocusTrap';
 import { cssProps } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
-export type DialogProps = React.HTMLProps<HTMLDialogElement> & {
+export type DialogProps = React.DialogHTMLAttributes<HTMLDialogElement> & {
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   width?: React.CSSProperties['width'];
 };
 
 export const Dialog = React.forwardRef<HTMLDialogElement, DialogProps>(
-  ({ open = false, width, style, className, children, ...props }, ref) => (
+  ({ open = false, size, width, style, className, children, ...props }, ref) => (
     <DialogFocusTrap active={open}>
       <dialog
         {...props}
@@ -20,7 +21,7 @@ export const Dialog = React.forwardRef<HTMLDialogElement, DialogProps>(
         data-floating-root
         data-dialog={open ? 'open' : 'closed'}
         className={cn(styles.dialog, className)}
-        style={{ ...style, ...cssProps({ width }) }}
+        style={{ ...style, ...cssProps({ size, width }) }}
       >
         <div data-dialog-wrapper className={styles.wrapper}>
           {children}
