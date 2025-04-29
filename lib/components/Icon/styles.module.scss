@@ -28,7 +28,7 @@ $schemes: (
   color: var(--color, currentColor);
   width: var(--width);
   height: var(--height);
-  vertical-align: text-bottom;
+  vertical-align: middle;
 
   // Affects all *-circle icons
   &[data-icon$=-circle] {
