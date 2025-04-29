@@ -58,13 +58,14 @@ export const Field = ({
   maxWidth,
   className,
   children,
+  style,
   ...props
 }: FieldProps) => (
   <div
     {...props}
     data-field={id || true}
     className={cn(styles.field, className)}
-    style={{ ...props.style, ...cssProps({ minWidth, maxWidth }) }}
+    style={{ ...style, ...cssProps({ minWidth, maxWidth }) }}
   >
     {label && (
       <FieldLabel htmlFor={id} label={label} required={required}>
