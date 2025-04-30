@@ -13,17 +13,17 @@ $font-weight: (
 
 $font-size: (
   em: 16px,
-  xs: 0.750rem,
-  sm: 0.875rem,
-  md: 1.000rem,
-  lg: 1.125rem,
-  xl: 1.250rem,
-  h6: clamp(1.000rem, 2.25vw, 1.125rem),
-  h5: clamp(1.125rem, 2.50vw, 1.250rem),
-  h4: clamp(1.250rem, 3.00vw, 1.500rem),
-  h3: clamp(1.500rem, 3.50vw, 1.750rem),
-  h2: clamp(1.750rem, 4.00vw, 2.000rem),
-  h1: clamp(2.000rem, 5.00vw, 2.500rem),
+  xs: 0.750rem, // 12
+  sm: 0.875rem, // 14
+  md: 1.000rem, // 16
+  lg: 1.125rem, // 18
+  xl: 1.250rem, // 20
+  h6: clamp(1.000rem, 2.25vw, 1.125rem), // 16 → 18
+  h5: clamp(1.125rem, 2.50vw, 1.250rem), // 18 → 20
+  h4: clamp(1.250rem, 3.00vw, 1.500rem), // 20 → 24
+  h3: clamp(1.500rem, 3.50vw, 1.750rem), // 24 → 28
+  h2: clamp(1.750rem, 4.00vw, 2.000rem), // 28 → 32
+  h1: clamp(2.000rem, 5.00vw, 2.500rem), // 32 → 40
 );
 
 $line-height: (
@@ -35,19 +35,21 @@ $line-height: (
 );
 
 $border-radius: (
-  xs: 0.1875rem, // 3px
-  sm: 0.3125rem, // 5px
-  md: 0.5000rem, // 8px
-  lg: 0.7500rem, // 12px
-  xl: 1.1250rem, // 18px
+  xs: 0.1875rem, // 03
+  sm: 0.3125rem, // 05
+  md: 0.5000rem, // 08
+  lg: 0.7500rem, // 12
+  xl: 1.1250rem, // 18
 );
 
 $spacing: (
-  xs: clamp(0.5rem, 0.9765625vw, 0.625rem), // 8 → 10
-  sm: clamp(1.0rem, 1.7578125vw, 1.125rem), // 16 → 18
-  md: clamp(1.5rem, 2.7343750vw, 1.750rem), // 24 → 28
-  lg: clamp(2.0rem, 3.5156250vw, 2.250rem), // 32 → 36
-  xl: clamp(2.5rem, 4.4921875vw, 2.875rem), // 40 → 46
+  2xs: clamp(0.500rem, 1.25vw, 0.625rem), // 08 → 10
+  xs:  clamp(0.750rem, 1.75vw, 0.875rem), // 12 → 14
+  sm:  clamp(1.000rem, 2.50vw, 1.250rem), // 16 → 20
+  md:  clamp(1.375rem, 3.50vw, 1.750rem), // 22 → 28
+  lg:  clamp(1.875rem, 4.75vw, 2.375rem), // 30 → 38
+  xl:  clamp(2.500rem, 6.25vw, 3.125rem), // 40 → 50
+  2xl: clamp(3.250rem, 8.00vw, 4.000rem), // 52 → 64
 );
 
 $drop-shadow: (
