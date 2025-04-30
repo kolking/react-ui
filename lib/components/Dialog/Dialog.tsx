@@ -3,6 +3,7 @@ import cn from 'classnames';
 
 import { Icon } from '../Icon';
 import { Button, ButtonProps } from '../Button';
+import { Heading, HeadingProps } from '../Heading';
 import { DialogFocusTrap } from './DialogFocusTrap';
 import { cssProps } from '../../utils/helpers';
 import styles from './styles.module.scss';
@@ -31,22 +32,16 @@ export const Dialog = React.forwardRef<HTMLDialogElement, DialogProps>(
   ),
 );
 
-export const DialogTitle = ({
-  className,
-  children,
-  ...props
-}: React.HTMLProps<HTMLHeadingElement>) => (
-  <h4 {...props} data-dialog-title className={cn(styles.title, className)}>
-    {children}
-  </h4>
+export const DialogTitle = ({ className, children, ...props }: Omit<HeadingProps, 'title'>) => (
+  <Heading as="h4" {...props} data-dialog-title title={children} className={className} />
 );
 
 export const DialogContent = ({
   className,
   children,
   ...props
-}: React.HTMLProps<HTMLDivElement>) => (
-  <div {...props} data-dialog-content className={cn(styles.content, className)}>
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div {...props} data-dialog-content className={className}>
     {children}
   </div>
 );
@@ -55,7 +50,7 @@ export const DialogFooter = ({
   className,
   children,
   ...props
-}: React.HTMLProps<HTMLDivElement>) => (
+}: React.HTMLAttributes<HTMLDivElement>) => (
   <div {...props} data-dialog-footer className={cn(styles.footer, className)}>
     {children}
   </div>
