@@ -35,6 +35,10 @@ export const Badges = () => {
           <Icon name="profile" size={50} scheme="neutral" />
           <Badge value={badge} scheme="accent" />
         </div>
+        <div style={{ borderRadius: '50%' }}>
+          <Icon name="shopping-cart" size={32} scheme="neutral" />
+          <Badge size="sm" value={badge} />
+        </div>
       </Flex>
     </Flex>
   );

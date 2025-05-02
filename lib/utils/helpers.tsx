@@ -1,11 +1,8 @@
 import React from 'react';
 
-export function clamp(value: number, min: number, max: number): number {
+export function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(value, max));
 }
-
-export const pluralize = (number: number, one: string, many: string, includeNumber = true) =>
-  includeNumber ? `${number}\u00A0${number === 1 ? one : many}` : `${number === 1 ? one : many}`;
 
 function toKebabCase(str: string) {
   return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
@@ -40,6 +37,18 @@ export function wrapNode(node: React.ReactNode, Wrapper: React.ElementType) {
   return typeof node === 'string' ? <Wrapper>{node}</Wrapper> : node;
 }
 
+export function getErrorMessage(error: unknown) {
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+
+  if (typeof error === 'string') {
+    return error;
+  }
+
+  return 'An error occurred';
+}
+
 // https://www.christianvm.dev/blog/react-as-prop
 // https://fettblog.eu/typescript-react-generic-forward-refs/
 // https://blog.logrocket.com/build-strongly-typed-polymorphic-components-react-typescript/
@@ -56,15 +65,3 @@ type FixedForwardRef = <T, P = Record<string, never>>(
 ) => (props: P & React.RefAttributes<T>) => React.ReactElement | null;
 
 export const fixedForwardRef = React.forwardRef as FixedForwardRef;
-
-export function getErrorMessage(error: unknown) {
-  if (error instanceof Error && error.message) {
-    return error.message;
-  }
-
-  if (typeof error === 'string') {
-    return error;
-  }
-
-  return 'An error occurred';
-}

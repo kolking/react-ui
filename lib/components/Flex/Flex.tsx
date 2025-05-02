@@ -29,6 +29,7 @@ function render<T extends React.ElementType = 'div'>(
     marginStart,
     marginEnd,
     className,
+    style,
     ...props
   }: FlexProps<T>,
   ref: PolymorphicRef<T>,
@@ -42,7 +43,7 @@ function render<T extends React.ElementType = 'div'>(
       data-flex={direction}
       className={cn(styles.flex, className)}
       style={{
-        ...props.style,
+        ...style,
         ...cssProps({ gap, align, justify, direction, wrap, marginStart, marginEnd }),
       }}
     />

@@ -1,16 +1,17 @@
 .dialog {
-  --width: var(--width-md);
-  --width-xs: 23em; // 368px
-  --width-sm: 25em; // 400px
-  --width-md: 28em; // 448px
-  --width-lg: 32em; // 516px
-  --width-xl: 37em; // 592px
+  --size: var(--size-md);
+  --size-xs: 23em; // 368px
+  --size-sm: 25em; // 400px
+  --size-md: 28em; // 448px
+  --size-lg: 32em; // 516px
+  --size-xl: 37em; // 592px
+  --padding: var(--spacing-md);
 
   border: 0;
   opacity: 0;
   padding: 0;
   max-width: 90vw;
-  width: var(--width);
+  width: var(--width, var(--size));
   color: var(--color-fg);
   transform: scale3d(0.8,0.8,1);
   background: var(--color-dialog);
@@ -65,23 +66,13 @@
 }
 
 .wrapper {
-  padding: var(--spacing-md);
-}
-
-.title {
-  margin: 0 0 1.25rem 0;
-  font-size: var(--font-size-h4);
-  line-height: var(--line-height-xs);
-  font-weight: var(--font-weight-bold);
-}
-
-.content {
-  margin-bottom: 1.25rem;
+  padding: var(--padding);
 }
 
 .footer {
   gap: 0.75em;
   display: flex;
+  margin-top: 1.25rem;
   justify-content: end;
 
   [data-button] {

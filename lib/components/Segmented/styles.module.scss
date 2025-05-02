@@ -1,13 +1,16 @@
 .segmented {
   --length: 1;
   --selected: 0;
+  --height: 2.5em;
   --margin: 1.25em 0;
+  --padding: 0.1875em;
   --background: var(--color-gray-200);
   --text-color: var(--color-gray-600);
   --border-radius: var(--border-radius-sm);
   --selected-text-color: var(--color-fg);
   --selected-background: var(--color-input);
   --disabled-text-color: var(--color-gray-400);
+  --outer-border-radius: calc(var(--border-radius) + var(--padding));
 
   --size: var(--size-md);
   --size-xs: var(--font-size-xs);
@@ -19,10 +22,11 @@
   z-index: 0;
   display: flex;
   position: relative;
+  height: var(--height);
   margin: var(--margin);
   font-size: var(--size);
   background: var(--background);
-  border-radius: calc(var(--border-radius) + 2px);
+  border-radius: var(--outer-border-radius);
 
   &:before {
     left: 0;
@@ -32,8 +36,8 @@
     position: absolute;
     border-radius: inherit;
     width: calc(100% / var(--length));
-    border: 2px solid var(--background);
     background: var(--selected-background);
+    border: var(--padding) solid var(--background);
     transform: translateX(calc(100% * var(--selected)));
 
     @media (prefers-reduced-motion: no-preference) {
@@ -42,34 +46,41 @@
   }
 
   button {
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 0.375em;
     border: none;
-    flex: 1 1 1%;
+    display: flex;
+    cursor: pointer;
     padding: 0 0.5em;
     overflow: hidden;
     background: none;
     font-size: inherit;
+    align-items: center;
     white-space: nowrap;
-    line-height: 2.5em;
     font-family: inherit;
     text-overflow: ellipsis;
+    justify-content: center;
     color: var(--text-color);
-    border-radius: var(--border-radius);
+    line-height: var(--line-height-sm);
     font-weight: var(--font-weight-medium);
+    border-radius: var(--outer-border-radius);
 
     &:hover, &:focus-visible {
-      color: var(--selected-text-color);
+      --text-color: var(--selected-text-color);
     }
 
     &:focus-visible {
+      outline-offset: 0;
       position: relative;
     }
   
     &[data-selected=true] {
-      color: var(--selected-text-color);
+      --text-color: var(--selected-text-color);
     }
 
     &[disabled] {
-      color: var(--disabled-text-color);
+      --text-color: var(--disabled-text-color);
     }
 
     @media (prefers-reduced-motion: no-preference) {

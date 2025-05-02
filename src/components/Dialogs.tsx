@@ -47,7 +47,7 @@ export const Dialogs = () => {
       <DialogForm>
         <Button title="Form dialog" />
       </DialogForm>
-      <DeleteDialog width="xs" onConfirm={(color) => console.log(`${color} color deleted`)}>
+      <DeleteDialog size="xs" onConfirm={(color) => console.log(`${color} color deleted`)}>
         {(dialog) => (
           <Flex gap="xs" wrap="wrap">
             {colors.map((color) => (
