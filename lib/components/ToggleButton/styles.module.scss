@@ -1,0 +1,38 @@
+// ---------------------------
+// BASE STYLE
+// ---------------------------
+
+.group {
+  --min-width: auto;
+  --max-width: none;
+  --flex-basis: auto;
+  --display: inline-flex;
+  --border-radius: var(--border-radius-sm);
+
+  display: var(--display);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  [data-button] {
+    --border-radius: inherit;
+    min-width: 0;
+    border-radius: 0;
+    border-left-width: 0;
+    flex: 1 1 var(--flex-basis);
+
+    &:focus-visible {
+      position: relative;
+    }
+  }
+
+  [data-button]:first-child {
+    border-left-width: var(--border-width);
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+  }
+
+  [data-button]:last-child {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+  }
+}

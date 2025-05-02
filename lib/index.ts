@@ -12,6 +12,7 @@ export * from './components/Progress';
 export * from './components/Segmented';
 export * from './components/Spinner';
 export * from './components/Tag';
+export * from './components/ToggleButton';
 export * from './components/Tooltip';
 
 export * from './utils/colors';
