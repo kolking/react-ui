@@ -56,15 +56,29 @@ export type BaseInputProps<T = React.InputHTMLAttributes<HTMLInputElement>> = Om
 };
 
 export type InputProps = Omit<BaseInputProps, 'prefix'> & {
+  wrapperType?: string;
   prefix?: React.ReactNode;
 };
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ size, error, type = 'text', className, style, prefix, children, ...props }, ref) => {
+  (
+    {
+      size,
+      error,
+      type = 'text',
+      wrapperType = type,
+      prefix,
+      className,
+      style,
+      children,
+      ...props
+    },
+    ref,
+  ) => {
     const content =
       allowWrap(type) && (prefix || children) ? (
         <div
-          data-input-wrapper
+          data-input-wrapper={wrapperType}
           data-disabled={props.disabled}
           data-invalid={error ? true : undefined}
           className={cn(inputStyles.wrapper, className)}
