@@ -1,0 +1,85 @@
+@use '../../../styles/utils' as *;
+
+.numeric {
+  overflow: clip;
+
+  &:focus-within {
+    @include focus-visible();
+  }
+
+  [data-input] {
+    // remove spin buttons in Firefox
+    -moz-appearance: textfield;
+
+    &::-webkit-inner-spin-button {
+      display: none;
+    }
+  }
+
+  [data-input-accessory] {
+    gap: 0;
+    padding: 0;
+    flex-direction: column;
+  }
+
+  [data-button] {
+    --padding: 0;
+    --text-color: var(--color-gray-700);
+    --background-color: var(--color-gray-100);
+
+    &[disabled] {
+      pointer-events: none;
+      --text-color: var(--color-gray-300);
+      --border-color: var(--color-gray-200);
+    }
+  }
+
+  @media (hover: hover) {
+    [data-button] {
+      --min-width: 1em;
+      --icon-size: 12px;
+      --border-color: var(--color-gray-300);
+      flex-grow: 1;
+
+      &:hover,
+      &:focus-visible {
+        --text-color: var(--color-fg);
+        --background-color: var(--color-gray-300);
+        outline: none;
+      }
+  
+      &.increase {
+        border-width: 0 0 1px 1px;
+      }
+
+      &.decrease {
+        border-width: 0 0 0 1px;
+      }
+    }
+  }
+
+  @media (hover: none) {
+    [data-input] {
+      text-align: center;
+    }
+
+    [data-input-accessory] {
+      display: contents;
+    }
+
+    [data-button] {
+      --min-width: 2em;
+      --icon-size: 18px;
+      --border-color: var(--color-gray-200);
+
+      &.decrease {
+        order: -1;
+        border-width: 0 1px 0 0;
+      }
+
+      &.increase {
+        border-width: 0 0 0 1px;
+      }
+    }
+  }
+}

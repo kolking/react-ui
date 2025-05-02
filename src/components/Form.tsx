@@ -5,7 +5,7 @@ import {
   Flex,
   Icon,
   Input,
-  Quantity,
+  Numeric,
   Radio,
   Select,
   Textarea,
@@ -58,11 +58,11 @@ export const Form = () => (
           <Button title="GO" variant="tertiary" />
         </Input>
       </Field>
-      <Field label="Numeric" maxWidth={100}>
-        <Input type="number" step={10} prefix="$" />
+      <Field label="Number" maxWidth={100}>
+        <Input type="number" step={1} prefix="$" />
       </Field>
-      <Field label="Quantity" maxWidth={100}>
-        <Quantity type="number" step={10} />
+      <Field label="Numeric" maxWidth={150}>
+        <Numeric step={1} prefix="Qty:" />
       </Field>
       <Field label="Select">
         <Select>
