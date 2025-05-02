@@ -25,6 +25,7 @@ export const Segmented = ({
 }: SegmentedProps) => (
   <div
     {...props}
+    role="radiogroup"
     data-segmented={selected}
     className={cn(styles.segmented, className)}
     style={{
@@ -40,8 +41,10 @@ export const Segmented = ({
     {items.map((item, index) => (
       <button
         key={index}
+        role="radio"
         type="button"
         disabled={disabled}
+        aria-checked={index === selected}
         data-selected={index === selected}
         onClick={() => index !== selected && onSelect(index)}
       >
