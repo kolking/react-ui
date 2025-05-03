@@ -13,6 +13,7 @@ import { Badges } from './components/Badges';
 import { Avatars } from './components/Avatars';
 import { Tags } from './components/Tags';
 import { Switches } from './components/Switches';
+import { Ranges } from './components/Ranges';
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
         />
       </Heading>
       <Form />
+      <Heading title="Range" />
+      <Ranges />
       <Heading title="Switch" />
       <Switches />
       <Heading title="Spinners" />

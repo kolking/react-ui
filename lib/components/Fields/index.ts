@@ -3,6 +3,7 @@ export * from './Field';
 export * from './Input';
 export * from './Numeric';
 export * from './Radio';
+export * from './Range';
 export * from './Select';
 export * from './Switch';
 export * from './Textarea';
