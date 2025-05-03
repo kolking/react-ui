@@ -12,6 +12,7 @@ import { SegmentedList } from './components/Segmented';
 import { Badges } from './components/Badges';
 import { Avatars } from './components/Avatars';
 import { Tags } from './components/Tags';
+import { Switches } from './components/Switches';
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
         />
       </Heading>
       <Form />
+      <Heading title="Switch" />
+      <Switches />
       <Heading title="Spinners" />
       <Flex gap="3xl">
         <Spinner />

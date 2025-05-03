@@ -4,5 +4,6 @@ export * from './Input';
 export * from './Numeric';
 export * from './Radio';
 export * from './Select';
+export * from './Switch';
 export * from './Textarea';
 export * from './ValidationTooltip';

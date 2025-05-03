@@ -1,0 +1,97 @@
+@use '../../../styles/utils' as *;
+
+// ---------------------------
+// BASE STYLE
+// ---------------------------
+
+.switch {
+  --size: var(--size-md);
+  --size-xs: var(--font-size-xs);
+  --size-sm: var(--font-size-sm);
+  --size-md: var(--font-size-md);
+  --size-lg: var(--font-size-lg);
+  --size-xl: var(--font-size-xl);
+
+  --gap: 0.5em;
+  --thumb-size: 1.25em;
+  --thumb-color: var(--color-white);
+  --border-width: 0.125em;
+  --border-radius: var(--thumb-size);
+  --line-height: var(--line-height-sm);
+  --background-color: var(--color-gray-400);
+  --border-color: var(--background-color);
+  --checked-color: var(--color-accent-500);
+  --disabled-color: var(--color-gray-300);
+
+  gap: var(--gap);
+  display: inline-flex;
+  font-size: var(--size);
+  line-height: var(--line-height);
+
+  &[data-required=true] .label::after {
+    @include required-sign();
+  }
+}
+
+.input {
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+  appearance: none;
+  font-size: inherit;
+  will-change: background-color;
+  background: var(--background-color);
+  border: var(--border-width) solid var(--border-color);
+  width: calc(2 * (var(--thumb-size) + var(--border-width)));
+  border-radius: calc(var(--border-radius) + var(--border-width));
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: outline 0.1s, border-color 0.3s, background-color 0.3s;
+  }
+
+  &::before {
+    content: '';
+    vertical-align: top;
+    display: inline-block;
+    will-change: transform;
+    width: var(--thumb-size);
+    height: var(--thumb-size);
+    background: var(--thumb-color);
+    border-radius: var(--border-radius);
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: transform 0.3s;
+    }
+  }
+
+  &:checked {
+    --border-color: var(--checked-color);
+    --background-color: var(--checked-color);
+
+    &::before {
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+
+  //&:invalid,
+  &[data-invalid=true] {
+    --color-focus: var(--input-error-focus-color);
+    --border-color: var(--input-error-border-color);
+    --background-color: var(--input-error-border-color);
+  }
+
+  &[disabled] {
+    --border-color: var(--disabled-color);
+    --background-color: var(--disabled-color);
+    cursor: default;
+  }
+}
+
+.label {
+  align-self: center;
+
+  p, ul, ol {
+    margin: 0.75em 0 0 0;
+  }
+}
