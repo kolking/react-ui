@@ -13,25 +13,23 @@ export type SwitchProps = BaseInputProps & {
 };
 
 export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
-  ({ size, error, label, required, checkedColor, className, style, ...props }, ref) => {
-    return (
-      <label
-        data-input="switch"
-        data-required={required}
-        className={cn(styles.switch, className)}
-        style={{ ...style, ...cssProps({ size, checkedColor }) }}
-      >
-        <ValidationTooltip content={error}>
-          <input
-            {...props}
-            ref={ref}
-            type="checkbox"
-            data-invalid={error ? true : undefined}
-            className={styles.input}
-          />
-        </ValidationTooltip>
-        {label && <div className={styles.label}>{label}</div>}
-      </label>
-    );
-  },
+  ({ size, error, label, required, checkedColor, className, style, ...props }, ref) => (
+    <label
+      data-input="switch"
+      data-required={required}
+      className={cn(styles.switch, className)}
+      style={{ ...style, ...cssProps({ size, checkedColor }) }}
+    >
+      <ValidationTooltip content={error}>
+        <input
+          {...props}
+          ref={ref}
+          type="checkbox"
+          data-invalid={error ? true : undefined}
+          className={styles.input}
+        />
+      </ValidationTooltip>
+      {label && <div className={styles.label}>{label}</div>}
+    </label>
+  ),
 );
