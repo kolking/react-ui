@@ -20,7 +20,7 @@ export const Form = () => (
         required
         labelAccessory={
           <Tooltip content="This is a tooltip" placement="top-end">
-            <Icon name="help-circle" size="1em" scheme="neutral" tabIndex={0} />
+            <Icon aria-label="Field help" name="help-circle" scheme="neutral" tabIndex={0} />
           </Tooltip>
         }
       >
@@ -120,6 +120,7 @@ export const Form = () => (
       <Radio name="choice" label="Checked" defaultChecked />
       <Radio label="Disabled" defaultChecked disabled />
       <Radio name="choice" label="Invalid" error="This field is not valid" />
+      <Checkbox label={<a href="#">Link label</a>} />
     </Flex>
     <Flex gap="lg">
       <Checkbox label="Size XS" size="xs" defaultChecked />
