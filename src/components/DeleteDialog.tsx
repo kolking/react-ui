@@ -30,29 +30,33 @@ const Dialog = ({ dialog, color, colors, deleteColor }: DialogProps) => {
     setSelected(e.target.value);
   }, []);
 
-  const handleDelete = useCallback(async () => {
-    setBusy(true);
+  const handleDelete = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setBusy(true);
 
-    await dialog.preventClose<void>(
-      new Promise((resolve, reject) =>
-        setTimeout(() => {
-          setBusy(false);
-          if (selected === 'red') {
-            setError('Failed to delete red color');
-            reject();
-          } else {
-            deleteColor(selected);
-            resolve();
-          }
-        }, 5000),
-      ),
-    );
+      await dialog.preventClose<void>(
+        new Promise((resolve, reject) =>
+          setTimeout(() => {
+            setBusy(false);
+            if (selected === 'red') {
+              setError('Failed to delete red color');
+              reject();
+            } else {
+              deleteColor(selected);
+              resolve();
+            }
+          }, 5000),
+        ),
+      );
 
-    dialog.confirm(selected);
-  }, [dialog, selected, deleteColor]);
+      dialog.confirm(selected);
+    },
+    [dialog, selected, deleteColor],
+  );
 
   return (
-    <>
+    <form onSubmit={handleDelete}>
       <DialogTitle>Delete color</DialogTitle>
       <DialogContent>
         {error && <Notice error={error} variant="plain" />}
@@ -73,10 +77,10 @@ const Dialog = ({ dialog, color, colors, deleteColor }: DialogProps) => {
           disabled={busy}
           onClick={dialog.cancel}
         />
-        <Button type="button" title="Delete" scheme="negative" busy={busy} onClick={handleDelete} />
+        <Button type="submit" title="Delete" scheme="negative" busy={busy} />
       </DialogFooter>
       <DialogClose disabled={busy} onClick={dialog.cancel} />
-    </>
+    </form>
   );
 };
 

@@ -28,8 +28,8 @@ export const Dialogs = () => {
   }, []);
 
   return (
-    <Flex>
-      <Button title="Open dialog" onClick={dialog.show} />
+    <Flex as="form">
+      <Button type="button" title="Open dialog" onClick={dialog.show} />
       <Dialog {...dialog.props}>
         <DialogTitle>The Dialog element</DialogTitle>
         <DialogContent>
@@ -45,7 +45,7 @@ export const Dialogs = () => {
         </DialogFooter>
       </Dialog>
       <DialogForm>
-        <Button title="Form dialog" />
+        <Button type="button" title="Form dialog" />
       </DialogForm>
       <DeleteDialog size="xs" onConfirm={(color) => console.log(`${color} color deleted`)}>
         {(dialog) => (
