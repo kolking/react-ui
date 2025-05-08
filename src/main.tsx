@@ -3,7 +3,10 @@ import { createRoot } from 'react-dom/client';
 
 import App from './App.tsx';
 
-//import '@lib/styles/style.css';
+if (import.meta.env.VITE_DIST) {
+  import('../dist/styles/style.css');
+}
+
 import './global.scss';
 
 createRoot(document.getElementById('root')!).render(

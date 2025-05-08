@@ -27,6 +27,7 @@
   ],
   "scripts": {
     "dev": "vite",
+    "dist": "yarn build && VITE_DIST='true' vite",
     "build": "tsc -b ./tsconfig.lib.json && vite -c ./vite.config.lib.ts build",
     "lint": "eslint .",
     "preview": "vite preview",
