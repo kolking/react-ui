@@ -1,3 +1,47 @@
+.overlay {
+  inset: 0;
+  z-index: 99;
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  transition: display 0.4s allow-discrete;
+
+  @media (prefers-reduced-motion: no-preference) {
+    --backdrop-transition: opacity 0.4s;
+    --dialog-transition-in: opacity 0.2s, transform 0.4s var(--ease-out-bounce);
+    --dialog-transition-out: opacity 0.3s, transform 0.4s;  
+  }
+
+  &::before {
+    inset: 0;
+    content: '';
+    position: absolute;
+    will-change: opacity;
+    backdrop-filter: blur(3px);
+    transition: var(--backdrop-transition);
+    background-color: var(--color-backdrop);
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  &[data-open=false] {
+    display: none;
+
+    &::before {
+      opacity: 0;
+    }
+
+    .dialog {
+      opacity: 0;
+      transform: scale3d(0.5,0.5,1);
+      transition: var(--dialog-transition-out);
+    }
+  }
+}
+
 .dialog {
   --size: var(--size-md);
   --size-xs: 23em; // 368px
@@ -5,68 +49,22 @@
   --size-md: 28em; // 448px
   --size-lg: 32em; // 516px
   --size-xl: 37em; // 592px
-  --padding: var(--spacing-md);
 
   border: 0;
-  opacity: 0;
-  padding: 0;
   max-width: 90vw;
-  width: var(--width, var(--size));
   color: var(--color-fg);
-  transform: scale3d(0.8,0.8,1);
+  padding: var(--spacing-md);
   background: var(--color-dialog);
   will-change: opacity, transform;
+  width: var(--width, var(--size));
   border-radius: var(--border-radius-lg);
+  transition: var(--dialog-transition-in);
   box-shadow: rgb(0 0 0 / 8%) 0 40px 40px, rgb(0 0 0 / 5%) 0 20px 20px;
 
-  &[open] {
-    opacity: 1;
-    transform: scale3d(1,1,1);
-
-    &::backdrop {
-      opacity: 1;
-    }
-
-    @starting-style {
-      opacity: 0;
-      transform: scale3d(0.8,0.8,1);
-
-      &::backdrop {
-        opacity: 0;
-      }
-    }
-  }
-
-  &::backdrop {
+  @starting-style {
     opacity: 0;
-    will-change: opacity;
-    backdrop-filter: blur(3px);
-    background-color: var(--color-backdrop);
+    transform: scale3d(0.8,0.8,1);
   }
-
-  @media (prefers-reduced-motion: no-preference) {
-    transition:
-      opacity 0.3s,
-      transform 0.4s,
-      overlay 0.4s allow-discrete,
-      display 0.4s allow-discrete;
-
-    &[open] {
-      transition:
-        opacity 0.2s,
-        overlay 0.4s allow-discrete,
-        display 0.4s allow-discrete,
-        transform 0.4s var(--ease-out-bounce);
-    }
-
-    &::backdrop {
-      transition: opacity 0.4s;
-    }
-  }
-}
-
-.wrapper {
-  padding: var(--padding);
 }
 
 .footer {

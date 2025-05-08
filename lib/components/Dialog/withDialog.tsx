@@ -3,7 +3,7 @@ import React from 'react';
 import { Dialog, DialogProps } from './Dialog';
 import { DialogOptions, DialogType, useDialog } from './useDialog';
 
-type ComponentProps<T, R> = Omit<DialogProps, 'children'> &
+type ComponentProps<T, R> = Omit<DialogProps, 'children' | 'ref' | 'requestClose'> &
   DialogOptions<T, R> & {
     children: (dialog: DialogType<T, R>) => React.ReactNode;
   };
