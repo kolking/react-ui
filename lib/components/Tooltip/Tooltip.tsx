@@ -34,6 +34,7 @@ export type TooltipProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'content' 
   trigger?: Trigger;
   disabled?: boolean;
   placement?: Placement;
+  anchor?: Element | null;
   content: React.ReactNode;
   children: React.JSX.Element;
   minWidth?: React.CSSProperties['minWidth'];
@@ -43,6 +44,7 @@ export type TooltipProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'content' 
 export const Tooltip = ({
   trigger = 'hover focus',
   placement = 'top',
+  anchor,
   content,
   disabled,
   minWidth,
@@ -96,6 +98,13 @@ export const Tooltip = ({
       portalRef.current = floatingRoot;
     }
   }, [refs, disabled]);
+
+  useEffect(() => {
+    // Separate events reference and the positioning reference
+    if (anchor) {
+      refs.setPositionReference(anchor);
+    }
+  }, [refs, anchor]);
 
   if (disabled) {
     return children;

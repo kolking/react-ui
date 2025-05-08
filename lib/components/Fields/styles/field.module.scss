@@ -34,19 +34,18 @@
 }
 
 .header {
-  gap: 1em;
+  gap: 0.75em;
   display: flex;
   align-items: flex-end;
+  color: var(--field-label-color);
+  font-size: var(--field-label-font-size);
+  line-height: var(--field-label-line-height);
+  font-weight: var(--field-label-font-weight);
 }
 
 .label {
   flex-grow: 1;
   min-width: 0;
-  display: block;
-  color: var(--field-label-color);
-  font-size: var(--field-label-font-size);
-  line-height: var(--field-label-line-height);
-  font-weight: var(--field-label-font-weight);
 
   &[data-required=true]::after {
     @include required-sign();

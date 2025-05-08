@@ -41,14 +41,22 @@
   box-sizing: border-box;
 }
 
+:focus-visible {
+  @include utils.focus-visible();
+}
+
 // Reset global styles
-button, input, select, textarea, header {
+button, input, select, textarea, label, a, header {
   all: revert;
   box-sizing: border-box;
 }
 
-:focus-visible {
-  @include utils.focus-visible();
+a {
+  color: var(--c, var(--color-link));
+
+  &:hover {
+    --c: var(--color-link-hover);
+  }
 }
 
 main {

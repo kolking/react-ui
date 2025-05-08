@@ -34,7 +34,11 @@ export function cssProps(values: { [key: string]: number | string | undefined })
 }
 
 export function wrapNode(node: React.ReactNode, Wrapper: React.ElementType) {
-  return typeof node === 'string' ? <Wrapper>{node}</Wrapper> : node;
+  if (typeof node === 'string' || typeof node === 'number') {
+    return <Wrapper>{node}</Wrapper>;
+  }
+
+  return node;
 }
 
 export function getErrorMessage(error: unknown) {
