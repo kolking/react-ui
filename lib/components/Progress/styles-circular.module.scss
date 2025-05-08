@@ -35,6 +35,7 @@
 
   &[data-progress-value=indeterminate] {
     .progress {
+      will-change: transform;
       animation: rotate 2.5s linear infinite;
     }
 

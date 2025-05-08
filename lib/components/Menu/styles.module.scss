@@ -75,6 +75,7 @@ $schemes: (
   font: inherit;
   display: flex;
   gap: var(--gap);
+  cursor: pointer;
   align-items: center;
   font-size: var(--size);
   color: var(--text-color);
@@ -90,6 +91,7 @@ $schemes: (
   &[disabled] {
     --text-color: var(--color-gray-400);
     --icon-color: var(--color-gray-300);
+    cursor: default;
   }
 
   [data-icon] {

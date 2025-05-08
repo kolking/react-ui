@@ -105,6 +105,9 @@ export const Form = () => (
       <Field label="Textarea" help="This is a help text shown below the field">
         <Textarea placeholder="Write something..." />
       </Field>
+      <Field label="Textarea" help="This is a help text shown below the field">
+        <Textarea autosize={false} placeholder="Write something..." />
+      </Field>
     </Flex>
     <Flex gap="lg">
       <Input type="checkbox" size="xl" />

@@ -33,7 +33,6 @@
 
   > span {
     @extend %truncate-text;
-    line-height: 1;
     font-size: var(--font-size);
   }
 

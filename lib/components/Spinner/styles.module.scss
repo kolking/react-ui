@@ -32,6 +32,7 @@
   width: var(--size);
   height: var(--size);
   vertical-align: top;
+  will-change: transform;
   animation: rotate 2.5s linear infinite;
 }
 
