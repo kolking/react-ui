@@ -14,6 +14,7 @@ import { Avatars } from './components/Avatars';
 import { Tags } from './components/Tags';
 import { Switches } from './components/Switches';
 import { Ranges } from './components/Ranges';
+import { BreadcrumbsDemo } from './components/Breadcrumbs';
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
       <Notices />
       <Heading title="Segmented" />
       <SegmentedList />
+      <BreadcrumbsDemo />
     </main>
   );
 }
