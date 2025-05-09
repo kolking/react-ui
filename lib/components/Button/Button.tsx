@@ -65,7 +65,7 @@ function render<T extends React.ElementType = 'button'>(
       ) : (
         <>
           {iconPosition === 'start' && icon}
-          {title && wrapNode(title, 'span')}
+          {title !== undefined && wrapNode(title, 'span')}
           {iconPosition === 'end' && icon}
         </>
       )}
