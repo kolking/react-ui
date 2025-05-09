@@ -1,49 +1,22 @@
 @use '../../styles/utils' as *;
 
 // ---------------------------
-// COLOR SCHEMES
-// ---------------------------
-
-$schemes: (
-  default: 'accent',
-  negative: 'red',
-  positive: 'green',
-  warning: 'orange',
-);
-
-@each $scheme, $color in $schemes {
-  .#{$scheme} {
-    @if $scheme == default {
-      --text-color: var(--color-text);
-      --icon-color: var(--color-gray-600);
-    } @else {
-      --text-color: var(--color-#{$color}-600);
-      --icon-color: var(--color-#{$color}-500);
-    }
-    --background-color: unset;
-
-    &[data-active=true] {
-      --icon-color: var(--color-white);
-      --text-color: var(--color-white);
-      --background-color: var(--color-#{$color}-500);
-    }  
-  }
-}
-
-// ---------------------------
 // BASE STYLE
 // ---------------------------
 
 .menu {
-  --min-width: auto;
-  --max-width: none;
   --padding: 0.25em;
+
+  --size: var(--size-md);
+  --size-xs: var(--font-size-xs);
+  --size-sm: var(--font-size-sm);
+  --size-md: var(--font-size-md);
+  --size-lg: var(--font-size-lg);
+  --size-xl: var(--font-size-xl);
 
   z-index: 6;
   overflow-y: auto;
   padding: var(--padding);
-  min-width: var(--min-width);
-  max-width: var(--max-width);
   box-shadow: var(--drop-shadow);
   background: var(--color-popup);
   border-radius: var(--border-radius-md);
@@ -62,13 +35,6 @@ $schemes: (
 .menuitem {
   --gap: 0.375em;
   --icon-size: 1.25em;
-
-  --size: var(--size-md);
-  --size-xs: var(--font-size-xs);
-  --size-sm: var(--font-size-sm);
-  --size-md: var(--font-size-md);
-  --size-lg: var(--font-size-lg);
-  --size-xl: var(--font-size-xl);
 
   width: 100%;
   border: none;
@@ -104,6 +70,32 @@ $schemes: (
   }
 }
 
-[data-menu=trigger] [data-icon=dropdown] {
-  margin-left: 0.25em;
+// ---------------------------
+// COLOR SCHEMES
+// ---------------------------
+
+$schemes: (
+  default: 'accent',
+  negative: 'red',
+  positive: 'green',
+  warning: 'orange',
+);
+
+@each $scheme, $color in $schemes {
+  .#{$scheme} {
+    @if $scheme == default {
+      --text-color: var(--color-text);
+      --icon-color: var(--color-gray-600);
+    } @else {
+      --text-color: var(--color-#{$color}-600);
+      --icon-color: var(--color-#{$color}-500);
+    }
+    --background-color: unset;
+
+    &[data-active=true] {
+      --icon-color: var(--color-white);
+      --text-color: var(--color-white);
+      --background-color: var(--color-#{$color}-500);
+    }  
+  }
 }

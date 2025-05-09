@@ -10,7 +10,7 @@ import {
   FloatingFocusManager,
   offset,
   flip,
-  size,
+  size as floatingSize,
   autoUpdate,
   FloatingPortal,
   FloatingList,
@@ -19,22 +19,31 @@ import {
 import cn from 'classnames';
 
 import { MenuContext, MenuContextProps } from './MenuContext';
+import { cssProps } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
-export type MenuProps = React.HTMLAttributes<HTMLDivElement> & {
+export type MenuProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   placement?: Placement;
   trigger: React.JSX.Element;
   minWidth?: React.CSSProperties['minWidth'];
   maxWidth?: React.CSSProperties['maxWidth'];
+  minHeight?: React.CSSProperties['minHeight'];
+  maxHeight?: React.CSSProperties['maxHeight'];
+  onSelect?: (index: number) => void;
 };
 
 export const Menu = ({
+  size,
   placement = 'bottom-start',
   trigger,
   minWidth,
   maxWidth,
+  minHeight,
+  maxHeight,
   className,
   children,
+  onSelect,
   ...props
 }: MenuProps) => {
   const [open, setOpen] = useState(false);
@@ -51,14 +60,15 @@ export const Menu = ({
     middleware: [
       offset(5),
       flip({ padding: 10 }),
-      size({
+      floatingSize({
         padding: 10,
         apply({ rects, availableWidth, availableHeight }) {
           flushSync(() => {
             setSizeBounds({
-              minWidth: rects.reference.width,
-              maxWidth: availableWidth,
-              maxHeight: availableHeight,
+              minHeight,
+              minWidth: minWidth ?? rects.reference.width,
+              maxWidth: maxWidth ?? availableWidth,
+              maxHeight: maxHeight ?? availableHeight,
             });
           });
         },
@@ -79,8 +89,8 @@ export const Menu = ({
   ]);
 
   const menuContext = useMemo<MenuContextProps>(
-    () => ({ active, setOpen, getItemProps }),
-    [active, getItemProps],
+    () => ({ active, setOpen, getItemProps, onSelect }),
+    [active, getItemProps, onSelect],
   );
 
   useEffect(() => {
@@ -95,8 +105,8 @@ export const Menu = ({
     <>
       {React.cloneElement(trigger, {
         ref: refs.setReference,
-        'data-menu': 'trigger',
         ...getReferenceProps(trigger.props),
+        'data-menu-trigger': true,
       })}
       <MenuContext.Provider value={menuContext}>
         {open && (
@@ -104,11 +114,11 @@ export const Menu = ({
             <FloatingFocusManager context={context} modal={false} initialFocus={-1}>
               <div
                 {...props}
-                ref={refs.setFloating}
-                data-menu="content"
-                className={cn(styles.menu, className)}
-                style={{ ...floatingStyles, ...sizeBounds, minWidth, maxWidth }}
                 {...getFloatingProps()}
+                ref={refs.setFloating}
+                data-menu
+                className={cn(styles.menu, className)}
+                style={{ ...floatingStyles, ...sizeBounds, ...cssProps({ size }) }}
               >
                 <FloatingList elementsRef={listRef}>{children}</FloatingList>
               </div>
