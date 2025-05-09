@@ -1,0 +1,36 @@
+// ---------------------------
+// BASE STYLE
+// ---------------------------
+
+.breadcrumbs {
+  --margin: 1em 0;
+  --icon-size: 1em;
+
+  --size: var(--size-md);
+  --size-xs: var(--font-size-xs);
+  --size-sm: var(--font-size-sm);
+  --size-md: var(--font-size-md);
+  --size-lg: var(--font-size-lg);
+  --size-xl: var(--font-size-xl);
+
+  padding: 0;
+  gap: 0.375em;
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: var(--margin);
+  font-size: var(--size);
+  color: var(--color-gray-600);
+  line-height: var(--line-height-xs);
+
+  li {
+    margin: 0;
+    gap: 0.375em;
+    display: flex;
+    align-items: center;
+  }
+
+  [data-icon] {
+    --height: var(--icon-size);
+  }
+}

@@ -1,7 +1,13 @@
+import { Breadcrumbs, Button, ButtonProps, Heading, Icon, Menu, MenuItem } from '@lib';
 import { useState } from 'react';
-import { Button, ButtonProps, Heading, Icon, Menu, MenuItem, Segmented } from '@lib';
 
-const items = ['First', 'Second', 'Third', 'Fourth', 'Fifth'];
+const items = [
+  { label: 'Home', href: '/' },
+  { label: 'Men’s Shoes', href: '/shoes' },
+  { label: 'Skateboarding', href: '/shoes/skateboarding' },
+  { label: 'Nike SB Dunk Low Pro' },
+];
+
 const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
 const triggerProps: ButtonProps = {
@@ -11,20 +17,19 @@ const triggerProps: ButtonProps = {
   iconPosition: 'end',
 };
 
-export const SegmentedDemo = () => {
-  const [selected, setSelected] = useState(0);
+export const BreadcrumbsDemo = () => {
   const [size, setSize] = useState<(typeof sizes)[number]>();
 
   return (
     <>
-      <Heading title="Segmented">
+      <Heading title="Breadcrumbs">
         <Menu trigger={<Button {...triggerProps} title="Size" />}>
           {sizes.map((value, index) => (
             <MenuItem key={index} title={`Size: ${value}`} onClick={() => setSize(value)} />
           ))}
         </Menu>
       </Heading>
-      <Segmented items={items} selected={selected} size={size} onSelect={setSelected} />
+      <Breadcrumbs items={items} size={size} />
     </>
   );
 };

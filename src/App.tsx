@@ -8,12 +8,13 @@ import { Dialogs } from './components/Dialogs';
 import { DropMenu } from './components/DropMenu';
 import { Icons } from './components/Icons';
 import { Notices } from './components/Notices';
-import { SegmentedList } from './components/Segmented';
+import { SegmentedDemo } from './components/Segmented';
 import { Badges } from './components/Badges';
 import { Avatars } from './components/Avatars';
 import { Tags } from './components/Tags';
 import { Switches } from './components/Switches';
 import { Ranges } from './components/Ranges';
+import { BreadcrumbsDemo } from './components/Breadcrumbs';
 
 function App() {
   return (
@@ -59,8 +60,8 @@ function App() {
       <Icons />
       <Heading title="Notice" />
       <Notices />
-      <Heading title="Segmented" />
-      <SegmentedList />
+      <SegmentedDemo />
+      <BreadcrumbsDemo />
     </main>
   );
 }
