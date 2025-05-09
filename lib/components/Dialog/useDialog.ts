@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
+
+function afterTransition(element: Element | null, callback: () => void) {
+  setTimeout(
+    callback,
+    element ? parseFloat(getComputedStyle(element).transitionDuration) * 1000 : 0,
+  );
+}
 
 export type DialogOptions<T, R> = {
   defaultOpen?: boolean;
@@ -10,7 +17,7 @@ export type DialogOptions<T, R> = {
 export type DialogType<T, R> = ReturnType<typeof useDialog<T, R>>;
 
 export function useDialog<T, R>(options?: DialogOptions<T, R>) {
-  const ref = useRef<HTMLDialogElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const refOptions = useRef(options);
   const refDisabled = useRef(false);
   const [open, setOpen] = useState(options?.defaultOpen ?? false);
@@ -23,8 +30,8 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
       return;
     }
 
-    setData(values);
     setOpen(true);
+    setData(values);
     refOptions.current?.onShow?.(values);
   }, []);
 
@@ -33,66 +40,21 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
       return;
     }
 
-    setOpen((open) => {
-      if (open) {
-        refDisabled.current = true;
-        ref.current?.addEventListener('transitionend', function callback(e) {
-          // Ignore transitionend event from child elements
-          if (e.target === ref.current) {
-            if (result !== undefined) {
-              refOptions.current?.onConfirm?.(result);
-            } else {
-              refOptions.current?.onCancel?.();
-            }
+    refDisabled.current = true;
+    ref.current?.setAttribute('data-open', 'false');
 
-            setData(undefined);
-            refDisabled.current = false;
-            this.removeEventListener('transitionend', callback);
-          }
-        });
+    afterTransition(ref.current, () => {
+      if (result !== undefined) {
+        refOptions.current?.onConfirm?.(result);
+      } else {
+        refOptions.current?.onCancel?.();
       }
 
-      return false;
+      setOpen(false);
+      setData(undefined);
+      refDisabled.current = false;
     });
   }, []);
-
-  useEffect(() => {
-    if (open) {
-      ref.current?.showModal();
-    } else {
-      ref.current?.close();
-    }
-  }, [open]);
-
-  useEffect(() => {
-    const dialog = ref.current;
-
-    if (dialog) {
-      // Hide when clicked outside
-      function handleClick(e: MouseEvent) {
-        if (e.target === e.currentTarget) {
-          close();
-        }
-      }
-
-      // Hide when escape pressed
-      function handleEscape(e: KeyboardEvent) {
-        if (e.key === 'Escape') {
-          e.stopPropagation();
-          e.preventDefault();
-          close();
-        }
-      }
-
-      dialog.addEventListener('click', handleClick);
-      dialog.addEventListener('keydown', handleEscape);
-
-      return () => {
-        dialog.removeEventListener('click', handleClick);
-        dialog.removeEventListener('keydown', handleEscape);
-      };
-    }
-  }, [close]);
 
   const cancel = useCallback(() => close(), [close]);
 
@@ -109,7 +71,7 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   }, []);
 
   return {
-    props: { ref, open },
+    props: { ref, open, requestClose: cancel },
     data,
     show,
     cancel,
