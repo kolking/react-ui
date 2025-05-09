@@ -1,40 +1,30 @@
 import { useState } from 'react';
-import { Segmented } from '@lib';
+import { Button, ButtonProps, Heading, Icon, Menu, MenuItem, Segmented } from '@lib';
 
-export const SegmentedList = () => {
-  const [segmented, setSegmented] = useState(0);
+const items = ['First', 'Second', 'Third', 'Fourth', 'Fifth'];
+const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+
+const triggerProps: ButtonProps = {
+  type: 'button',
+  variant: 'tertiary',
+  icon: <Icon name="dropdown" />,
+  iconPosition: 'end',
+};
+
+export const SegmentedDemo = () => {
+  const [selected, setSelected] = useState(0);
+  const [size, setSize] = useState<(typeof sizes)[number]>();
 
   return (
     <>
-      <Segmented
-        size="xs"
-        items={['First', 'Second', 'Third', 'Fourth', 'Fifth']}
-        selected={segmented}
-        onSelect={setSegmented}
-      />
-      <Segmented
-        size="sm"
-        items={['First', 'Second', 'Third', 'Fourth', 'Fifth']}
-        selected={segmented}
-        onSelect={setSegmented}
-      />
-      <Segmented
-        items={['First', 'Second', 'Third', 'Fourth', 'Fifth']}
-        selected={segmented}
-        onSelect={setSegmented}
-      />
-      <Segmented
-        size="lg"
-        items={['First', 'Second', 'Third', 'Fourth', 'Fifth']}
-        selected={segmented}
-        onSelect={setSegmented}
-      />
-      <Segmented
-        size="xl"
-        items={['First', 'Second', 'Third', 'Fourth', 'Fifth']}
-        selected={segmented}
-        onSelect={setSegmented}
-      />
+      <Heading title="Segmented">
+        <Menu trigger={<Button {...triggerProps} title="Size" />}>
+          {sizes.map((value, index) => (
+            <MenuItem key={index} title={`Size: ${value}`} onClick={() => setSize(value)} />
+          ))}
+        </Menu>
+      </Heading>
+      <Segmented items={items} selected={selected} size={size} onSelect={setSelected} />
     </>
   );
 };
