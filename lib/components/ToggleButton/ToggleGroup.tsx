@@ -1,4 +1,5 @@
 import React from 'react';
+import { Composite, CompositeItem } from '@floating-ui/react';
 import cn from 'classnames';
 
 import styles from './styles.module.scss';
@@ -32,21 +33,23 @@ export const ToggleGroup = ({
   const flexBasis = equalWidth ? '0' : undefined;
 
   return (
-    <div
+    <Composite
       {...props}
       role="radiogroup"
       data-toggle-group
       className={cn(styles.group, styles[variant], className)}
       style={{ ...style, ...cssProps({ display, flexBasis, minWidth, maxWidth }) }}
     >
-      {React.Children.map(children, (child, index) =>
-        React.cloneElement(child, {
-          role: 'radio',
-          disabled,
-          selected: index === selected,
-          onClick: () => onSelect(index),
-        }),
-      )}
-    </div>
+      {React.Children.map(children, (child, index) => (
+        <CompositeItem
+          render={React.cloneElement(child, {
+            role: 'radio',
+            disabled,
+            selected: index === selected,
+            onClick: () => onSelect(index),
+          })}
+        />
+      ))}
+    </Composite>
   );
 };

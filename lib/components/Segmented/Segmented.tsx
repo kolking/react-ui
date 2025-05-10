@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import { Composite, CompositeItem } from '@floating-ui/react';
 
 import styles from './styles.module.scss';
 import { cssProps } from '../../utils/helpers';
@@ -23,7 +24,7 @@ export const Segmented = ({
   onSelect,
   ...props
 }: SegmentedProps) => (
-  <div
+  <Composite
     {...props}
     role="radiogroup"
     data-segmented={selected}
@@ -39,17 +40,21 @@ export const Segmented = ({
     }}
   >
     {items.map((item, index) => (
-      <button
+      <CompositeItem
         key={index}
-        role="radio"
-        type="button"
-        disabled={disabled}
-        aria-checked={index === selected}
-        data-selected={index === selected}
-        onClick={() => index !== selected && onSelect(index)}
-      >
-        {item}
-      </button>
+        render={
+          <button
+            role="radio"
+            type="button"
+            disabled={disabled}
+            aria-checked={index === selected}
+            data-selected={index === selected}
+            onClick={() => index !== selected && onSelect(index)}
+          >
+            {item}
+          </button>
+        }
+      />
     ))}
-  </div>
+  </Composite>
 );
