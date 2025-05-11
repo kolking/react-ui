@@ -12,13 +12,17 @@ export type RadioProps = BaseInputProps & {
 export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
   ({ size, error, label, className, style, required, ...props }, ref) => (
     <label
-      data-input="radio"
+      data-radio
       data-required={required}
       className={cn(styles.radio, className)}
       style={{ ...style, ...cssProps({ size }) }}
     >
       <Input {...props} ref={ref} type="radio" size={size} error={error} />
-      {label && <div className={styles.label}>{label}</div>}
+      {label && (
+        <div data-radio-label className={styles.label}>
+          {label}
+        </div>
+      )}
     </label>
   ),
 );

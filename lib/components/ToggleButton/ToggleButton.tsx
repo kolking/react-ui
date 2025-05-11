@@ -11,10 +11,11 @@ export const ToggleButton = React.forwardRef<typeof Button, ToggleButtonProps>(
       {...props}
       ref={ref}
       role={role}
-      aria-checked={role === 'radio' ? selected : undefined}
-      aria-pressed={role !== 'radio' ? selected : undefined}
+      data-toggle-button
       data-selected={selected}
       variant={selected ? 'primary' : 'secondary'}
+      aria-checked={role === 'radio' ? selected : undefined}
+      aria-pressed={role !== 'radio' ? selected : undefined}
     />
   ),
 );

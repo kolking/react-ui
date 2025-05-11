@@ -49,13 +49,14 @@ export const ProgressCircular = React.forwardRef<HTMLDivElement, ProgressCircula
 
     return (
       <div
+        aria-label={progress ? `${progress} percent` : 'indeterminate'}
         {...props}
         ref={ref}
         role="progressbar"
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuenow={progress}
-        data-progress="circular"
+        data-progress-circular
         data-countdown={countdown}
         data-progress-value={progress ?? 'indeterminate'}
         className={cn(styles.container, className)}

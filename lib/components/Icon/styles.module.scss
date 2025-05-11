@@ -1,22 +1,4 @@
 // ---------------------------
-// COLOR SCHEMES
-// ---------------------------
-
-$schemes: (
-  info: 'blue',
-  error: 'red',
-  success: 'green',
-  warning: 'orange',
-  neutral: 'gray',
-);
-
-@each $scheme, $color in $schemes {
-  .#{$scheme} {
-    --color: var(--color-#{$color}-500);
-  }
-}
-
-// ---------------------------
 // BASE STYLE
 // ---------------------------
 
@@ -37,5 +19,23 @@ $schemes: (
     &:focus:not(:focus-visible) {
       outline: none;
     }
+  }
+}
+
+// ---------------------------
+// COLOR SCHEMES
+// ---------------------------
+
+$schemes: (
+  info: 'blue',
+  error: 'red',
+  success: 'green',
+  warning: 'orange',
+  neutral: 'gray',
+);
+
+@each $scheme, $color in $schemes {
+  .#{$scheme} {
+    --color: var(--color-#{$color}-500);
   }
 }

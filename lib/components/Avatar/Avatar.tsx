@@ -50,11 +50,19 @@ export const Avatar = ({
       style={{ ...style, ...cssProps({ size, backgroundColor: color }) }}
     >
       {imageSource ? (
-        <img className={styles.image} src={imageSource} alt={userName} onError={handleError} />
+        <img
+          data-avatar-image
+          className={styles.image}
+          src={imageSource}
+          alt={userName ?? ''}
+          onError={handleError}
+        />
       ) : userName ? (
-        <span className={styles.name}>{getInitials(userName)}</span>
+        <span data-avatar-initials className={styles.initials}>
+          {getInitials(userName)}
+        </span>
       ) : (
-        <SvgAvatar className={styles.default} aria-hidden />
+        <SvgAvatar aria-hidden data-avatar-default className={styles.default} />
       )}
       {children}
     </div>

@@ -1,7 +1,7 @@
 import { Field, Flex, Input, Range } from '@lib';
 import React, { useCallback, useState } from 'react';
 
-const ticks = ['low', '25%', '50%', '75%', 'full'];
+const ticks = ['low', '25%', '50%', '75%', 'high'];
 
 export const Ranges = () => {
   const [value, setValue] = useState(35);

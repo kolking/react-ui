@@ -4,7 +4,6 @@ import React from 'react';
 import { cssProps } from '../../utils/helpers';
 import { BaseInputProps } from './Input';
 import { ValidationTooltip } from './ValidationTooltip';
-
 import styles from './styles/input.module.scss';
 
 export type SelectProps = BaseInputProps<React.SelectHTMLAttributes<HTMLSelectElement>>;

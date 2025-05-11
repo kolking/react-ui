@@ -1,11 +1,10 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { BaseInputProps } from './Input';
 import { cssProps } from '../../utils/helpers';
-
-import styles from './styles/switch.module.scss';
+import { BaseInputProps } from './Input';
 import { ValidationTooltip } from './ValidationTooltip';
+import styles from './styles/switch.module.scss';
 
 export type SwitchProps = BaseInputProps & {
   label?: React.ReactNode;
@@ -15,7 +14,7 @@ export type SwitchProps = BaseInputProps & {
 export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
   ({ size, error, label, required, checkedColor, className, style, ...props }, ref) => (
     <label
-      data-input="switch"
+      data-switch
       data-required={required}
       className={cn(styles.switch, className)}
       style={{ ...style, ...cssProps({ size, checkedColor }) }}
@@ -29,7 +28,11 @@ export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
           className={styles.input}
         />
       </ValidationTooltip>
-      {label && <div className={styles.label}>{label}</div>}
+      {label && (
+        <div data-switch-label className={styles.label}>
+          {label}
+        </div>
+      )}
     </label>
   ),
 );

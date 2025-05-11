@@ -4,13 +4,15 @@ import React, { useCallback, useImperativeHandle, useRef } from 'react';
 import { Icon } from '../Icon';
 import { Button } from '../Button';
 import { Input, InputProps } from './Input';
-
 import styles from './styles/numeric.module.scss';
 
-export type NumericProps = Omit<InputProps, 'children'>;
+export type NumericProps = Omit<InputProps, 'children'> & {
+  labelIncrease?: string;
+  labelDecrease?: string;
+};
 
 export const Numeric = React.forwardRef<HTMLInputElement, NumericProps>(
-  ({ className, ...props }, ref) => {
+  ({ labelIncrease = 'increase', labelDecrease = 'decrease', className, ...props }, ref) => {
     const innerRef = useRef<HTMLInputElement>(null);
 
     useImperativeHandle(ref, () => innerRef.current!);
@@ -36,7 +38,7 @@ export const Numeric = React.forwardRef<HTMLInputElement, NumericProps>(
         <Button
           type="button"
           variant="secondary"
-          aria-label="Increase"
+          aria-label={labelIncrease}
           disabled={props.disabled}
           className={styles.increase}
           icon={<Icon name="triangle-up" />}
@@ -45,7 +47,7 @@ export const Numeric = React.forwardRef<HTMLInputElement, NumericProps>(
         <Button
           type="button"
           variant="secondary"
-          aria-label="Decrease"
+          aria-label={labelDecrease}
           disabled={props.disabled}
           className={styles.decrease}
           icon={<Icon name="triangle-down" />}

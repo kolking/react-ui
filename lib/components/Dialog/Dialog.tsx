@@ -3,10 +3,10 @@ import { createPortal } from 'react-dom';
 import { FocusTrap } from 'focus-trap-react';
 import cn from 'classnames';
 
-import { Icon } from '../Icon';
+import { cssProps } from '../../utils/helpers';
 import { Button, ButtonProps } from '../Button';
 import { Heading, HeadingProps } from '../Heading';
-import { cssProps } from '../../utils/helpers';
+import { Icon } from '../Icon';
 import styles from './styles.module.scss';
 
 const focusTrapOptions = { escapeDeactivates: false };
@@ -100,12 +100,12 @@ export const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLD
 
 export const DialogClose = ({ className, ...props }: ButtonProps) => (
   <Button
-    {...props}
     type="button"
     variant="tertiary"
-    data-dialog-close
-    aria-label="dismiss dialog"
+    aria-label="close dialog"
     icon={<Icon name="close" />}
+    {...props}
+    data-dialog-close
     className={cn(styles.close, className)}
   />
 );

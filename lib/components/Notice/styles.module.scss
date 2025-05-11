@@ -1,26 +1,6 @@
 @use '../../styles/utils' as *;
 
 // ---------------------------
-// COLOR SCHEMES
-// ---------------------------
-
-$schemes: (
-  info: 'blue',
-  error: 'red',
-  success: 'green',
-  warning: 'orange',
-  neutral: 'gray',
-);
-
-@each $scheme, $color in $schemes {
-  .#{$scheme} {
-    --icon-color: var(--color-#{$color}-500);
-    --text-color: var(--color-#{$color}-600);
-    --background-color: var(--color-#{$color}-100);
-  }
-}
-
-// ---------------------------
 // BASE STYLE
 // ---------------------------
 
@@ -108,4 +88,24 @@ $schemes: (
 .plain {
   --padding: 0;
   --background-color: none;
+}
+
+// ---------------------------
+// COLOR SCHEMES
+// ---------------------------
+
+$schemes: (
+  info: 'blue',
+  error: 'red',
+  success: 'green',
+  warning: 'orange',
+  neutral: 'gray',
+);
+
+@each $scheme, $color in $schemes {
+  .#{$scheme} {
+    --icon-color: var(--color-#{$color}-500);
+    --text-color: var(--color-#{$color}-600);
+    --background-color: var(--color-#{$color}-100);
+  }
 }

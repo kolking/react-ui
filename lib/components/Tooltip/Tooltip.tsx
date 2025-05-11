@@ -131,7 +131,9 @@ export const Tooltip = ({
               className={styles.arrow}
               staticOffset={staticOffset ? 8 : null}
             />
-            <div className={styles.content}>{content}</div>
+            <div data-tooltip-content className={styles.content}>
+              {content}
+            </div>
           </div>
         </FloatingPortal>
       )}

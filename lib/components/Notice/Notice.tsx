@@ -49,10 +49,16 @@ export const Notice = ({
     className={cn(styles.container, styles[scheme], styles[layout], styles[variant], className)}
     style={{ ...style, ...cssProps({ size, margin, padding }) }}
   >
-    <div className={styles.content}>
+    <div data-notice-content className={styles.content}>
       {icon !== undefined ? icon : icons[scheme] && <Icon name={icons[scheme]} />}
-      <div className={styles.message}>{error ? getErrorMessage(error) : children}</div>
+      <div data-notice-message className={styles.message}>
+        {error ? getErrorMessage(error) : children}
+      </div>
     </div>
-    {accessory && <div className={styles.accessory}>{accessory}</div>}
+    {accessory && (
+      <div data-notice-accessory className={styles.accessory}>
+        {accessory}
+      </div>
+    )}
   </div>
 );

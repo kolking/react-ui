@@ -38,7 +38,7 @@ export const Tag = ({
     ) : (
       <>
         {iconPosition === 'start' && icon}
-        {title && wrapNode(title, 'span')}
+        {title !== undefined && wrapNode(title, 'span')}
         {iconPosition === 'end' && icon}
       </>
     )}

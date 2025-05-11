@@ -36,14 +36,14 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
 
     return (
       <div
+        aria-label={progress ? `${progress} percent` : 'indeterminate'}
         {...props}
         ref={ref}
         role="progressbar"
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={progress}
-        aria-label={progress ? `${progress} percent` : 'indeterminate'}
-        data-progress="bar"
+        data-progress-bar
         data-progress-value={progress ?? 'indeterminate'}
         className={cn(styles.progress, className)}
         style={{
@@ -51,7 +51,11 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
           ...cssProps({ width, height, color, trackColor, minWidth, maxWidth, margin }),
         }}
       >
-        <span className={styles.bar} style={{ width: `${progress}%` }} />
+        <span
+          data-progress-bar-indicator
+          className={styles.indicator}
+          style={{ width: `${progress}%` }}
+        />
       </div>
     );
   },

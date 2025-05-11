@@ -3,7 +3,6 @@ import React from 'react';
 
 import { cssProps } from '../../utils/helpers';
 import { ValidationTooltip } from './ValidationTooltip';
-
 import checkboxStyles from './styles/checkbox.module.scss';
 import inputStyles from './styles/input.module.scss';
 

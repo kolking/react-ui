@@ -1,8 +1,8 @@
 import React from 'react';
 import cn from 'classnames';
 
-import styles from './styles.module.scss';
 import { cssProps } from '../../utils/helpers';
+import styles from './styles.module.scss';
 
 export type Breadcrumb = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
   label: React.ReactNode;

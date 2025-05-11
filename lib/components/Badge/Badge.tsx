@@ -24,7 +24,7 @@ export const Badge = ({
   ...props
 }: BadgeProps) => {
   const hidden = !value;
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (!hidden && placement && ref.current) {

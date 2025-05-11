@@ -14,10 +14,10 @@ export type SpinnerProps = React.HTMLAttributes<HTMLSpanElement> & {
 export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
   ({ size, color, overlay, overlayColor, className, style, ...props }, ref) => (
     <span
+      aria-label="loading"
       {...props}
       ref={ref}
       role="status"
-      aria-label="loading"
       data-spinner
       data-overlay={overlay}
       className={cn(styles.container, className)}
