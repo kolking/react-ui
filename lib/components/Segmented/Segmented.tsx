@@ -2,7 +2,7 @@ import cn from 'classnames';
 import { Composite, CompositeItem } from '@floating-ui/react';
 
 import styles from './styles.module.scss';
-import { cssProps } from '../../utils/helpers';
+import { cssProps, wrapNode } from '../../utils/helpers';
 
 export type SegmentedProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -27,7 +27,8 @@ export const Segmented = ({
   <Composite
     {...props}
     role="radiogroup"
-    data-segmented={selected}
+    data-segmented
+    data-disabled={disabled}
     className={cn(styles.segmented, className)}
     style={{
       ...style,
@@ -47,11 +48,12 @@ export const Segmented = ({
             role="radio"
             type="button"
             disabled={disabled}
+            data-segmented-item={index}
             aria-checked={index === selected}
             data-selected={index === selected}
             onClick={() => index !== selected && onSelect(index)}
           >
-            {item}
+            {wrapNode(item, 'span')}
           </button>
         }
       />

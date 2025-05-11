@@ -34,17 +34,16 @@
   }
 }
 
-.input {
+input.input {
   margin: 0;
   padding: 0;
   flex-shrink: 0;
   cursor: pointer;
   appearance: none;
   font-size: inherit;
-  will-change: background-color;
   background: var(--background-color);
   border: var(--border-width) solid var(--border-color);
-  width: calc(2 * (var(--thumb-size) + var(--border-width)));
+  width: calc(1.8 * var(--thumb-size) + 2 * var(--border-width));
   border-radius: calc(var(--border-radius) + var(--border-width));
 
   @media (prefers-reduced-motion: no-preference) {
@@ -71,7 +70,7 @@
     --background-color: var(--checked-color);
 
     &::before {
-      transform: translate3d(100%, 0, 0);
+      transform: translate3d(80%, 0, 0);
     }
   }
 

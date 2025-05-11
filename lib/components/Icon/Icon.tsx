@@ -40,7 +40,11 @@ export const Icon = React.forwardRef<SVGSVGElement, IconProps>(
     const [width, height] = Array.isArray(size) ? size : [size, size];
     const Svg = svg || (name ? icons[name] : undefined);
 
-    return !Svg ? null : (
+    if (!Svg) {
+      return null;
+    }
+
+    return (
       <Svg
         {...props}
         ref={ref}

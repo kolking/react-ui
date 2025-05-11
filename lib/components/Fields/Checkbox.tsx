@@ -25,13 +25,17 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
 
     return (
       <label
-        data-input="checkbox"
+        data-checkbox
         data-required={required}
         className={cn(styles.checkbox, className)}
         style={{ ...style, ...cssProps({ size }) }}
       >
         <Input {...props} ref={innerRef} type="checkbox" size={size} error={error} />
-        {label && <div className={styles.label}>{label}</div>}
+        {label && (
+          <div data-checkbox-label className={styles.label}>
+            {label}
+          </div>
+        )}
       </label>
     );
   },

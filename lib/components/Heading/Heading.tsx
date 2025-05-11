@@ -55,7 +55,7 @@ export const Heading = ({
         ...cssProps({ fontSize, margin, marginStart, marginEnd }),
       }}
     >
-      <Element>{title}</Element>
+      <Element data-heading-title>{title}</Element>
       <div data-heading-accessory className={styles.accessory}>
         {children}
       </div>

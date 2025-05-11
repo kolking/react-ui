@@ -1,5 +1,9 @@
 @use '../../../styles/utils' as *;
 
+// ---------------------------
+// BASE STYLE
+// ---------------------------
+
 .numeric {
   overflow: clip;
 
@@ -34,6 +38,7 @@
     }
   }
 
+  // Device supports hover (have a pointer or stylus)
   @media (hover: hover) {
     [data-button] {
       --min-width: 1em;
@@ -58,6 +63,7 @@
     }
   }
 
+  // Device does not support hover (touch screen)
   @media (hover: none) {
     [data-input] {
       text-align: center;

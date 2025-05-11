@@ -1,10 +1,9 @@
 import cn from 'classnames';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import { cssProps, wrapNode } from '../../utils/helpers';
 import { BaseInputProps } from './Input';
 import { ValidationTooltip } from './ValidationTooltip';
-import { cssProps, wrapNode } from '../../utils/helpers';
-
 import styles from './styles/range.module.scss';
 
 function setProgress(element: HTMLDivElement | null, min: number, max: number, value: number) {
@@ -60,13 +59,13 @@ export const Range = React.forwardRef<HTMLInputElement, RangeProps>(
     return (
       <div
         ref={rootRef}
-        data-input="range"
+        data-range
         data-disabled={props.disabled}
         data-invalid={error ? true : undefined}
         className={cn(styles.range, className)}
         style={{ ...style, ...cssProps({ size, height }) }}
       >
-        <div className={styles.range_wrapper}>
+        <div data-range-wrapper className={styles.range_wrapper}>
           <div data-range-track className={styles.range_track} />
           <div ref={setTooltipRef} data-range-thumb className={styles.range_thumb}>
             {children !== undefined && wrapNode(children, 'small')}
