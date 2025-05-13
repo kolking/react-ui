@@ -13,8 +13,8 @@
   --thumb-border-width: 0.125em;
   --track-color-1: var(--color-gray-300);
   --track-color-2: var(--color-accent-500);
-  --thumb-color: var(--color-white);
   --thumb-border-color: var(--color-accent-500);
+  --thumb-color: light-dark(var(--color-white), var(--color-gray-200));
 
   --size: var(--size-md);
   --size-xs: var(--font-size-xs);

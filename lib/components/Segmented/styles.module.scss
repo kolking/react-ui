@@ -11,12 +11,11 @@
   --margin: 1.25em 0;
   --padding: 0.1875em;
   --background: var(--color-gray-200);
-  --text-color: var(--color-gray-600);
+  --text-color: var(--color-gray-700);
   --border-radius: var(--border-radius-sm);
   --selected-text-color: var(--color-fg);
-  --selected-background: var(--color-input);
-  --disabled-text-color: var(--color-gray-400);
-  --outer-border-radius: calc(var(--border-radius) + var(--padding));
+  --disabled-text-color: var(--color-gray-500);
+  --selected-background: light-dark(var(--color-white), var(--color-gray-400));
 
   --size: var(--size-md);
   --size-xs: var(--font-size-xs);
@@ -30,21 +29,22 @@
   position: relative;
   height: var(--height);
   margin: var(--margin);
+  padding: var(--padding);
   font-size: var(--size);
   background: var(--background);
-  border-radius: var(--outer-border-radius);
+  border-radius: calc(var(--border-radius) + var(--padding));
 
   &:before {
-    left: 0;
     z-index: -1;
     content: '';
-    height: 100%;
     position: absolute;
-    border-radius: inherit;
+    inset: var(--padding);
     width: calc(100% / var(--length));
+    border-radius: var(--border-radius);
     background: var(--selected-background);
-    border: var(--padding) solid var(--background);
+    box-shadow: 0 0 var(--padding) rgb(0 0 0 / 10%);
     transform: translateX(calc(100% * var(--selected)));
+    width: calc((100% - var(--padding) * 2) / var(--length));
 
     @media (prefers-reduced-motion: no-preference) {
       transition: transform ease 0.3s;
@@ -59,21 +59,38 @@
     display: flex;
     cursor: pointer;
     padding: 0 0.5em;
-    overflow: hidden;
     background: none;
+    position: relative;
     font-size: inherit;
     align-items: center;
-    white-space: nowrap;
     font-family: inherit;
-    text-overflow: ellipsis;
     justify-content: center;
     color: var(--text-color);
     line-height: var(--line-height-sm);
     font-weight: var(--font-weight-medium);
-    border-radius: var(--outer-border-radius);
+    border-radius: var(--border-radius);
 
     @media (prefers-reduced-motion: no-preference) {
       transition: color 0.2s, outline 0.1s;
+    }
+
+    &::before {
+      left: 0;
+      width: 1px;
+      content: '';
+      position: absolute;
+      height: calc(var(--height) / 2);
+      background: var(--color-gray-400);
+
+      @media (prefers-reduced-motion: no-preference) {
+        transition: display 0.3s allow-discrete;
+      }  
+    }
+
+    &:first-child::before,
+    &[data-selected=true]::before,
+    &[data-selected=true] + button::before {
+      display: none;
     }
 
     &:hover, &:focus-visible {
@@ -91,6 +108,7 @@
 
     &[disabled] {
       --text-color: var(--disabled-text-color);
+      cursor: default;
     }
 
     > span {
