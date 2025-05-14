@@ -1,9 +1,10 @@
-import { Breadcrumbs, Button, ButtonProps, Heading, Icon, Menu, MenuItem } from '@lib';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Breadcrumb, Breadcrumbs, Button, ButtonProps, Heading, Icon, Menu, MenuItem } from '@lib';
 
-const items = [
+const items: (Breadcrumb | Breadcrumb<typeof Link>)[] = [
   { label: 'Home', href: '/' },
-  { label: 'Men’s Shoes', href: '/shoes' },
+  { label: 'Men’s Shoes', as: Link, to: '/shoes' },
   { label: 'Skateboarding', href: '/shoes/skateboarding' },
   { label: 'Nike SB Dunk Low Pro' },
 ];
