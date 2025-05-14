@@ -22,7 +22,7 @@ function getColor(variable: string) {
       const hex = (0x1000000 | (b | (g << 8) | (r << 16))).toString(16);
 
       return {
-        hex: hex.replace(/^./, '#').toUpperCase(),
+        hex: '#' + hex.substring(1).toUpperCase(),
         rgb: { r, g, b },
       };
     }
