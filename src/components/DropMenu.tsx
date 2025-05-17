@@ -11,6 +11,7 @@ export const DropMenu = () => (
     <Menu trigger={<Button {...triggerProps} title="Menu" />}>
       <MenuItem title="First action" />
       <MenuItem title="Second action" />
+      <MenuItem as="a" title="Link action" href="https://google.com/" target="_blank" />
       <MenuItem title="Third action" scheme="negative" />
     </Menu>
     <Menu

@@ -3,16 +3,21 @@ import { useListItem } from '@floating-ui/react';
 import cn from 'classnames';
 
 import { MenuContext } from './MenuContext';
-import { wrapNode } from '../../utils/helpers';
+import { PolymorphicProps, wrapNode } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
-export type MenuItemProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'title'> & {
-  scheme?: 'default' | 'negative' | 'positive' | 'warning';
-  icon?: React.ReactElement;
-  title?: React.ReactNode;
-};
+export type MenuItemProps<T extends React.ElementType = 'button'> = PolymorphicProps<
+  T,
+  {
+    as?: T;
+    scheme?: 'default' | 'negative' | 'positive' | 'warning';
+    title?: React.ReactNode;
+    icon?: React.ReactElement;
+  }
+>;
 
-export const MenuItem = ({
+export const MenuItem = <T extends React.ElementType = 'button'>({
+  as,
   scheme = 'default',
   icon,
   title,
@@ -20,10 +25,11 @@ export const MenuItem = ({
   className,
   onClick,
   ...props
-}: MenuItemProps) => {
+}: MenuItemProps<T>) => {
   const { active, setOpen, getItemProps, onSelect } = useContext(MenuContext);
   const { ref, index } = useListItem();
   const isActive = index === active;
+  const Element = as ?? 'button';
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -35,14 +41,14 @@ export const MenuItem = ({
   );
 
   return (
-    <button
+    <Element
       {...props}
       ref={ref}
-      type="button"
       role="menuitem"
       data-menu-item
       data-active={isActive}
       tabIndex={isActive ? 0 : -1}
+      type={!as ? 'button' : undefined}
       className={cn(styles.menuitem, styles[scheme], className)}
       {...getItemProps({ onClick: handleClick })}
     >
@@ -54,6 +60,6 @@ export const MenuItem = ({
           {title !== undefined && wrapNode(title, 'span')}
         </>
       )}
-    </button>
+    </Element>
   );
 };
