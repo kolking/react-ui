@@ -14,21 +14,22 @@
   --size-lg: var(--font-size-lg);
   --size-xl: var(--font-size-xl);
 
+  gap: 1px;
   z-index: 6;
+  display: flex;
   overflow-y: auto;
+  flex-direction: column;
   padding: var(--padding);
   box-shadow: var(--drop-shadow);
   background: var(--color-popup);
   border-radius: var(--border-radius-md);
 
-  &:focus-visible {
-    outline: none;
+  &[data-open=false] {
+    display: none;
   }
 
-  hr {
-    border: none;
-    margin-block: 0.375em;
-    border-top: 1px solid var(--color-gray-300);
+  &:focus-visible {
+    outline: none;
   }
 }
 
@@ -42,6 +43,7 @@
   display: flex;
   gap: var(--gap);
   cursor: pointer;
+  text-align: left;
   align-items: center;
   text-decoration: none;
   font-size: var(--size);
@@ -69,6 +71,14 @@
   > span {
     @extend %truncate-text;
   }
+}
+
+.separator {
+  height: 1px;
+  width: 100%;
+  border: none;
+  margin-block: 0.375em;
+  background: var(--color-gray-300);
 }
 
 // ---------------------------

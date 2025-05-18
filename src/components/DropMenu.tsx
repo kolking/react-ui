@@ -1,4 +1,4 @@
-import { Button, ButtonProps, Flex, Icon, Menu, MenuItem, Notice } from '@lib';
+import { Button, ButtonProps, Flex, Icon, Menu, MenuItem, MenuSeparator, Notice } from '@lib';
 
 const triggerProps: ButtonProps = {
   type: 'button',
@@ -18,6 +18,7 @@ export const DropMenu = () => (
       placement="bottom-end"
       trigger={<Button {...triggerProps} title="Icons menu" variant="secondary" />}
       onSelect={(index) => console.log('Selected item', index)}
+      unmount={false}
     >
       <MenuItem
         title="Undo action"
@@ -26,6 +27,7 @@ export const DropMenu = () => (
       />
       <MenuItem
         title="Redo action"
+        //selected={true}
         icon={<Icon name="redo-circle" />}
         onClick={() => console.log('Menu item 1')}
       />
@@ -41,7 +43,7 @@ export const DropMenu = () => (
         icon={<Icon name="checkmark-circle" />}
         onClick={() => console.log('Menu item 3')}
       />
-      <hr />
+      <MenuSeparator />
       <MenuItem
         title="Negative action"
         scheme="negative"
