@@ -13,6 +13,7 @@ export type MenuItemProps<T extends React.ElementType = 'button'> = PolymorphicP
     scheme?: 'default' | 'negative' | 'positive' | 'warning';
     title?: React.ReactNode;
     icon?: React.ReactElement;
+    selected?: boolean;
   }
 >;
 
@@ -21,6 +22,7 @@ export const MenuItem = <T extends React.ElementType = 'button'>({
   scheme = 'default',
   icon,
   title,
+  selected,
   children,
   className,
   onClick,
@@ -46,7 +48,8 @@ export const MenuItem = <T extends React.ElementType = 'button'>({
       ref={ref}
       role="menuitem"
       data-menu-item
-      data-active={isActive}
+      data-active={isActive || selected}
+      data-selected={selected}
       tabIndex={isActive ? 0 : -1}
       type={!as ? 'button' : undefined}
       className={cn(styles.menuitem, styles[scheme], className)}

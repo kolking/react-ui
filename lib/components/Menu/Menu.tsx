@@ -26,6 +26,7 @@ export type MenuProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> &
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   placement?: Placement;
   trigger: React.JSX.Element;
+  unmount?: boolean;
   minWidth?: React.CSSProperties['minWidth'];
   maxWidth?: React.CSSProperties['maxWidth'];
   minHeight?: React.CSSProperties['minHeight'];
@@ -37,6 +38,7 @@ export const Menu = ({
   size,
   placement = 'bottom-start',
   trigger,
+  unmount = true,
   minWidth,
   maxWidth,
   minHeight,
@@ -109,14 +111,15 @@ export const Menu = ({
         'data-menu-trigger': true,
       })}
       <MenuContext.Provider value={menuContext}>
-        {open && (
-          <FloatingPortal root={portalRef}>
+        {(open || !unmount) && (
+          <FloatingPortal root={portalRef.current}>
             <FloatingFocusManager context={context} modal={false} initialFocus={-1}>
               <div
                 {...props}
                 {...getFloatingProps()}
                 ref={refs.setFloating}
                 data-menu
+                data-open={open}
                 className={cn(styles.menu, className)}
                 style={{ ...floatingStyles, ...sizeBounds, ...cssProps({ size }) }}
               >
