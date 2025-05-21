@@ -6,8 +6,8 @@
 
 .container {
   --size: 1.25em;
-  --thickness: 10px;
-  --radius: calc(50% - var(--thickness) / 2);
+  --thickness: calc(var(--size) / 10);
+  --radius: calc((var(--size) - var(--thickness)) / 2);
   --circumference: calc(2 * 3.1415926 * var(--radius));
   --color: var(--color-accent-500);
   --track-color: color-mix(in srgb, var(--color) 15%, transparent);
@@ -38,9 +38,9 @@
 
 .track,
 .range {
-  cx: 50%;
-  cy: 50%;
   r: var(--radius);
+  cx: calc(var(--size) / 2);
+  cy: calc(var(--size) / 2);
   stroke-width: var(--thickness);
 }
 

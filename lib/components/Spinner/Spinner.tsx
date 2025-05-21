@@ -23,7 +23,7 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
       className={cn(styles.container, className)}
       style={{ ...style, ...cssProps({ size, color, overlayColor }) }}
     >
-      <svg aria-hidden viewBox="0 0 100 100" className={styles.spinner}>
+      <svg aria-hidden className={styles.spinner}>
         <circle fill="none" className={styles.track} />
         <circle fill="none" className={styles.range} />
       </svg>
