@@ -39,7 +39,7 @@ export const Numeric = React.forwardRef<HTMLInputElement, NumericProps>(
           type="button"
           variant="secondary"
           aria-label={labelIncrease}
-          disabled={props.disabled}
+          disabled={props.disabled || props.readOnly}
           className={styles.increase}
           icon={<Icon name="triangle-up" />}
           onClick={handleStepUp}
@@ -48,7 +48,7 @@ export const Numeric = React.forwardRef<HTMLInputElement, NumericProps>(
           type="button"
           variant="secondary"
           aria-label={labelDecrease}
-          disabled={props.disabled}
+          disabled={props.disabled || props.readOnly}
           className={styles.decrease}
           icon={<Icon name="triangle-down" />}
           onClick={handleStepDown}
