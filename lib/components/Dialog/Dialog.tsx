@@ -87,7 +87,13 @@ export const Dialog = React.forwardRef<HTMLDivElement, DialogProps>(
 );
 
 export const DialogTitle = ({ className, children, ...props }: Omit<HeadingProps, 'title'>) => (
-  <Heading as="h4" {...props} data-dialog-title title={children} className={className} />
+  <Heading
+    as="h4"
+    {...props}
+    data-dialog-title
+    title={children}
+    className={cn(styles.title, className)}
+  />
 );
 
 export const DialogContent = (props: React.HTMLAttributes<HTMLDivElement>) => (
