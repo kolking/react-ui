@@ -71,10 +71,15 @@
   }
 }
 
+.title {
+  --margin-start: 0;
+  --margin-end: 0.75em;
+}
+
 .footer {
   gap: 0.75em;
   display: flex;
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
   justify-content: end;
 
   [data-button] {

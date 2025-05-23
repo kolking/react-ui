@@ -20,7 +20,11 @@ function App() {
   return (
     <main>
       <Palette />
-      <Heading title="Form components" size="h1">
+      <Heading
+        size="h1"
+        title="Form components"
+        description="This is a heading description shown below the heading"
+      >
         <Button variant="tertiary" title="Action" />
         <Button
           variant="tertiary"
