@@ -15,6 +15,7 @@ import {
   FloatingPortal,
   FloatingList,
   Placement,
+  useMergeRefs,
 } from '@floating-ui/react';
 import cn from 'classnames';
 
@@ -26,6 +27,7 @@ export type MenuProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> &
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   placement?: Placement;
   trigger: React.JSX.Element;
+  offset?: number;
   unmount?: boolean;
   minWidth?: React.CSSProperties['minWidth'];
   maxWidth?: React.CSSProperties['maxWidth'];
@@ -38,6 +40,7 @@ export const Menu = ({
   size,
   placement = 'bottom-start',
   trigger,
+  offset: customOffset = 5,
   unmount = true,
   minWidth,
   maxWidth,
@@ -60,7 +63,7 @@ export const Menu = ({
     onOpenChange: setOpen,
     whileElementsMounted: autoUpdate,
     middleware: [
-      offset(5),
+      offset(customOffset),
       flip({ padding: 10 }),
       floatingSize({
         padding: 10,
@@ -95,6 +98,12 @@ export const Menu = ({
     [active, getItemProps, onSelect],
   );
 
+  // Preserve child component's ref
+  const ref = useMergeRefs([
+    refs.setReference,
+    'ref' in trigger ? (trigger.ref as React.Ref<Element>) : null,
+  ]);
+
   useEffect(() => {
     // Find the closest parent with the data-floating-root attribute
     const floatingRoot = refs.domReference.current?.closest('[data-floating-root]') as HTMLElement;
@@ -105,11 +114,10 @@ export const Menu = ({
 
   return (
     <>
-      {React.cloneElement(trigger, {
-        ref: refs.setReference,
-        ...getReferenceProps(trigger.props),
-        'data-menu-trigger': true,
-      })}
+      {React.cloneElement(
+        trigger,
+        getReferenceProps({ ref, 'data-menu-trigger': true, ...trigger.props }),
+      )}
       <MenuContext.Provider value={menuContext}>
         {(open || !unmount) && (
           <FloatingPortal root={portalRef.current}>

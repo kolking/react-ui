@@ -6,7 +6,7 @@ const triggerProps: ButtonProps = {
   iconPosition: 'end',
 };
 
-export const DropMenu = () => (
+export const MenuDemo = () => (
   <Flex>
     <Menu trigger={<Button {...triggerProps} title="Menu" />}>
       <MenuItem title="First action" />

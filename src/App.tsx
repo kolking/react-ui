@@ -5,7 +5,7 @@ import { Form } from './components/Form';
 import { Buttons } from './components/Buttons';
 import { Progress } from './components/Progress';
 import { Dialogs } from './components/Dialogs';
-import { DropMenu } from './components/DropMenu';
+import { MenuDemo } from './components/Menu';
 import { Icons } from './components/Icons';
 import { Notices } from './components/Notices';
 import { SegmentedDemo } from './components/Segmented';
@@ -53,8 +53,8 @@ function App() {
       <Progress />
       <Heading title="Dialog" />
       <Dialogs />
-      <Heading title="Drop Menu" />
-      <DropMenu />
+      <Heading title="Menu" />
+      <MenuDemo />
       <Heading title="Popover" />
       <PopoverDemo />
       <Heading title="Badges" />
