@@ -408,10 +408,10 @@
   dependencies:
     "@floating-ui/dom" "^1.0.0"
 
-"@floating-ui/react@^0.27.5":
-  version "0.27.5"
-  resolved "https://registry.yarnpkg.com/@floating-ui/react/-/react-0.27.5.tgz#27a6e63a8ef35eb8712ef304a154ea706da26814"
-  integrity sha512-BX3jKxo39Ba05pflcQmqPPwc0qdNsdNi/eweAFtoIdrJWNen2sVEWMEac3i6jU55Qfx+lOcdMNKYn2CtWmlnOQ==
+"@floating-ui/react@^0.27.8":
+  version "0.27.8"
+  resolved "https://registry.yarnpkg.com/@floating-ui/react/-/react-0.27.8.tgz#6d7f4bf7bfe2065934ba18d54f7383b777f87dd5"
+  integrity sha512-EQJ4Th328y2wyHR3KzOUOoTW2UKjFk53fmyahfwExnFQ8vnsMYqKc+fFPOkeYtj5tcp1DUMiNJ7BFhed7e9ONw==
   dependencies:
     "@floating-ui/react-dom" "^2.1.2"
     "@floating-ui/utils" "^0.2.9"
