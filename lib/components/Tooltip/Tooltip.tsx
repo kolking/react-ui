@@ -118,12 +118,11 @@ export const Tooltip = ({
       {open && (
         <FloatingPortal root={portalRef}>
           <div
-            {...props}
+            {...getFloatingProps(props)}
             ref={refs.setFloating}
             data-tooltip={placement}
             className={cn(styles.tooltip, className)}
             style={{ ...floatingStyles, minWidth, maxWidth }}
-            {...getFloatingProps()}
           >
             <FloatingArrow
               width={12}

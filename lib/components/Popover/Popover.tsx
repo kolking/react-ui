@@ -81,7 +81,7 @@ export const Popover = ({
     useClick(context, { enabled: event.includes('click') }),
   ]);
 
-  // Preserve child component's ref
+  // Preserve trigger component's ref
   const ref = useMergeRefs([
     refs.setReference,
     'ref' in trigger ? (trigger.ref as React.Ref<Element>) : null,
@@ -113,12 +113,11 @@ export const Popover = ({
         <FloatingPortal root={portalRef}>
           <FloatingFocusManager context={context} modal={modal} visuallyHiddenDismiss={modal}>
             <div
-              {...props}
+              {...getFloatingProps(props)}
               ref={refs.setFloating}
               data-popover={placement}
               className={cn(styles.popover, className)}
               style={{ ...floatingStyles, minWidth, maxWidth }}
-              {...getFloatingProps()}
             >
               {children}
             </div>

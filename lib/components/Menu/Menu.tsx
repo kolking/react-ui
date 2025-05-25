@@ -98,7 +98,7 @@ export const Menu = ({
     [active, getItemProps, onSelect],
   );
 
-  // Preserve child component's ref
+  // Preserve trigger component's ref
   const ref = useMergeRefs([
     refs.setReference,
     'ref' in trigger ? (trigger.ref as React.Ref<Element>) : null,
@@ -123,11 +123,10 @@ export const Menu = ({
           <FloatingPortal root={portalRef.current}>
             <FloatingFocusManager context={context} modal={false} initialFocus={-1}>
               <div
-                {...props}
-                {...getFloatingProps()}
+                {...getFloatingProps(props)}
                 ref={refs.setFloating}
-                data-menu
                 data-open={open}
+                data-menu={placement}
                 className={cn(styles.menu, className)}
                 style={{ ...floatingStyles, ...sizeBounds, ...cssProps({ size }) }}
               >
