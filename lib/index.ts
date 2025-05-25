@@ -9,6 +9,7 @@ export * from './components/Heading';
 export * from './components/Icon';
 export * from './components/Menu';
 export * from './components/Notice';
+export * from './components/Popover';
 export * from './components/Progress';
 export * from './components/Segmented';
 export * from './components/Spinner';
