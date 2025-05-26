@@ -1,4 +1,4 @@
-import { useCallback, useId, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 function afterTransition(element: Element | null, callback: () => void) {
   // Get the maximum transition duration from the element's computed style
@@ -23,10 +23,10 @@ export type DialogOptions<T, R> = {
 export type DialogType<T, R> = ReturnType<typeof useDialog<T, R>>;
 
 export function useDialog<T, R>(options?: DialogOptions<T, R>) {
-  const id = useId();
   const ref = useRef<HTMLDivElement>(null);
   const refOptions = useRef(options);
   const refDisabled = useRef(false);
+  const [triggerProps, setTriggerProps] = useState({});
   const [open, setOpen] = useState(options?.defaultOpen ?? false);
   const [data, setData] = useState<T>();
 
@@ -78,13 +78,8 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   }, []);
 
   return {
-    props: { id, ref, open, requestClose: cancel },
-    trigger: {
-      'aria-controls': open ? id : undefined,
-      'aria-haspopup': 'dialog' as const,
-      'aria-expanded': open,
-      onClick: show,
-    },
+    props: { ref, open, setTriggerProps, requestClose: cancel },
+    trigger: { ...triggerProps, onClick: show },
     data,
     show,
     cancel,

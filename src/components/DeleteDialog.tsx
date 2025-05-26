@@ -79,7 +79,7 @@ const Dialog = ({ dialog, color, colors, deleteColor }: DialogProps) => {
         />
         <Button type="submit" title="Delete" scheme="negative" busy={busy} />
       </DialogFooter>
-      <DialogClose disabled={busy} onClick={dialog.cancel} />
+      <DialogClose disabled={busy} />
     </form>
   );
 };

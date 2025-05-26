@@ -87,7 +87,7 @@ export const DialogForm = ({ children }: Props) => {
           <Button type="button" variant="secondary" title="Dismiss" onClick={dialog.cancel} />
           <Button type="button" title="Submit" onClick={handleSubmit} />
         </DialogFooter>
-        <DialogClose onClick={dialog.cancel} />
+        <DialogClose />
       </Dialog>
     </>
   );
