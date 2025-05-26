@@ -57,7 +57,7 @@ export const DialogForm = ({ children }: Props) => {
 
   return (
     <>
-      {React.cloneElement(children, { onClick: dialog.show })}
+      {React.cloneElement(children, dialog.trigger)}
       <Dialog {...dialog.props}>
         <DialogTitle>Form dialog</DialogTitle>
         <DialogContent>

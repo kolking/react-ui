@@ -1,10 +1,16 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useId, useRef, useState } from 'react';
 
 function afterTransition(element: Element | null, callback: () => void) {
-  setTimeout(
-    callback,
-    element ? parseFloat(getComputedStyle(element).transitionDuration) * 1000 : 0,
-  );
+  // Get the maximum transition duration from the element's computed style
+  const duration = element
+    ? Math.max(
+        ...getComputedStyle(element)
+          .transitionDuration.split(',')
+          .map((d) => parseFloat(d) * 1000),
+      )
+    : 0;
+
+  setTimeout(callback, duration);
 }
 
 export type DialogOptions<T, R> = {
@@ -17,6 +23,7 @@ export type DialogOptions<T, R> = {
 export type DialogType<T, R> = ReturnType<typeof useDialog<T, R>>;
 
 export function useDialog<T, R>(options?: DialogOptions<T, R>) {
+  const id = useId();
   const ref = useRef<HTMLDivElement>(null);
   const refOptions = useRef(options);
   const refDisabled = useRef(false);
@@ -71,7 +78,13 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   }, []);
 
   return {
-    props: { ref, open, requestClose: cancel },
+    props: { id, ref, open, requestClose: cancel },
+    trigger: {
+      'aria-controls': open ? id : undefined,
+      'aria-haspopup': 'dialog' as const,
+      'aria-expanded': open,
+      onClick: show,
+    },
     data,
     show,
     cancel,

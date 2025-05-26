@@ -5,44 +5,24 @@
 .overlay {
   inset: 0;
   z-index: 99;
-  display: flex;
+  display: grid;
   position: fixed;
-  align-items: center;
-  justify-content: center;
-  transition: display 0.4s allow-discrete;
+  place-items: center;
+  will-change: opacity;
+  backdrop-filter: blur(3px);
+  background-color: var(--color-backdrop);
 
   @media (prefers-reduced-motion: no-preference) {
-    --backdrop-transition: opacity 0.4s;
-    --dialog-transition-in: opacity 0.2s, transform 0.4s var(--ease-out-bounce);
-    --dialog-transition-out: opacity 0.3s, transform 0.4s;  
+    transition: opacity 0.4s, display 0.4s allow-discrete;
   }
 
-  &::before {
-    inset: 0;
-    content: '';
-    position: absolute;
-    will-change: opacity;
-    backdrop-filter: blur(3px);
-    transition: var(--backdrop-transition);
-    background-color: var(--color-backdrop);
-
-    @starting-style {
-      opacity: 0;
-    }
+  @starting-style {
+    opacity: 0;
   }
 
-  &[data-open=false] {
+  &:has(.dialog[data-open=false]) {
+    opacity: 0;
     display: none;
-
-    &::before {
-      opacity: 0;
-    }
-
-    .dialog {
-      opacity: 0;
-      transform: scale3d(0.5,0.5,1);
-      transition: var(--dialog-transition-out);
-    }
   }
 }
 
@@ -60,14 +40,25 @@
   padding: var(--spacing-md);
   background: var(--color-dialog);
   will-change: opacity, transform;
+  transition: var(--transition-in);
   width: var(--width, var(--size));
   border-radius: var(--border-radius-lg);
-  transition: var(--dialog-transition-in);
   box-shadow: rgb(0 0 0 / 8%) 0 40px 40px, rgb(0 0 0 / 5%) 0 20px 20px;
+
+  @media (prefers-reduced-motion: no-preference) {
+    --transition-in: opacity 0.2s, transform 0.4s var(--ease-out-bounce);
+    --transition-out: opacity 0.3s, transform 0.4s;
+  }
 
   @starting-style {
     opacity: 0;
     transform: scale3d(0.8,0.8,1);
+  }
+
+  &[data-open=false] {
+    opacity: 0;
+    transform: scale3d(0.5,0.5,1);
+    transition: var(--transition-out);
   }
 }
 
