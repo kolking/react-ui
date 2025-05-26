@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import {
   arrow,
@@ -34,6 +34,7 @@ export type TooltipProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'content' 
   trigger?: Trigger;
   disabled?: boolean;
   placement?: Placement;
+  offset?: number;
   anchor?: Element | null;
   content: React.ReactNode;
   children: React.JSX.Element;
@@ -44,6 +45,7 @@ export type TooltipProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'content' 
 export const Tooltip = ({
   trigger = 'hover focus',
   placement = 'top',
+  offset: customOffset = 8,
   anchor,
   content,
   disabled,
@@ -64,9 +66,9 @@ export const Tooltip = ({
     onOpenChange: setOpen,
     whileElementsMounted: autoUpdate,
     middleware: [
-      offset(8),
-      flip(),
-      shift(),
+      offset(customOffset),
+      flip({ padding: 10 }),
+      shift({ padding: 5 }),
       arrow(({ placement, rects }) => {
         setStaticOffset(
           rects.floating.width < rects.reference.width &&
@@ -99,7 +101,7 @@ export const Tooltip = ({
     }
   }, [refs, disabled]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Separate events reference and the positioning reference
     if (anchor) {
       refs.setPositionReference(anchor);
@@ -116,12 +118,11 @@ export const Tooltip = ({
       {open && (
         <FloatingPortal root={portalRef}>
           <div
-            {...props}
+            {...getFloatingProps(props)}
             ref={refs.setFloating}
             data-tooltip={placement}
             className={cn(styles.tooltip, className)}
             style={{ ...floatingStyles, minWidth, maxWidth }}
-            {...getFloatingProps()}
           >
             <FloatingArrow
               width={12}

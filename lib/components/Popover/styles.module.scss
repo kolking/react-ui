@@ -1,0 +1,22 @@
+// ---------------------------
+// BASE STYLE
+// ---------------------------
+
+.popover {
+  --padding: 1em;
+
+  z-index: 6;
+  overflow-y: auto;
+  padding: var(--padding);
+  box-shadow: var(--drop-shadow);
+  background: var(--color-popup);
+  border-radius: var(--border-radius-md);
+
+  &[data-open=false] {
+    display: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}

@@ -5,7 +5,7 @@ import { Form } from './components/Form';
 import { Buttons } from './components/Buttons';
 import { Progress } from './components/Progress';
 import { Dialogs } from './components/Dialogs';
-import { DropMenu } from './components/DropMenu';
+import { MenuDemo } from './components/Menu';
 import { Icons } from './components/Icons';
 import { Notices } from './components/Notices';
 import { SegmentedDemo } from './components/Segmented';
@@ -15,6 +15,7 @@ import { Tags } from './components/Tags';
 import { Switches } from './components/Switches';
 import { Ranges } from './components/Ranges';
 import { BreadcrumbsDemo } from './components/Breadcrumbs';
+import { PopoverDemo } from './components/Popover';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
       <Heading
         size="h1"
         title="Form components"
-        description="This is a heading description shown below the heading"
+        description="This is a brief description shown below the heading"
       >
         <Button variant="tertiary" title="Action" />
         <Button
@@ -52,8 +53,10 @@ function App() {
       <Progress />
       <Heading title="Dialog" />
       <Dialogs />
-      <Heading title="Drop Menu" />
-      <DropMenu />
+      <Heading title="Menu" />
+      <MenuDemo />
+      <Heading title="Popover" />
+      <PopoverDemo />
       <Heading title="Badges" />
       <Badges />
       <Heading title="Tags" />
