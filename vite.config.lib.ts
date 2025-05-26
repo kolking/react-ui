@@ -43,7 +43,6 @@ export default defineConfig({
         'react/jsx-runtime',
         '@floating-ui/react',
         'classnames',
-        'focus-trap-react',
         'js-md5',
         'react-textarea-autosize',
       ],
