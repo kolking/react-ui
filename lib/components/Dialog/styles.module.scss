@@ -5,10 +5,11 @@
 .overlay {
   inset: 0;
   z-index: 99;
-  display: grid;
+  display: flex;
   position: fixed;
-  place-items: center;
+  align-items: center;
   will-change: opacity;
+  justify-content: center;
   backdrop-filter: blur(3px);
   background-color: var(--color-backdrop);
 
