@@ -1,10 +1,16 @@
 import { useCallback, useRef, useState } from 'react';
 
 function afterTransition(element: Element | null, callback: () => void) {
-  setTimeout(
-    callback,
-    element ? parseFloat(getComputedStyle(element).transitionDuration) * 1000 : 0,
-  );
+  // Get the maximum transition duration from the element's computed style
+  const duration = element
+    ? Math.max(
+        ...getComputedStyle(element)
+          .transitionDuration.split(',')
+          .map((d) => parseFloat(d) * 1000),
+      )
+    : 0;
+
+  setTimeout(callback, duration);
 }
 
 export type DialogOptions<T, R> = {
@@ -20,6 +26,7 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   const ref = useRef<HTMLDivElement>(null);
   const refOptions = useRef(options);
   const refDisabled = useRef(false);
+  const [triggerProps, setTriggerProps] = useState({});
   const [open, setOpen] = useState(options?.defaultOpen ?? false);
   const [data, setData] = useState<T>();
 
@@ -71,7 +78,8 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   }, []);
 
   return {
-    props: { ref, open, requestClose: cancel },
+    props: { ref, open, setTriggerProps, requestClose: cancel },
+    trigger: { ...triggerProps, onClick: show },
     data,
     show,
     cancel,

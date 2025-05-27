@@ -1,100 +1,122 @@
-import React, { useEffect, useImperativeHandle, useRef } from 'react';
-import { createPortal } from 'react-dom';
-import { FocusTrap } from 'focus-trap-react';
+import React, { useContext, useLayoutEffect, useState } from 'react';
 import cn from 'classnames';
+import {
+  FloatingFocusManager,
+  FloatingOverlay,
+  FloatingPortal,
+  useDismiss,
+  useFloating,
+  useId,
+  useInteractions,
+  useMergeRefs,
+  useRole,
+} from '@floating-ui/react';
 
 import { cssProps } from '../../utils/helpers';
+import { DialogContext } from './DialogContext';
 import { Button, ButtonProps } from '../Button';
 import { Heading, HeadingProps } from '../Heading';
 import { Icon } from '../Icon';
 import styles from './styles.module.scss';
 
-const focusTrapOptions = { escapeDeactivates: false };
-
 export type DialogProps = React.HTMLAttributes<HTMLDivElement> & {
   open?: boolean;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   width?: React.CSSProperties['width'];
+  lockScroll?: boolean;
   requestClose: () => void;
+  setTriggerProps?: React.Dispatch<React.SetStateAction<object>>;
 };
 
 export const Dialog = React.forwardRef<HTMLDivElement, DialogProps>(
-  ({ open = false, size, width, style, className, children, requestClose, ...props }, ref) => {
-    const innerRef = useRef<HTMLDivElement>(null);
+  (
+    {
+      open = false,
+      size,
+      width,
+      lockScroll = true,
+      style,
+      className,
+      children,
+      setTriggerProps,
+      requestClose,
+      ...props
+    },
+    ref,
+  ) => {
+    const [labelId, setLabelId] = useState<string>();
 
-    useImperativeHandle(ref, () => innerRef.current!);
+    const { refs, context } = useFloating({
+      open,
+      onOpenChange: requestClose,
+    });
 
-    useEffect(() => {
-      const dialog = innerRef.current;
+    const { getFloatingProps, getReferenceProps } = useInteractions([
+      useDismiss(context),
+      useRole(context, { role: 'dialog' }),
+    ]);
 
-      if (dialog && open) {
-        // Hide when clicked outside
-        function handleClick(e: MouseEvent) {
-          if (e.target === e.currentTarget) {
-            requestClose();
-          }
-        }
+    useLayoutEffect(() => {
+      setTriggerProps?.(getReferenceProps());
+    }, [setTriggerProps, getReferenceProps]);
 
-        // Hide when escape pressed
-        function handleEscape(e: KeyboardEvent) {
-          if (e.key === 'Escape') {
-            e.stopPropagation();
-            e.preventDefault();
-            requestClose();
-          }
-        }
-
-        dialog.addEventListener('click', handleClick);
-        dialog.addEventListener('keydown', handleEscape);
-
-        return () => {
-          dialog.removeEventListener('click', handleClick);
-          dialog.removeEventListener('keydown', handleEscape);
-        };
-      }
-    }, [open, requestClose]);
+    const dialogRef = useMergeRefs([refs.setFloating, ref]);
+    const portalRef = document.querySelector<HTMLElement>('[data-floating-root]') ?? document.body;
 
     if (!open) {
       return null;
     }
 
-    return createPortal(
-      <FocusTrap active={open} focusTrapOptions={focusTrapOptions}>
-        <div
-          {...props}
-          ref={innerRef}
-          tabIndex={0}
-          data-dialog
-          data-open={open}
-          data-floating-root
-          className={styles.overlay}
-        >
-          <div
-            role="alertdialog"
-            aria-modal="true"
-            data-dialog-wrapper
-            className={cn(styles.dialog, className)}
-            style={{ ...style, ...cssProps({ size, width }) }}
+    return (
+      <DialogContext.Provider value={{ labelId, setLabelId, requestClose }}>
+        <FloatingPortal root={portalRef}>
+          <FloatingOverlay
+            data-floating-root
+            data-dialog-overlay
+            lockScroll={lockScroll}
+            className={styles.overlay}
           >
-            {children}
-          </div>
-        </div>
-      </FocusTrap>,
-      // Append to an element with data-floating-root attribute
-      document.querySelector('[data-floating-root]') ?? document.body,
+            <FloatingFocusManager context={context}>
+              <div
+                {...getFloatingProps(props)}
+                ref={dialogRef}
+                data-dialog
+                data-open={open}
+                aria-labelledby={labelId}
+                className={cn(styles.dialog, className)}
+                style={{ ...style, ...cssProps({ size, width }) }}
+              >
+                {children}
+              </div>
+            </FloatingFocusManager>
+          </FloatingOverlay>
+        </FloatingPortal>
+      </DialogContext.Provider>
     );
   },
 );
 
-export const DialogTitle = ({ className, children, ...props }: Omit<HeadingProps, 'title'>) => (
-  <Heading
-    as="h4"
-    {...props}
-    data-dialog-title
-    title={children}
-    className={cn(styles.title, className)}
-  />
-);
+export const DialogTitle = ({ className, children, ...props }: Omit<HeadingProps, 'title'>) => {
+  const labelId = useId();
+  const { setLabelId } = useContext(DialogContext);
+
+  // Set aria-labelledby for the Dialog
+  useLayoutEffect(() => {
+    setLabelId(labelId);
+    return () => setLabelId(undefined);
+  }, [labelId, setLabelId]);
+
+  return (
+    <Heading
+      as="h4"
+      {...props}
+      id={labelId}
+      data-dialog-title
+      title={children}
+      className={cn(styles.title, className)}
+    />
+  );
+};
 
 export const DialogContent = (props: React.HTMLAttributes<HTMLDivElement>) => (
   <div {...props} data-dialog-content />
@@ -104,14 +126,19 @@ export const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLD
   <div {...props} data-dialog-footer className={cn(styles.footer, className)} />
 );
 
-export const DialogClose = ({ className, ...props }: ButtonProps) => (
-  <Button
-    type="button"
-    variant="tertiary"
-    aria-label="close dialog"
-    icon={<Icon name="close" />}
-    {...props}
-    data-dialog-close
-    className={cn(styles.close, className)}
-  />
-);
+export const DialogClose = ({ className, ...props }: ButtonProps) => {
+  const { requestClose } = useContext(DialogContext);
+
+  return (
+    <Button
+      type="button"
+      variant="tertiary"
+      aria-label="close dialog"
+      icon={<Icon name="close" />}
+      onClick={requestClose}
+      {...props}
+      data-dialog-close
+      className={cn(styles.close, className)}
+    />
+  );
+};

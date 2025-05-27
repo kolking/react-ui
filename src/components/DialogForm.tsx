@@ -57,7 +57,7 @@ export const DialogForm = ({ children }: Props) => {
 
   return (
     <>
-      {React.cloneElement(children, { onClick: dialog.show })}
+      {React.cloneElement(children, dialog.trigger)}
       <Dialog {...dialog.props}>
         <DialogTitle>Form dialog</DialogTitle>
         <DialogContent>
@@ -87,7 +87,7 @@ export const DialogForm = ({ children }: Props) => {
           <Button type="button" variant="secondary" title="Dismiss" onClick={dialog.cancel} />
           <Button type="button" title="Submit" onClick={handleSubmit} />
         </DialogFooter>
-        <DialogClose onClick={dialog.cancel} />
+        <DialogClose />
       </Dialog>
     </>
   );
