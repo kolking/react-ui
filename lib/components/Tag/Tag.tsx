@@ -5,7 +5,7 @@ import { cssProps, wrapNode } from '../../utils/helpers';
 import { PaletteColor } from '../../utils/colors';
 import styles from './styles.module.scss';
 
-export type TagProps = React.HTMLAttributes<HTMLSpanElement> & {
+export type TagProps = Omit<React.HTMLAttributes<HTMLSpanElement>, 'title'> & {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   variant?: 'default' | 'solid';
   scheme?: PaletteColor;
