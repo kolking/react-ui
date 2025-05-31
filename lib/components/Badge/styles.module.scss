@@ -38,15 +38,16 @@
     min-height: calc(var(--size) / 2);
   }
 
-  @starting-style {
+  &[data-hidden=true] {
     opacity: 0;
+    visibility: hidden;
     transform: scale3d(0,0,1);
   }
 
   @media (prefers-reduced-motion: no-preference) {
     transition:
       opacity 0.2s,
-      display 0.2s allow-discrete,
+      visibility 0.2s allow-discrete,
       transform 0.2s var(--ease-out-bounce);
   }
 

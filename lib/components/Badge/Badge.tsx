@@ -49,10 +49,6 @@ export const Badge = ({
     }
   }, [hidden, placement]);
 
-  if (hidden) {
-    return null;
-  }
-
   const showMaxValue = typeof value === 'number' && maxValue > 0 && value > maxValue;
 
   return (
@@ -60,6 +56,8 @@ export const Badge = ({
       {...props}
       ref={ref}
       data-badge={scheme}
+      data-hidden={hidden}
+      aria-hidden={hidden}
       data-placement={placement}
       className={cn(styles.badge, styles[scheme], className)}
       style={{ ...style, ...cssProps({ size }) }}
