@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import {
   autoUpdate,
+  Boundary,
   flip,
   FloatingFocusManager,
   FloatingPortal,
@@ -38,6 +39,7 @@ export type PopoverProps = React.HTMLAttributes<HTMLDivElement> & {
   modal?: boolean;
   disabled?: boolean;
   anchor?: Element | null;
+  boundary?: Boundary;
   minWidth?: React.CSSProperties['minWidth'];
   maxWidth?: React.CSSProperties['maxWidth'];
   onToggle?: (open: boolean) => void;
@@ -51,6 +53,7 @@ export const Popover = ({
   offset: customOffset = 5,
   modal = false,
   anchor,
+  boundary,
   disabled,
   minWidth,
   maxWidth,
@@ -70,7 +73,11 @@ export const Popover = ({
     placement,
     onOpenChange: setOpen,
     whileElementsMounted: autoUpdate,
-    middleware: [offset(customOffset), flip({ padding: 10 }), shift({ padding: 5 })],
+    middleware: [
+      offset(customOffset),
+      flip({ padding: 10, boundary }),
+      shift({ padding: 5, boundary }),
+    ],
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
