@@ -1,9 +1,17 @@
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import cn from 'classnames';
-import React, { useEffect, useRef } from 'react';
 
 import { cssProps } from '../../utils/helpers';
 import { PaletteColor } from '../../utils/colors';
 import styles from './styles.module.scss';
+
+function usePrevious<T>(value: T) {
+  const ref = useRef<T>();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
 
 export type BadgeProps = React.HTMLAttributes<HTMLSpanElement> & {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -24,7 +32,15 @@ export const Badge = ({
   ...props
 }: BadgeProps) => {
   const hidden = !value;
-  const ref = useRef<HTMLSpanElement>(null);
+  const prevHidden = usePrevious(hidden);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    // Apply CSS transition only if the badge was initially hidden
+    if (prevHidden && !hidden) {
+      ref.current?.classList.add(styles.appear);
+    }
+  }, [prevHidden, hidden]);
 
   useEffect(() => {
     if (!hidden && placement && ref.current) {
@@ -49,20 +65,22 @@ export const Badge = ({
     }
   }, [hidden, placement]);
 
+  if (hidden) {
+    return null;
+  }
+
   const showMaxValue = typeof value === 'number' && maxValue > 0 && value > maxValue;
 
   return (
-    <span
+    <div
       {...props}
       ref={ref}
       data-badge={scheme}
-      data-hidden={hidden}
-      aria-hidden={hidden}
       data-placement={placement}
       className={cn(styles.badge, styles[scheme], className)}
       style={{ ...style, ...cssProps({ size }) }}
     >
       {showMaxValue ? `${maxValue}+` : value}
-    </span>
+    </div>
   );
 };
