@@ -34,7 +34,8 @@ export const MenuDemo = () => (
       <MenuItem
         title="Disabled"
         disabled={true}
-        icon={<Icon name="cross-circle" />}
+        icon="blank"
+        //icon={<Icon name="cross-circle" />}
         onClick={() => console.log('Menu item 2')}
       />
       <MenuItem
