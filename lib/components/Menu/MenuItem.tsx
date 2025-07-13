@@ -12,7 +12,7 @@ export type MenuItemProps<T extends React.ElementType = 'button'> = PolymorphicP
     as?: T;
     scheme?: 'default' | 'negative' | 'positive' | 'warning';
     title?: React.ReactNode;
-    icon?: React.ReactElement;
+    icon?: React.ReactElement | 'blank';
     selected?: boolean;
   }
 >;
@@ -59,7 +59,7 @@ export const MenuItem = <T extends React.ElementType = 'button'>({
         wrapNode(children, 'span')
       ) : (
         <>
-          {icon}
+          {icon === 'blank' ? <div data-icon-blank /> : icon}
           {title !== undefined && wrapNode(title, 'span')}
         </>
       )}

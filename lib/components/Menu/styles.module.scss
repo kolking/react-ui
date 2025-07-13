@@ -68,6 +68,11 @@
     --color: var(--icon-color);
   }
 
+  [data-icon-blank] {
+    aspect-ratio: 1;
+    width: var(--icon-size);
+  }
+
   > span {
     @extend %truncate-text;
   }

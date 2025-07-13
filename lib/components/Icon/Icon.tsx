@@ -50,7 +50,7 @@ export const Icon = React.forwardRef<SVGSVGElement, IconProps>(
         ref={ref}
         focusable={false}
         aria-hidden={!props['aria-label'] || undefined}
-        data-icon={name || Svg.name}
+        data-icon={name || Svg.name || true}
         className={cn(styles.icon, scheme && styles[scheme], className)}
         style={{ ...style, ...cssProps({ color, width, height }) }}
       />
