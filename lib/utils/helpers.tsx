@@ -12,7 +12,9 @@ function cssPropValue(name: string, value?: string | number) {
   if (typeof value === 'number') {
     return `${value}px`;
   } else if (typeof value === 'string') {
-    return value.replace(/(?<=^|\s)([1-4]?xs|sm|md|lg|[1-4]?xl)/g, `var(--${name}-$1)`);
+    // Not using lookbehind in the beginning because iOS Safari prior to 16.4
+    // does not support it. Lookahead used in the end is supported everywhere.
+    return value.replace(/(^|\s)([1-4]?xs|sm|md|lg|[1-4]?xl)(?=$|\s)/g, `$1var(--${name}-$2)`);
   }
 
   return value;
