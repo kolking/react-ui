@@ -107,9 +107,7 @@ export const Menu = ({
   useEffect(() => {
     // Find the closest parent with the data-floating-root attribute
     const floatingRoot = refs.domReference.current?.closest('[data-floating-root]') as HTMLElement;
-    if (floatingRoot) {
-      portalRef.current = floatingRoot;
-    }
+    portalRef.current = floatingRoot ?? document.body;
   }, [refs]);
 
   return (
