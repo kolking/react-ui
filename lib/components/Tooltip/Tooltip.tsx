@@ -19,6 +19,7 @@ import {
   useRole,
 } from '@floating-ui/react';
 
+import { getElementRef } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
 type Trigger =
@@ -88,10 +89,7 @@ export const Tooltip = ({
   ]);
 
   // Preserve child component's ref
-  const ref = useMergeRefs([
-    refs.setReference,
-    'ref' in children ? (children.ref as React.Ref<Element>) : null,
-  ]);
+  const ref = useMergeRefs([refs.setReference, getElementRef(children)]);
 
   useEffect(() => {
     // Find the closest parent with the data-floating-root attribute
@@ -114,7 +112,7 @@ export const Tooltip = ({
 
   return (
     <>
-      {React.cloneElement(children, getReferenceProps({ ref, ...children.props }))}
+      {React.cloneElement(children, getReferenceProps({ ...children.props, ref }))}
       {open && (
         <FloatingPortal root={portalRef}>
           <div

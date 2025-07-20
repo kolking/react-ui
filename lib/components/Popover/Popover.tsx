@@ -19,6 +19,7 @@ import {
   useRole,
 } from '@floating-ui/react';
 
+import { getElementRef } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
 type TriggerEvent =
@@ -89,10 +90,7 @@ export const Popover = ({
   ]);
 
   // Preserve trigger component's ref
-  const ref = useMergeRefs([
-    refs.setReference,
-    'ref' in trigger ? (trigger.ref as React.Ref<Element>) : null,
-  ]);
+  const ref = useMergeRefs([refs.setReference, getElementRef(trigger)]);
 
   useEffect(() => {
     // Find the closest parent with the data-floating-root attribute
@@ -115,7 +113,7 @@ export const Popover = ({
 
   return (
     <>
-      {React.cloneElement(trigger, getReferenceProps({ ref, ...trigger.props }))}
+      {React.cloneElement(trigger, getReferenceProps({ ...trigger.props, ref }))}
       {open && (
         <FloatingPortal root={portalRef}>
           <FloatingFocusManager context={context} modal={modal} visuallyHiddenDismiss={modal}>
