@@ -20,7 +20,7 @@ import {
 import cn from 'classnames';
 
 import { MenuContext, MenuContextProps } from './MenuContext';
-import { cssProps } from '../../utils/helpers';
+import { cssProps, getElementRef } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
 export type MenuProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
@@ -99,10 +99,7 @@ export const Menu = ({
   );
 
   // Preserve trigger component's ref
-  const ref = useMergeRefs([
-    refs.setReference,
-    'ref' in trigger ? (trigger.ref as React.Ref<Element>) : null,
-  ]);
+  const ref = useMergeRefs([refs.setReference, getElementRef(trigger)]);
 
   useEffect(() => {
     // Find the closest parent with the data-floating-root attribute
@@ -114,7 +111,7 @@ export const Menu = ({
     <>
       {React.cloneElement(
         trigger,
-        getReferenceProps({ ref, 'data-menu-trigger': true, ...trigger.props }),
+        getReferenceProps({ ...trigger.props, ref, 'data-menu-trigger': true }),
       )}
       <MenuContext.Provider value={menuContext}>
         {(open || !unmount) && (

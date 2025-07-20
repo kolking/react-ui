@@ -43,6 +43,16 @@ export function wrapNode(node: React.ReactNode, Wrapper: React.ElementType) {
   return node;
 }
 
+export function getElementRef(element: React.JSX.Element) {
+  if (parseInt(React.version, 10) >= 19 && element.props.ref) {
+    return element.props.ref as React.Ref<Element>;
+  } else if ('ref' in element) {
+    return element.ref as React.Ref<Element>;
+  }
+
+  return null;
+}
+
 export function getErrorMessage(error: unknown) {
   if (error instanceof Error && error.message) {
     return error.message;
