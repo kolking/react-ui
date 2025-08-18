@@ -1,5 +1,36 @@
 @use '@lib/styles/utils';
 @use '@lib/styles/theme' with (
+  // When the host page uses a different rem size, these variabes should be adjusted.
+  // Below is the example for the case when the rem is 10px and default font size is 16px.
+  // $font-size: (
+  //   xs: 1.2rem, // 12
+  //   sm: 1.4rem, // 14
+  //   md: 1.6rem, // 16
+  //   lg: 1.8rem, // 18
+  //   xl: 2.0rem, // 20
+  //   h6: clamp(1.6rem, 2.25vw, 1.8rem), // 16 → 18
+  //   h5: clamp(1.8rem, 2.50vw, 2.0rem), // 18 → 20
+  //   h4: clamp(2.0rem, 3.00vw, 2.4rem), // 20 → 24
+  //   h3: clamp(2.4rem, 3.50vw, 2.8rem), // 24 → 28
+  //   h2: clamp(2.8rem, 4.00vw, 3.2rem), // 28 → 32
+  //   h1: clamp(3.2rem, 5.00vw, 4.0rem), // 32 → 40
+  // ),
+  // $border-radius: (
+  //   xs: 0.3rem, // 03
+  //   sm: 0.5rem, // 05
+  //   md: 0.8rem, // 08
+  //   lg: 1.2rem, // 12
+  //   xl: 1.8rem, // 18
+  // ),
+  // $spacing: (
+  //   2xs: clamp(0.8rem, 1.25vw, 1.0rem), // 08 → 10
+  //   xs:  clamp(1.2rem, 1.75vw, 1.4rem), // 12 → 14
+  //   sm:  clamp(1.6rem, 2.50vw, 2.0rem), // 16 → 20
+  //   md:  clamp(2.2rem, 3.50vw, 2.8rem), // 22 → 28
+  //   lg:  clamp(3.0rem, 4.75vw, 3.8rem), // 30 → 38
+  //   xl:  clamp(4.0rem, 6.25vw, 5.0rem), // 40 → 50
+  //   2xl: clamp(5.2rem, 8.00vw, 6.4rem), // 52 → 64
+  // ),
   $light-colors: (
     brand: #F565A5,
   ),
@@ -29,7 +60,6 @@
   text-rendering: optimizeLegibility;
   text-size-adjust: 100%;
   color: var(--color-fg);
-  font-size: var(--font-size-em);
   background: var(--color-bg);
   font-family: var(--font-family-body);
   font-weight: var(--font-weight-normal);
@@ -60,7 +90,7 @@ a {
 }
 
 main {
-  padding: 2rem;
+  padding: 2em;
   margin: 0 auto;
   max-width: 1080px;
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import cn from 'classnames';
 
-import { cssProps } from '../../utils/helpers';
+import { cssProps, wrapNode } from '../../utils/helpers';
 import { PaletteColor } from '../../utils/colors';
 import styles from './styles.module.scss';
 
@@ -80,7 +80,7 @@ export const Badge = ({
       className={cn(styles.badge, styles[scheme], className)}
       style={{ ...style, ...cssProps({ size }) }}
     >
-      {showMaxValue ? `${maxValue}+` : value}
+      {wrapNode(showMaxValue ? `${maxValue}+` : value, 'span')}
     </div>
   );
 };

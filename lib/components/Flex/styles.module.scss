@@ -12,14 +12,14 @@
   --margin: var(--margin-start) var(--margin-end);
 
   --gap: var(--gap-md) var(--gap-sm);
-  --gap-2xs: 0.25rem;  // 4
-  --gap-xs:  0.50rem;  // 8
-  --gap-sm:  0.75rem;  // 12
-  --gap-md:  1.00rem;  // 16
-  --gap-lg:  1.25rem;  // 20
-  --gap-xl:  1.50rem;  // 24
-  --gap-2xl: 2.00rem;  // 32
-  --gap-3xl: 2.50rem;  // 40
+  --gap-2xs: 0.25em;  // 4
+  --gap-xs:  0.50em;  // 8
+  --gap-sm:  0.75em;  // 12
+  --gap-md:  1.00em;  // 16
+  --gap-lg:  1.25em;  // 20
+  --gap-xl:  1.50em;  // 24
+  --gap-2xl: 2.00em;  // 32
+  --gap-3xl: 2.50em;  // 40
 
   display: flex;
   gap: var(--gap);
