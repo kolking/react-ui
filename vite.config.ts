@@ -43,7 +43,7 @@ export default defineConfig(({ mode }) => {
           }),
           prefixWrap('#root', {
             whitelist: ['(?<!.module)[.](css|scss)$'],
-            ignoredSelectors: ['#root'],
+            ignoredSelectors: ['#root', ':root'],
           }),
         ],
       },
