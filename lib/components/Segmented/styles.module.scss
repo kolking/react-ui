@@ -5,8 +5,8 @@
 // ---------------------------
 
 .segmented {
-  --length: 1;
-  --selected: 0;
+  --width: 0;
+  --offset: 0;
   --height: 2.5em;
   --margin: 1.25em 0;
   --padding: 0.1875em;
@@ -38,21 +38,20 @@
     z-index: -1;
     content: '';
     position: absolute;
+    width: var(--width);
     inset: var(--padding);
-    width: calc(100% / var(--length));
     border-radius: var(--border-radius);
+    transform: translateX(var(--offset));
     background: var(--selected-background);
     box-shadow: 0 0 var(--padding) rgb(0 0 0 / 10%);
-    transform: translateX(calc(100% * var(--selected)));
-    width: calc((100% - var(--padding) * 2) / var(--length));
 
     @media (prefers-reduced-motion: no-preference) {
-      transition: transform ease 0.3s;
+      transition: width ease 0.3s, transform ease 0.3s;
     }
   }
 
   button {
-    flex: 1 1 0;
+    flex: 1 1 auto;
     min-width: 0;
     gap: 0.375em;
     border: none;
