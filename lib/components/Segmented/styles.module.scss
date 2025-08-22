@@ -5,10 +5,8 @@
 // ---------------------------
 
 .segmented {
-  --length: 1;
-  --selected: 0;
+  --margin: 0;
   --height: 2.5em;
-  --margin: 1.25em 0;
   --padding: 0.1875em;
   --background: var(--color-gray-200);
   --text-color: var(--color-gray-700);
@@ -34,29 +32,12 @@
   background: var(--background);
   border-radius: calc(var(--border-radius) + var(--padding));
 
-  &:before {
-    z-index: -1;
-    content: '';
-    position: absolute;
-    inset: var(--padding);
-    width: calc(100% / var(--length));
-    border-radius: var(--border-radius);
-    background: var(--selected-background);
-    box-shadow: 0 0 var(--padding) rgb(0 0 0 / 10%);
-    transform: translateX(calc(100% * var(--selected)));
-    width: calc((100% - var(--padding) * 2) / var(--length));
-
-    @media (prefers-reduced-motion: no-preference) {
-      transition: transform ease 0.3s;
-    }
-  }
-
   button {
-    flex: 1 1 0;
     min-width: 0;
     gap: 0.375em;
     border: none;
     display: flex;
+    flex: 1 1 auto;
     cursor: pointer;
     padding: 0 0.5em;
     background: none;
@@ -77,18 +58,15 @@
     &::before {
       left: 0;
       width: 1px;
-      z-index: -2;
+      z-index: -1;
       content: '';
       position: absolute;
       height: calc(var(--height) / 2);
       background: var(--color-gray-400);
-
-      @media (prefers-reduced-motion: no-preference) {
-        transition: display 0.3s allow-discrete;
-      }  
     }
 
     &:first-child::before,
+    &:focus-visible::before,
     &[data-selected=true]::before,
     &[data-selected=true] + button::before {
       display: none;
@@ -99,12 +77,15 @@
     }
 
     &:focus-visible {
+      z-index: 1;
       outline-offset: 0;
       position: relative;
     }
   
     &[data-selected=true] {
       --text-color: var(--selected-text-color);
+      background: var(--selected-background);
+      box-shadow: 0 0 var(--padding) rgb(0 0 0 / 10%);
     }
 
     &[disabled] {
