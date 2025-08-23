@@ -30,15 +30,7 @@ export const Segmented = ({
     data-segmented
     data-disabled={disabled}
     className={cn(styles.segmented, className)}
-    style={{
-      ...style,
-      ...cssProps({
-        size,
-        margin,
-        length: items.length.toString(),
-        selected: selected.toString(),
-      }),
-    }}
+    style={{ ...style, ...cssProps({ size, margin }) }}
   >
     {items.map((item, index) => (
       <CompositeItem
