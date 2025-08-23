@@ -1,11 +1,17 @@
+:root {
+  // These values are unitless
+  --heading-margin-start: 1.25;
+  --heading-margin-end: 0.75;
+}
+
 // ---------------------------
 // BASE STYLE
 // ---------------------------
 
 @each $tag in h1, h2, h3, h4, h5, h6 {
   .#{$tag}, .heading #{$tag} {
-    --margin-start: 1.25em;
-    --margin-end: 0.75em;
+    --margin-start: calc(var(--heading-margin-start) * 1em);
+    --margin-end: calc(var(--heading-margin-end) * 1em);
     --margin: var(--margin-start) 0 var(--margin-end) 0;
     --font-size: var(--font-size-#{$tag});
   
@@ -28,22 +34,17 @@
 
 .heading {
   --template-columns: auto;
-  --margin-start: calc(var(--font-size) * 1.25);
-  --margin-end: calc(var(--font-size) * 0.75);
+  --margin-start: calc(var(--font-size) * var(--heading-margin-start));
+  --margin-end: calc(var(--font-size) * var(--heading-margin-end));
   --margin: var(--margin-start) 0 var(--margin-end) 0;
 
-  display: grid;
+  display: flex;
   gap: 0.375em 1em;
   align-items: center;
   margin: var(--margin);
-  grid-template-columns: var(--template-columns);
 
   &:first-child {
     --margin-start: 0;
-  }
-
-  &:has(.accessory) {
-    --template-columns: 1fr auto;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -55,6 +56,7 @@
 .accessory {
   gap: 0.75em;
   display: flex;
+  margin-left: auto;
   align-items: center;
 }
 
