@@ -10,7 +10,6 @@ export type HeadingProps = Omit<React.HTMLAttributes<HTMLHeadingElement>, 'title
   as?: HeadingElement;
   size?: HeadingElement;
   title: React.ReactNode;
-  description?: React.ReactNode;
   margin?: React.CSSProperties['margin'];
   marginStart?: React.CSSProperties['marginBlockStart'];
   marginEnd?: React.CSSProperties['marginBlockEnd'];
@@ -20,7 +19,6 @@ export const Heading = ({
   as: Element = 'h2',
   size = Element,
   title,
-  description,
   margin,
   marginStart,
   marginEnd,
@@ -32,7 +30,7 @@ export const Heading = ({
   const fontSize = `var(--font-size-${size})`;
   const hasChildren = React.Children.toArray(children).length > 0;
 
-  if (hasChildren || description) {
+  if (hasChildren) {
     return (
       <header
         {...props}
@@ -44,16 +42,9 @@ export const Heading = ({
         }}
       >
         <Element data-heading-title>{title}</Element>
-        {hasChildren && (
-          <div data-heading-accessory className={styles.accessory}>
-            {children}
-          </div>
-        )}
-        {description && (
-          <div data-heading-description className={styles.description}>
-            {description}
-          </div>
-        )}
+        <div data-heading-accessory className={styles.accessory}>
+          {children}
+        </div>
       </header>
     );
   }
