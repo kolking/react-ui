@@ -9,7 +9,7 @@
 // ---------------------------
 
 @each $tag in h1, h2, h3, h4, h5, h6 {
-  .#{$tag}, .heading #{$tag} {
+  .#{$tag} {
     --margin-start: calc(var(--heading-margin-start) * 1em);
     --margin-end: calc(var(--heading-margin-end) * 1em);
     --margin: var(--margin-start) 0 var(--margin-end) 0;
