@@ -18,3 +18,4 @@ export * from './components/ToggleButton';
 export * from './components/Tooltip';
 
 export * from './utils/colors';
+export * from './utils/helpers';
