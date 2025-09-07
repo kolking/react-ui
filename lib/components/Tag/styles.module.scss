@@ -14,30 +14,31 @@
   --size-lg: var(--font-size-lg);
   --size-xl: var(--font-size-xl);
 
-  --font-size: 0.875em;
-  --icon-size: 0.875em;
+  --height: 1.5em;
+  --padding: 0 0.375em;
   --border-width: 1px;
-  --border-radius: 0.1875em;
+  --border-radius: 0.25em;
   --border-color: color-mix(in srgb, transparent, var(--text-color) 10%);
+  --font-size: calc(var(--size) - 2px);
+  --icon-size: var(--font-size);
 
   gap: 0.25em;
-  min-height: 1.5em;
-  padding: 0 0.375em;
   align-items: center;
   display: inline-flex;
+  text-decoration: none;
   font-size: var(--size);
+  padding: var(--padding);
   color: var(--text-color);
+  min-height: var(--height);
   background: var(--background-color);
   border-radius: var(--border-radius);
   box-shadow: inset 0 0 0 var(--border-width) var(--border-color);
 
   > span {
-    overflow: clip;
+    overflow-x: clip;
     white-space: nowrap;
     text-overflow: ellipsis;
-    overflow-clip-margin: 0.25em;
     font-size: var(--font-size);
-    line-height: round(1em, 1px);
   }
 
   [data-icon] {
@@ -63,5 +64,16 @@ $colors: string-keys(map.get(theme.$light-palette, 'colors'));
     --border-width: 0;
     --text-color: var(--color-white);
     --background-color: var(--color-#{$color}-500);
+  }
+
+  .plain-#{$color} {
+    --height: unset;
+    --padding: unset;
+    --border-width: 0;
+    --border-radius: 0;
+    --icon-size: 1.25em;
+    --font-size: var(--size);
+    --icon-color: var(--color-#{$color}-500);
+    --text-color: var(--color-#{$color}-600);
   }
 }
