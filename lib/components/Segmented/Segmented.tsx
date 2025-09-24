@@ -19,6 +19,7 @@ export const Segmented = ({
   selected,
   disabled,
   margin,
+  children,
   className,
   style,
   onSelect,
@@ -50,5 +51,6 @@ export const Segmented = ({
         }
       />
     ))}
+    {children}
   </Composite>
 );
