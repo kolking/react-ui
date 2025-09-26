@@ -30,7 +30,7 @@ export const Dialogs = () => {
   return (
     <Flex as="form">
       <Button {...dialog.trigger} type="button" title="Open dialog" />
-      <Dialog {...dialog.props}>
+      <Dialog {...dialog.props} size="sm">
         <DialogTitle>The Dialog element</DialogTitle>
         <DialogContent>
           <p>
@@ -47,7 +47,7 @@ export const Dialogs = () => {
       <DialogForm>
         <Button type="button" title="Form dialog" />
       </DialogForm>
-      <DeleteDialog size="xs" onConfirm={(color) => console.log(`${color} color deleted`)}>
+      <DeleteDialog onConfirm={(color) => console.log(`${color} color deleted`)}>
         {(dialog) => (
           <Flex gap="xs" wrap="wrap">
             {colors.map((color) => (

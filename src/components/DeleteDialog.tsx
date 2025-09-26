@@ -84,4 +84,4 @@ const Dialog = ({ dialog, color, colors, deleteColor }: DialogProps) => {
   );
 };
 
-export const DeleteDialog = withDialog<Props, string>(Dialog);
+export const DeleteDialog = withDialog<Props, string>(Dialog, { size: 'xs' });

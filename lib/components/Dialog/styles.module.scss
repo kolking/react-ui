@@ -29,11 +29,11 @@
 
 .dialog {
   --size: var(--size-md);
-  --size-xs: 23em; // 368px
-  --size-sm: 25em; // 400px
-  --size-md: 28em; // 448px
-  --size-lg: 32em; // 516px
-  --size-xl: 37em; // 592px
+  --size-xs: 360px;
+  --size-sm: 420px; //+60
+  --size-md: 480px; //+60
+  --size-lg: 560px; //+80
+  --size-xl: 640px; //+80
 
   border: 0;
   max-width: 90vw;
