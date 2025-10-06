@@ -90,6 +90,7 @@ $dark-colors: (
 
 $light-palette: (
   colors: (
+    accent: #0070F7,
     gray:   #8D8D96,
     brown:  #A08060,
     red:    #F03020,
@@ -101,7 +102,7 @@ $light-palette: (
     blue:   #0070F7,
     indigo: #6056ED,
     purple: #A949D9,
-    accent: #0070F7,
+    pink:   #F74599,
   ),
   tints: (
     50:  95%,
@@ -118,6 +119,7 @@ $light-palette: (
 
 $dark-palette: (
   colors: (
+    accent: #0080FF,
     gray:   #656573,
     brown:  #A08060,
     red:    #F03020,
@@ -129,7 +131,7 @@ $dark-palette: (
     blue:   #0080FF,
     indigo: #7369FF,
     purple: #B353E3,
-    accent: #0080FF,
+    pink:   #F74599,
   ),
   tints: (
     50:  95%,

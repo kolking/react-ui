@@ -1,5 +1,6 @@
 const theme = {
   colors: [
+    'accent',
     'gray',
     'brown',
     'red',
@@ -11,7 +12,7 @@ const theme = {
     'blue',
     'indigo',
     'purple',
-    'accent',
+    'pink',
   ],
   tints: ['50', '100', '200', '300', '400', '500', '600', '700', '800'],
 } as const;
