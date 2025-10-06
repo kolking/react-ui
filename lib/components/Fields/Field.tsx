@@ -7,6 +7,7 @@ import styles from './styles/field.module.scss';
 export interface FieldConfig {
   id?: string;
   label?: React.ReactNode;
+  labelId?: string;
   labelAccessory?: React.ReactNode;
   help?: React.ReactNode;
   required?: boolean;
@@ -38,7 +39,7 @@ export const FieldLabel = ({ label, required, className, children, ...props }: F
   </div>
 );
 
-export type FieldDescriptionProps = React.HTMLAttributes<HTMLDivElement>;
+export type FieldDescriptionProps = React.HTMLAttributes<HTMLSpanElement>;
 
 export const FieldDescription = ({ className, children, ...props }: FieldDescriptionProps) => (
   <small {...props} data-field-description className={cn(styles.description, className)}>
@@ -51,6 +52,7 @@ export type FieldProps = React.HTMLAttributes<HTMLDivElement> & FieldConfig;
 export const Field = ({
   id,
   label,
+  labelId,
   labelAccessory,
   help,
   required,
@@ -68,7 +70,7 @@ export const Field = ({
     style={{ ...style, ...cssProps({ minWidth, maxWidth }) }}
   >
     {label && (
-      <FieldLabel htmlFor={id} label={label} required={required}>
+      <FieldLabel id={labelId} htmlFor={id} label={label} required={required}>
         {labelAccessory}
       </FieldLabel>
     )}
