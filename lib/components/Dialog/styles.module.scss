@@ -7,9 +7,8 @@
   z-index: 99;
   display: flex;
   position: fixed;
-  align-items: center;
+  padding: 5vh 5vw;
   will-change: opacity;
-  justify-content: center;
   backdrop-filter: blur(3px);
   background-color: var(--color-backdrop);
 
@@ -36,7 +35,8 @@
   --size-xl: 640px; //+80
 
   border: 0;
-  max-width: 90vw;
+  margin: auto;
+  max-width: 100%;
   color: var(--color-fg);
   padding: var(--spacing-md);
   background: var(--color-dialog);
