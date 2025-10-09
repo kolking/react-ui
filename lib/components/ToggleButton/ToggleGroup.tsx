@@ -1,52 +1,57 @@
-import React from 'react';
-import { Composite, CompositeItem } from '@floating-ui/react';
 import cn from 'classnames';
+import React, { useEffect, useState } from 'react';
+import { Composite, CompositeItem } from '@floating-ui/react';
 
-import styles from './styles.module.scss';
 import { cssProps } from '../../utils/helpers';
+import styles from './styles.module.scss';
 
 export type ToggleGroupProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
-  variant?: 'inline' | 'block';
-  selected: number;
+  selected?: number;
   disabled?: boolean;
-  equalWidth?: boolean;
   children: React.ReactElement[];
   minWidth?: React.CSSProperties['minWidth'];
   maxWidth?: React.CSSProperties['maxWidth'];
-  onSelect: (index: number) => void;
+  flexBasis?: React.CSSProperties['flexBasis'];
+  onSelect?: (index: number) => void;
 };
 
 export const ToggleGroup = ({
-  variant = 'inline',
-  selected,
+  selected = 0,
   disabled,
-  equalWidth,
   minWidth,
   maxWidth,
+  flexBasis,
   className,
   style,
   children,
   onSelect,
   ...props
 }: ToggleGroupProps) => {
-  const display = variant === 'block' ? 'flex' : undefined;
-  const flexBasis = equalWidth ? '0' : undefined;
+  const [selectedIndex, setSelectedIndex] = useState(selected);
+
+  useEffect(() => {
+    setSelectedIndex(selected);
+  }, [selected]);
 
   return (
     <Composite
       {...props}
       role="radiogroup"
       data-toggle-group
-      className={cn(styles.group, styles[variant], className)}
-      style={{ ...style, ...cssProps({ display, flexBasis, minWidth, maxWidth }) }}
+      className={cn(styles.group, className)}
+      style={{ ...style, ...cssProps({ flexBasis, minWidth, maxWidth }) }}
     >
       {React.Children.map(children, (child, index) => (
         <CompositeItem
           render={React.cloneElement(child, {
             role: 'radio',
-            disabled,
-            selected: index === selected,
-            onClick: () => onSelect(index),
+            disabled: disabled || child.props.disabled,
+            selected: index === selectedIndex,
+            onClick: (e: React.MouseEvent) => {
+              setSelectedIndex(index);
+              onSelect?.(index);
+              child.props.onClick?.(e);
+            },
           })}
         />
       ))}
