@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button, ButtonProps, Heading, Icon, Menu, MenuItem, Segmented } from '@lib';
 
-const items = ['First', 'Second', 'Third', 'Fourth', 'Fifth'];
 const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+const items = [
+  { value: 1, label: 'First' },
+  { value: 2, label: 'Second' },
+  { value: 3, label: 'Third' },
+  { value: 4, label: 'Fourth' },
+  { value: 5, label: 'Fifth' },
+];
 
 const triggerProps: ButtonProps = {
   type: 'button',
@@ -12,8 +18,11 @@ const triggerProps: ButtonProps = {
 };
 
 export const SegmentedDemo = () => {
-  const [selected, setSelected] = useState(0);
   const [size, setSize] = useState<(typeof sizes)[number]>();
+
+  const handleSelect = useCallback((value: number) => {
+    console.log('Segmented:', value);
+  }, []);
 
   return (
     <>
@@ -24,7 +33,10 @@ export const SegmentedDemo = () => {
           ))}
         </Menu>
       </Heading>
-      <Segmented items={items} selected={selected} size={size} onSelect={setSelected} />
+      <Segmented items={items} size={size} onSelect={handleSelect}>
+        <Button type="button" variant="tertiary" icon={<Icon name="chevron-left" />} />
+        <Button type="button" variant="tertiary" icon={<Icon name="chevron-right" />} />
+      </Segmented>
     </>
   );
 };
