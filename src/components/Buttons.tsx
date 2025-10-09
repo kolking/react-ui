@@ -1,9 +1,8 @@
-import { Button, Flex, Icon, ToggleButton, ToggleGroup, Tooltip } from '@lib';
+import { Button, ButtonGroup, Flex, Icon, ToggleButton, ToggleGroup, Tooltip } from '@lib';
 import { useState } from 'react';
 
 export const Buttons = () => {
   const [toggleButton, setToggleButton] = useState(false);
-  const [buttonGroup, setButtonGroup] = useState(0);
 
   return (
     <Flex as="section" direction="column" gap="xl">
@@ -134,11 +133,20 @@ export const Buttons = () => {
           selected={toggleButton}
           onClick={() => setToggleButton(!toggleButton)}
         />
-        <ToggleGroup selected={buttonGroup} onSelect={setButtonGroup}>
+        <ToggleGroup>
           {['First', 'Second', 'Third'].map((title) => (
-            <ToggleButton key={title} title={title} />
+            <ToggleButton
+              key={title}
+              title={title}
+              onClick={() => console.log('ToggleGroup:', title)}
+            />
           ))}
         </ToggleGroup>
+        <ButtonGroup>
+          {['First', 'Second', 'Third'].map((title) => (
+            <Button key={title} type="button" title={title} variant="secondary" />
+          ))}
+        </ButtonGroup>
       </Flex>
     </Flex>
   );

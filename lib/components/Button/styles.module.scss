@@ -154,3 +154,38 @@ $schemes: (
     }
   }
 }
+
+// ---------------------------
+// BUTTON GROUP
+// ---------------------------
+
+.group {
+  --gap: 2px;
+  --min-width: auto;
+  --max-width: none;
+  --flex-basis: auto;
+
+  gap: var(--gap);
+  display: inline-flex;
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  [data-button] {
+    min-width: 0;
+    flex: 1 1 var(--flex-basis);
+
+    &:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &:not(:last-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &:focus-visible {
+      position: relative;
+    }
+  }
+}
