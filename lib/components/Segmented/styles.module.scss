@@ -8,6 +8,7 @@
   --margin: 0;
   --height: 2.5em;
   --padding: 0.1875em;
+  --flex-basis: auto;
   --background: var(--color-gray-200);
   --text-color: var(--color-gray-700);
   --border-radius: var(--border-radius-sm);
@@ -38,7 +39,6 @@
   gap: 0.375em;
   border: none;
   display: flex;
-  flex: 1 1 auto;
   cursor: pointer;
   padding: 0 0.5em;
   background: none;
@@ -48,6 +48,7 @@
   font-family: inherit;
   justify-content: center;
   color: var(--text-color);
+  flex: 1 1 var(--flex-basis);
   line-height: var(--line-height-sm);
   font-weight: var(--font-weight-medium);
   border-radius: var(--border-radius);

@@ -16,6 +16,7 @@ export type SegmentedProps<T> = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSe
   items: SegmentedItem<T>[];
   selected?: T;
   disabled?: boolean;
+  segmentsWidth?: 'auto' | 'equal';
   margin?: React.CSSProperties['margin'];
   onSelect?: (value: T) => void;
 };
@@ -25,6 +26,7 @@ export const Segmented = <T,>({
   items,
   selected = items[0].value,
   disabled,
+  segmentsWidth = 'auto',
   margin,
   children,
   className,
@@ -32,6 +34,7 @@ export const Segmented = <T,>({
   onSelect,
   ...props
 }: SegmentedProps<T>) => {
+  const flexBasis = segmentsWidth === 'equal' ? 0 : undefined;
   const [selectedValue, setSelectedValue] = useState(selected);
 
   useEffect(() => {
@@ -46,7 +49,7 @@ export const Segmented = <T,>({
       data-segmented
       data-disabled={disabled}
       className={cn(styles.segmented, className)}
-      style={{ ...style, ...cssProps({ size, margin }) }}
+      style={{ ...style, ...cssProps({ size, margin, flexBasis }) }}
     >
       {items.map((item, index) => (
         <CompositeItem
