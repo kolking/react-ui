@@ -31,7 +31,7 @@ type TriggerEvent =
   | 'focus click'
   | 'hover focus click';
 
-export type PopoverProps = React.HTMLAttributes<HTMLDivElement> & {
+export type PopoverProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onToggle'> & {
   open?: boolean;
   event?: TriggerEvent;
   placement?: Placement;
