@@ -185,6 +185,7 @@
   }
 
   &[data-disabled=true] {
+    --text-color: var(--input-disabled-text-color);
     --border-color: var(--input-disabled-border-color);
     --background-color: var(--input-disabled-background-color);
   }
@@ -201,6 +202,7 @@
     gap: 0.375em;
     display: flex;
     align-items: center;
+    color: var(--text-color);
     padding-right: var(--input-padding);
   }
 

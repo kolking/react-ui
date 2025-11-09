@@ -51,7 +51,7 @@ function getClassName(type: React.HTMLInputTypeAttribute) {
 
 export type BaseInputProps<T = React.InputHTMLAttributes<HTMLInputElement>> = Omit<T, 'size'> & {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  error?: string;
+  error?: string | boolean;
 };
 
 export type InputProps = Omit<BaseInputProps, 'prefix'> & {
