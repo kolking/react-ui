@@ -55,3 +55,25 @@
   height: 1.5em;
   border-radius: 50%;
 }
+
+.gallery {
+  margin: 0;
+  padding: 0;
+  gap: 0.5em;
+  display: grid;
+  list-style: none;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
+  li {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    vertical-align: top;
+  }
+}
