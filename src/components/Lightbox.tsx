@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { Lightbox, Heading } from '@lib';
+import { Lightbox, Heading, LightboxImage } from '@lib';
 
 import styles from './styles.module.scss';
 
-const images = [
+const images: LightboxImage[] = [
   {
     src: 'https://images.pexels.com/photos/906150/pexels-photo-906150.jpeg',
     alt: 'Pink Petaled Flower Plant Inside White Hanging Pot',
+    loading: 'lazy',
   },
   {
     src: 'https://images.pexels.com/photos/250591/pexels-photo-250591.jpeg',

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useId, useRef } from 'react';
 import {
   FloatingFocusManager,
   FloatingOverlay,
@@ -14,84 +14,110 @@ import cn from 'classnames';
 import { Icon } from '../Icon';
 import { Button } from '../Button';
 import { Thumbnails } from './Thumbnails';
-import { afterTransition } from '../../utils/helpers';
+import { afterTransition, htmlImage } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
-export type LightboxImage = {
-  src: string;
-  alt?: string;
-};
+export type LightboxImage = React.ImgHTMLAttributes<HTMLImageElement>;
 
-export type LightboxProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
+export type LightboxProps<T extends LightboxImage> = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'onSelect'
+> & {
+  images: T[];
   selected: number;
-  images: LightboxImage[];
+  loop?: boolean;
   onSelect: (index?: number) => void;
+  renderImage?: (image: T) => React.ReactElement;
 };
 
-export const Lightbox = ({
-  selected,
+export const Lightbox = <T extends LightboxImage>({
   images,
+  selected,
+  loop = true,
   className,
   children,
   onSelect,
+  renderImage = htmlImage,
   ...props
-}: LightboxProps) => {
+}: LightboxProps<T>) => {
+  const id = useId();
   const count = images.length;
   const open = selected !== undefined;
-  const imagesRef = useRef<(HTMLElement | null)[]>([]);
+  const imagesRef = useRef<Array<HTMLElement | null>>([]);
   const portalRef = document.querySelector<HTMLElement>('[data-floating-root]') ?? document.body;
+  const showPrev = count > 1 && (loop || selected > 0);
+  const showNext = count > 1 && (loop || selected < count - 1);
 
   const { refs, context, elements } = useFloating({
     open,
-    onOpenChange: () => closeLightbox(),
-  });
-
-  const listNavigation = useListNavigation(context, {
-    loop: true,
-    // virtual: true,
-    // allowEscape: true,
-    listRef: imagesRef,
-    activeIndex: selected,
-    selectedIndex: selected,
-    orientation: 'both',
-    focusItemOnHover: false,
-    openOnArrowKeyDown: false,
-    scrollItemIntoView: { block: 'nearest' },
-    onNavigate: (index) => {
-      if (index !== null) {
-        onSelect(index);
+    onOpenChange: (open) => {
+      if (!open) {
+        closeLightbox();
       }
     },
   });
 
   const { getFloatingProps, getItemProps } = useInteractions([
-    listNavigation,
     useDismiss(context),
     useRole(context, { role: 'dialog' }),
+    useListNavigation(context, {
+      loop,
+      virtual: true,
+      listRef: imagesRef,
+      activeIndex: selected,
+      selectedIndex: selected,
+      orientation: 'both',
+      focusItemOnHover: false,
+      openOnArrowKeyDown: false,
+      scrollItemIntoView: { inline: 'nearest' },
+      onNavigate: (index) => {
+        if (index !== null && index !== selected) {
+          imagesRef.current[index]?.focus();
+          onSelect(index);
+        }
+      },
+    }),
   ]);
+
+  const preserveFocus = useCallback(
+    (index: number) => {
+      // Prevent losing focus after switching to
+      // the first or last image in non-looping mode
+      if (!loop && (index === 0 || index === count - 1)) {
+        imagesRef.current[index]?.focus();
+      }
+    },
+    [loop, count],
+  );
 
   const closeLightbox = useCallback(() => {
     elements.floating?.classList.add(styles.willhide);
-
     afterTransition(elements.floating, () => {
       onSelect(undefined);
     });
   }, [elements.floating, onSelect]);
 
   const selectPrev = useCallback(() => {
-    onSelect(selected === 0 ? count - 1 : selected - 1);
-  }, [count, selected, onSelect]);
+    const prevIndex = selected === 0 ? count - 1 : selected - 1;
+    onSelect(prevIndex);
+    preserveFocus(prevIndex);
+  }, [count, selected, preserveFocus, onSelect]);
 
   const selectNext = useCallback(() => {
-    onSelect(selected === count - 1 ? 0 : selected + 1);
-  }, [count, selected, onSelect]);
+    const nextIndex = selected === count - 1 ? 0 : selected + 1;
+    onSelect(nextIndex);
+    preserveFocus(nextIndex);
+  }, [count, selected, preserveFocus, onSelect]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            onSelect(imagesRef.current.indexOf(entry.target as HTMLElement));
+            const index = imagesRef.current.indexOf(entry.target as HTMLElement);
+            if (index !== -1 && index !== selected) {
+              onSelect(index);
+            }
           }
         });
       },
@@ -110,7 +136,11 @@ export const Lightbox = ({
         }
       });
     }
-  }, [elements.floating, onSelect]);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [elements.floating, selected, onSelect]);
 
   return (
     <FloatingPortal root={portalRef}>
@@ -131,16 +161,13 @@ export const Lightbox = ({
                   ref={(node) => {
                     imagesRef.current[index] = node;
                   }}
+                  id={`${id}${index}`}
                   data-lightbox-image={index}
                   data-selected={index === selected}
                   tabIndex={index === selected ? 0 : -1}
                   {...getItemProps()}
                 >
-                  <img
-                    decoding="async"
-                    src={image.src}
-                    alt={image.alt ?? `Image ${index + 1} of ${count}`}
-                  />
+                  {renderImage({ ...image, alt: image.alt ?? `Image ${index + 1} of ${count}` })}
                 </figure>
               ))}
             </div>
@@ -153,27 +180,27 @@ export const Lightbox = ({
               className={styles.close}
               onClick={closeLightbox}
             />
-            {count > 1 && (
-              <>
-                <Button
-                  type="button"
-                  variant="tertiary"
-                  data-lightbox-prev
-                  aria-label="previous image"
-                  icon={<Icon name="arrow-left" />}
-                  className={styles.prev}
-                  onClick={selectPrev}
-                />
-                <Button
-                  type="button"
-                  variant="tertiary"
-                  data-lightbox-next
-                  aria-label="next image"
-                  icon={<Icon name="arrow-right" />}
-                  className={styles.next}
-                  onClick={selectNext}
-                />
-              </>
+            {showNext && (
+              <Button
+                type="button"
+                variant="tertiary"
+                data-lightbox-next
+                aria-label="next image"
+                icon={<Icon name="arrow-right" />}
+                className={styles.next}
+                onClick={selectNext}
+              />
+            )}
+            {showPrev && (
+              <Button
+                type="button"
+                variant="tertiary"
+                data-lightbox-prev
+                aria-label="previous image"
+                icon={<Icon name="arrow-left" />}
+                className={styles.prev}
+                onClick={selectPrev}
+              />
             )}
           </div>
           {children}

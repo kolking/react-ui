@@ -78,6 +78,10 @@ export function getErrorMessage(error: unknown) {
   return 'An error occurred';
 }
 
+export function htmlImage(props: React.ImgHTMLAttributes<HTMLImageElement>) {
+  return <img decoding="async" {...props} />;
+}
+
 // https://www.christianvm.dev/blog/react-as-prop
 // https://fettblog.eu/typescript-react-generic-forward-refs/
 // https://blog.logrocket.com/build-strongly-typed-polymorphic-components-react-typescript/

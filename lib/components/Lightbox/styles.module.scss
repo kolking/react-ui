@@ -1,30 +1,17 @@
 @use '@kolking/react-ui/styles/utils';
 
 .lightbox {
-  --image-padding: 1em;
+  --image-padding: 0;
   --button-offset: 1.5em;
   --background-color: #000000;
-  --thumbnails-padding: 1.5em;
-  --thumbnails-background-color: #0C0C0C;
-  --thumbnail-size: 60px;
-  --thumbnail-opacity: 0.7;
-  --thumbnail-padding: 0.5em;
-  --thumbnail-border-width: 1px;
-  --thumbnail-border-color: #202020;
-  --thumbnail-border-radius: var(--border-radius-sm);
-  --thumbnail-background-color: #000000;
-  --thumbnail-selected-border-width: 2px;
-  --thumbnail-selected-border-color: var(--color-accent-500);
-  --thumbnail-selected-background-color: #000000;
 
   inset: 0;
-  z-index: 999;
+  z-index: 99;
   display: flex;
   position: fixed;
   user-select: none;
   will-change: opacity;
   flex-direction: column;
-  backdrop-filter: blur(5px);
   background: var(--background-color);
 
   @starting-style {
@@ -147,6 +134,20 @@
 }
 
 .thumbnails {
+  --thumbnails-padding: 1.5em;
+  --thumbnails-background-color: #0C0C0C;
+  --thumbnail-size: 4em;
+  --thumbnail-opacity: 0.7;
+  --thumbnail-padding: calc(var(--thumbnail-size) / 8);
+  --thumbnail-object-fit: contain;
+  --thumbnail-border-width: 1px;
+  --thumbnail-border-color: #202020;
+  --thumbnail-border-radius: var(--border-radius-sm);
+  --thumbnail-background-color: #000000;
+  --thumbnail-selected-border-width: 2px;
+  --thumbnail-selected-border-color: var(--color-accent-500);
+  --thumbnail-selected-background-color: #000000;
+
   margin: 0;
   width: 100%;
   display: flex;
@@ -154,8 +155,8 @@
   list-style: none;
   overflow-x: scroll;
   will-change: transform;
+  scroll-behavior: smooth;
   overscroll-behavior: contain;
-  scroll-snap-type: x proximity;
   -ms-overflow-style: none;
   scrollbar-width: none;
   padding: var(--thumbnails-padding);
@@ -170,6 +171,7 @@
   &::before, &::after {
     content: '';
     flex-grow: 1;
+    min-width: 0;
   }
 
   li {
@@ -196,8 +198,6 @@
 
     &[data-selected=true] {
       z-index: 1;
-      scroll-snap-stop: always;
-      scroll-snap-align: center;
       border-radius: var(--thumbnail-border-radius);
       background: var(--thumbnail-selected-background-color);
       outline: var(--thumbnail-selected-border-width) solid var(--thumbnail-selected-border-color);
@@ -210,22 +210,29 @@
   }
 
   img {
-    object-fit: contain;
     vertical-align: top;
     will-change: opacity;
     transition: opacity 0.2s;
     width: var(--thumbnail-size);
     height: var(--thumbnail-size);
     opacity: var(--thumbnail-opacity);
+    object-fit: var(--thumbnail-object-fit);
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .lightbox {
+    --image-padding: 0;
+    --button-offset: 1em;
+  }
+
+  .thumbnails {
+    --thumbnail-size: 3em;
+    --thumbnails-padding: 1em;
   }
 }
 
 @media (pointer: coarse) {
-  .lightbox {
-    --image-padding: 0;
-    --thumbnails-padding: 0.75em;
-  }
-
   .images {
     overflow-x: scroll;
   }
