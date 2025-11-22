@@ -1,12 +1,14 @@
 import cn from 'classnames';
 
 import { LightboxImage } from './Lightbox';
+import { Thumbnail } from './Thumbnail';
 import styles from './styles.module.scss';
 
 export type ThumbnailsProps = Omit<React.HTMLAttributes<HTMLOListElement>, 'onSelect'> & {
   selected: number;
   images: LightboxImage[];
   onSelect: (index: number) => void;
+  renderImage?: (image: LightboxImage) => React.ReactElement;
 };
 
 export const Thumbnails = ({
@@ -14,6 +16,7 @@ export const Thumbnails = ({
   images,
   className,
   onSelect,
+  renderImage,
   ...props
 }: ThumbnailsProps) => {
   const count = images.length;
@@ -25,14 +28,14 @@ export const Thumbnails = ({
   return (
     <ol {...props} data-lightbox-thumbnails className={cn(styles.thumbnails, className)}>
       {images.map((image, index) => (
-        <li
+        <Thumbnail
           key={index}
-          data-lightbox-thumbnail={index}
-          data-selected={index === selected}
-          onClick={() => onSelect(index)}
-        >
-          <img decoding="async" src={image.src} alt={`Thumbnail ${index + 1}`} />
-        </li>
+          index={index}
+          image={image}
+          renderImage={renderImage}
+          selected={index === selected}
+          onSelect={onSelect}
+        />
       ))}
     </ol>
   );

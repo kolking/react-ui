@@ -154,8 +154,8 @@
   list-style: none;
   overflow-x: scroll;
   will-change: transform;
+  scroll-behavior: smooth;
   overscroll-behavior: contain;
-  scroll-snap-type: x proximity;
   -ms-overflow-style: none;
   scrollbar-width: none;
   padding: var(--thumbnails-padding);
@@ -196,8 +196,6 @@
 
     &[data-selected=true] {
       z-index: 1;
-      scroll-snap-stop: always;
-      scroll-snap-align: center;
       border-radius: var(--thumbnail-border-radius);
       background: var(--thumbnail-selected-background-color);
       outline: var(--thumbnail-selected-border-width) solid var(--thumbnail-selected-border-color);
@@ -220,12 +218,15 @@
   }
 }
 
-@media (pointer: coarse) {
+@media screen and (max-width: 640px) {
   .lightbox {
     --image-padding: 0;
+    --button-offset: 1em;
     --thumbnails-padding: 0.75em;
   }
+}
 
+@media (pointer: coarse) {
   .images {
     overflow-x: scroll;
   }

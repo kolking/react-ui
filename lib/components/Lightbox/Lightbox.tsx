@@ -14,18 +14,17 @@ import cn from 'classnames';
 import { Icon } from '../Icon';
 import { Button } from '../Button';
 import { Thumbnails } from './Thumbnails';
+import { htmlImage } from './helpers';
 import { afterTransition } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
-export type LightboxImage = {
-  src: string;
-  alt?: string;
-};
+export type LightboxImage = React.ImgHTMLAttributes<HTMLImageElement>;
 
 export type LightboxProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
   selected: number;
   images: LightboxImage[];
   onSelect: (index?: number) => void;
+  renderImage?: (image: LightboxImage) => React.ReactElement;
 };
 
 export const Lightbox = ({
@@ -34,6 +33,7 @@ export const Lightbox = ({
   className,
   children,
   onSelect,
+  renderImage = htmlImage,
   ...props
 }: LightboxProps) => {
   const count = images.length;
@@ -56,7 +56,7 @@ export const Lightbox = ({
     orientation: 'both',
     focusItemOnHover: false,
     openOnArrowKeyDown: false,
-    scrollItemIntoView: { block: 'nearest' },
+    scrollItemIntoView: { inline: 'nearest' },
     onNavigate: (index) => {
       if (index !== null) {
         onSelect(index);
@@ -136,11 +136,7 @@ export const Lightbox = ({
                   tabIndex={index === selected ? 0 : -1}
                   {...getItemProps()}
                 >
-                  <img
-                    decoding="async"
-                    src={image.src}
-                    alt={image.alt ?? `Image ${index + 1} of ${count}`}
-                  />
+                  {renderImage({ ...image, alt: image.alt ?? `Image ${index + 1} of ${count}` })}
                 </figure>
               ))}
             </div>
