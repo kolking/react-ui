@@ -1,17 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-
-function afterTransition(element: Element | null, callback: () => void) {
-  // Get the maximum transition duration from the element's computed style
-  const duration = element
-    ? Math.max(
-        ...getComputedStyle(element)
-          .transitionDuration.split(',')
-          .map((d) => parseFloat(d) * 1000),
-      )
-    : 0;
-
-  setTimeout(callback, duration);
-}
+import { afterTransition } from '../../utils/helpers';
 
 export type DialogOptions<T, R> = {
   defaultOpen?: boolean;
