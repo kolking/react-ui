@@ -92,7 +92,7 @@ export const Palette = () => {
   const textColor = luminance && luminance < 0.45 ? 'white' : 'black';
 
   return (
-    <Flex gap="xl" align="flex-start">
+    <Flex gap="xl" align="flex-start" wrap="wrap">
       <dl className={styles.palette}>
         <dt />
         {tints.map((tint) => (
