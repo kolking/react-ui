@@ -108,6 +108,7 @@ const icons = [
   'redo-outline',
   'refresh',
   'reorder',
+  'scissors',
   'search',
   'shield-checkmark',
   'shield-lock',
