@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { Lightbox, Heading, LightboxImage } from '@lib';
-
-import styles from './styles.module.scss';
+import { Lightbox, Heading, LightboxImage, Gallery, GalleryItem, Icon } from '@lib';
 
 const images: LightboxImage[] = [
   {
@@ -47,22 +45,34 @@ const images: LightboxImage[] = [
   },
 ];
 
+function renderImage({ src, ...rest }: LightboxImage) {
+  return <img decoding="async" src={`${src}?w=350&h=350`} {...rest} />;
+}
+
 export const LightboxDemo = () => {
-  const [image, setImage] = useState<number>();
+  const [selected, setSelected] = useState<number>();
 
   return (
     <>
-      <Heading title="Lightbox" />
-      <ul className={styles.gallery}>
+      <Heading title="Gallery and Lightbox" />
+      <Gallery>
+        <GalleryItem render={<button />} onClick={() => console.log('button')}>
+          <Icon size="3em" name="photos" scheme="neutral" />
+        </GalleryItem>
         {images.map((image, index) => (
-          <li key={index} onClick={() => setImage(index)}>
-            <img decoding="async" src={`${image.src}?w=350`} alt={image.alt} />
-          </li>
+          <GalleryItem key={index} index={index} onSelect={setSelected}>
+            {renderImage(image)}
+          </GalleryItem>
         ))}
-      </ul>
-      {image !== undefined && (
-        <Lightbox images={images} selected={image} onSelect={setImage}>
-          <Lightbox.Thumbnails images={images} selected={image} onSelect={setImage} />
+      </Gallery>
+      {selected !== undefined && (
+        <Lightbox images={images} selected={selected} onSelect={setSelected}>
+          <Lightbox.Thumbnails
+            images={images}
+            selected={selected}
+            renderImage={renderImage}
+            onSelect={setSelected}
+          />
         </Lightbox>
       )}
     </>

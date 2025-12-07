@@ -5,6 +5,7 @@ export * from './components/Button';
 export * from './components/Dialog';
 export * from './components/Fields';
 export * from './components/Flex';
+export * from './components/Gallery';
 export * from './components/Heading';
 export * from './components/Icon';
 export * from './components/Lightbox';
