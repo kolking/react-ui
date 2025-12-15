@@ -12,7 +12,7 @@ export const Progress = () => (
       color={palette.red[500]}
       trackColor={palette.gray[200]}
     />
-    <Flex gap="3xl">
+    <Flex gap="3xl" wrap="wrap">
       <ProgressCircular value={null} />
       <ProgressCircular value={35} color={palette.green[500]} />
       <ProgressCircular size={50} thickness={25} value={35} color={palette.purple[500]} />

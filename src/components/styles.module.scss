@@ -1,6 +1,6 @@
 .palette {
   --tints-count: 9;
-  --swatch-size: 50px;
+  --swatch-size: min(8vw, 50px);
 
   margin: 0;
   gap: 0.5px;
@@ -47,6 +47,12 @@
     border: 1px solid transparent;
     font-size: var(--font-size-lg);
     border-radius: var(--border-radius-sm);  
+  }
+}
+
+@media (max-width: 800px) {
+  .form > [data-flex=row] {
+    flex-wrap: wrap;
   }
 }
 

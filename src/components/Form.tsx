@@ -13,11 +13,13 @@ import {
   Tooltip,
 } from '@lib';
 
+import styles from './styles.module.scss';
+
 export const Form = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Flex as="form" direction="column" gap="xl">
+    <Flex as="form" direction="column" gap="xl" className={styles.form}>
       <Flex>
         <Field
           label="Text label"
@@ -33,7 +35,7 @@ export const Form = () => {
         <Field
           label="Text label"
           required
-          labelAccessory={<Button title="Action" variant="tertiary" size="sm" />}
+          labelAccessory={<Button type="button" title="Action" variant="tertiary" size="sm" />}
         >
           <Input defaultValue="Read only" readOnly />
         </Field>

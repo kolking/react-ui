@@ -35,6 +35,19 @@ export function cssProps(values: { [key: string]: number | string | undefined })
   return style;
 }
 
+export function afterTransition(element: Element | null, callback: () => void) {
+  // Get the maximum transition duration from the element's computed style
+  const duration = element
+    ? Math.max(
+        ...getComputedStyle(element)
+          .transitionDuration.split(',')
+          .map((d) => parseFloat(d) * 1000),
+      )
+    : 0;
+
+  setTimeout(callback, duration);
+}
+
 export function wrapNode(node: React.ReactNode, Wrapper: React.ElementType) {
   if (typeof node === 'string' || typeof node === 'number') {
     return <Wrapper>{node}</Wrapper>;
@@ -63,6 +76,10 @@ export function getErrorMessage(error: unknown) {
   }
 
   return 'An error occurred';
+}
+
+export function htmlImage(props: React.ImgHTMLAttributes<HTMLImageElement>) {
+  return <img decoding="async" {...props} />;
 }
 
 // https://www.christianvm.dev/blog/react-as-prop

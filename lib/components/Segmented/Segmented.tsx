@@ -54,24 +54,21 @@ export const Segmented = <T,>({
       {items.map((item, index) => (
         <CompositeItem
           key={index}
-          render={
-            <button
-              role="radio"
-              type="button"
-              disabled={disabled || item.disabled}
-              data-segmented-item={index}
-              aria-checked={item.value === selectedValue}
-              data-selected={item.value === selectedValue}
-              className={styles.button}
-              onClick={() => {
-                setSelectedValue(item.value);
-                onSelect?.(item.value);
-              }}
-            >
-              {wrapNode(item.label, 'span')}
-            </button>
-          }
-        />
+          role="radio"
+          type="button"
+          render={<button />}
+          disabled={disabled || item.disabled}
+          data-segmented-item={index}
+          aria-checked={item.value === selectedValue}
+          data-selected={item.value === selectedValue}
+          className={styles.button}
+          onClick={() => {
+            setSelectedValue(item.value);
+            onSelect?.(item.value);
+          }}
+        >
+          {wrapNode(item.label, 'span')}
+        </CompositeItem>
       ))}
       {children}
     </Composite>

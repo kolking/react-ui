@@ -1,0 +1,50 @@
+// ---------------------------
+// BASE STYLE
+// ---------------------------
+
+.gallery {
+  --gap: 0.5em;
+  --margin-start: 0;
+  --margin-end: 0;
+  --margin: var(--margin-start) var(--margin-end);
+  --item-size: 150px;
+  --item-padding: 0;
+  --item-border-radius: var(--border-radius-xs);
+  --item-background-color: var(--color-gray-200);
+  --image-object-fit: cover;
+
+  padding: 0;
+  display: grid;
+  gap: var(--gap);
+  margin-block: var(--margin);
+  grid-template-columns: repeat(auto-fill, minmax(var(--item-size), 1fr));
+}
+
+.item {
+  border: 0;
+  margin: 0;
+  font: inherit;
+  overflow: clip;
+  cursor: pointer;
+  appearance: none;
+  padding: var(--item-padding);
+  background: var(--item-background-color);
+  border-radius: var(--item-border-radius);
+
+  &:focus-visible {
+    position: relative;
+  }
+
+  :is(&:hover, &:focus-visible) img {
+    transform: scale(1.1);
+  }
+
+  img {
+    width: 100%;
+    aspect-ratio: 1;
+    vertical-align: top;
+    will-change: transform;
+    transition: transform 0.3s ease;
+    object-fit: var(--image-object-fit);
+  }
+}

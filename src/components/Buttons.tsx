@@ -6,7 +6,7 @@ export const Buttons = () => {
 
   return (
     <Flex as="section" direction="column" gap="xl">
-      <Flex>
+      <Flex wrap="wrap">
         <Tooltip content="This is a tooltip">
           <Button title="Primary" minWidth={110} />
         </Tooltip>
@@ -17,7 +17,7 @@ export const Buttons = () => {
         <Button title="Positive" scheme="positive" icon={<Icon name="checkmark-circle" />} />
         <Button title="Warning" scheme="warning" icon={<Icon name="warning" />} />
       </Flex>
-      <Flex>
+      <Flex wrap="wrap">
         <Button variant="secondary" title="Secondary" minWidth={110} />
         <Button variant="secondary" title="Disabled" disabled />
         <Button variant="secondary" title="Loading" busy />
@@ -41,7 +41,7 @@ export const Buttons = () => {
           icon={<Icon name="warning" />}
         />
       </Flex>
-      <Flex gap="xl">
+      <Flex wrap="wrap" gap="xl">
         <Button variant="tertiary" title="Tertiary" />
         <Button variant="tertiary" title="Disabled" disabled />
         <Button variant="tertiary" title="Loading" busy />
@@ -65,7 +65,7 @@ export const Buttons = () => {
           icon={<Icon name="warning" />}
         />
       </Flex>
-      <Flex>
+      <Flex wrap="wrap">
         <Button
           as="a"
           title="Link button"
@@ -97,7 +97,7 @@ export const Buttons = () => {
           icon={<Icon name="arrow-right" />}
         />
       </Flex>
-      <Flex>
+      <Flex wrap="wrap">
         <Button title="Size XS" size="xs" />
         <Button title="Size SM" size="sm" />
         <Button title="Size MD" size="md" />
@@ -106,7 +106,7 @@ export const Buttons = () => {
         <Button title="Max width button" maxWidth={135} />
         <Button title="Min width" minWidth={135} />
       </Flex>
-      <Flex>
+      <Flex wrap="wrap">
         <Button variant="secondary" title="Size XS" size="xs" />
         <Button variant="secondary" title="Size SM" size="sm" />
         <Button variant="secondary" title="Size MD" size="md" />
@@ -115,7 +115,7 @@ export const Buttons = () => {
         <Button variant="secondary" title="Max width button" maxWidth={135} />
         <Button variant="secondary" title="Min width" minWidth={135} />
       </Flex>
-      <Flex>
+      <Flex wrap="wrap">
         <ToggleButton
           title="Toggle me"
           selected={toggleButton}

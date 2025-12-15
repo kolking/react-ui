@@ -88,3 +88,9 @@ header {
     }
   }
 }
+
+@media (max-width: 640px) {
+  header {
+    flex-wrap: wrap;
+  }
+}

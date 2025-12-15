@@ -16,6 +16,7 @@ import { Switches } from './components/Switches';
 import { Ranges } from './components/Ranges';
 import { BreadcrumbsDemo } from './components/Breadcrumbs';
 import { PopoverDemo } from './components/Popover';
+import { LightboxDemo } from './components/Lightbox';
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
       <Notices />
       <SegmentedDemo />
       <BreadcrumbsDemo />
+      <LightboxDemo />
     </main>
   );
 }
