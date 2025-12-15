@@ -24,7 +24,9 @@ const Dialog = ({ dialog, color, colors, deleteColor }: DialogProps) => {
   const [error, setError] = useState('');
   const [selected, setSelected] = useState(color);
 
-  useEffect(() => setSelected(color), [color]);
+  useEffect(() => {
+    setSelected(color);
+  }, [color]);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelected(e.target.value);

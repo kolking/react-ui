@@ -35,7 +35,7 @@ export const Form = () => {
         <Field
           label="Text label"
           required
-          labelAccessory={<Button title="Action" variant="tertiary" size="sm" />}
+          labelAccessory={<Button type="button" title="Action" variant="tertiary" size="sm" />}
         >
           <Input defaultValue="Read only" readOnly />
         </Field>
