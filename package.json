@@ -1,6 +1,6 @@
 {
   "name": "@kolking/react-ui",
-  "version": "1.8.20",
+  "version": "1.9.0",
   "description": "React component library for building user interfaces",
   "author": "Nick Seryakov (https://github.com/kolking)",
   "license": "MIT",
