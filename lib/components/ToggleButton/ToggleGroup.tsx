@@ -2,6 +2,7 @@ import cn from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { Composite, CompositeItem } from '@floating-ui/react';
 
+import { ToggleButtonProps } from './ToggleButton';
 import { cssProps } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
@@ -41,20 +42,24 @@ export const ToggleGroup = ({
       className={cn(styles.group, className)}
       style={{ ...style, ...cssProps({ flexBasis, minWidth, maxWidth }) }}
     >
-      {React.Children.map(children, (child, index) => (
-        <CompositeItem
-          render={React.cloneElement(child, {
-            role: 'radio',
-            disabled: disabled || child.props.disabled,
-            selected: index === selectedIndex,
-            onClick: (e: React.MouseEvent) => {
-              setSelectedIndex(index);
-              onSelect?.(index);
-              child.props.onClick?.(e);
-            },
-          })}
-        />
-      ))}
+      {React.Children.map(children, (child, index) => {
+        const button = child as React.ReactElement<ToggleButtonProps>;
+
+        return (
+          <CompositeItem
+            render={React.cloneElement(button, {
+              role: 'radio',
+              disabled: disabled || button.props?.disabled,
+              selected: index === selectedIndex,
+              onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
+                setSelectedIndex(index);
+                onSelect?.(index);
+                button.props?.onClick?.(e);
+              },
+            })}
+          />
+        );
+      })}
     </Composite>
   );
 };

@@ -50,11 +50,6 @@ export default defineConfig(({ mode }) => {
       modules: {
         generateScopedName: '[folder]_[local]_[hash:base64:5]',
       },
-      preprocessorOptions: {
-        scss: {
-          api: 'modern-compiler',
-        },
-      },
     },
     resolve: {
       // The @lib alias points to the /lib forder by default

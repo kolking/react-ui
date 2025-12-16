@@ -1,3 +1,5 @@
+/// <reference types="../vite-env.global.d.ts" />
+
 import React from 'react';
 
 export function clamp(value: number, min: number, max: number) {

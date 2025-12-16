@@ -6,7 +6,7 @@ import { PaletteColor } from '../../utils/colors';
 import styles from './styles.module.scss';
 
 function usePrevious<T>(value: T) {
-  const ref = useRef<T>();
+  const ref = useRef<T>(undefined);
   useEffect(() => {
     ref.current = value;
   });
