@@ -31,7 +31,7 @@
     "build": "tsc -b ./tsconfig.lib.json && vite -c ./vite.config.lib.ts build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "validate": "yarn tsc && yarn lint --fix",
+    "validate": "yarn tsc -b && yarn lint --fix",
     "prepublishOnly": "yarn build"
   },
   "peerDependencies": {
