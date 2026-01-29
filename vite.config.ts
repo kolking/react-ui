@@ -59,6 +59,12 @@ export default defineConfig(({ mode }) => {
       include: ['./lib/**/*.test.ts?(x)'],
       setupFiles: './lib/setupTests.ts',
       css: true,
+      coverage: {
+        exclude: ['*.d.ts'],
+        include: ['./lib/**/*.[jt]s?(x)'],
+        reporter: ['text', 'json-summary', 'json'],
+        reportOnFailure: true,
+      },
     },
     resolve: {
       // The @lib alias points to the /lib forder by default

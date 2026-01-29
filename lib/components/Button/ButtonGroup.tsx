@@ -5,7 +5,7 @@ import { cssProps } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
 export type ButtonGroupProps = React.HTMLAttributes<HTMLDivElement> & {
-  children: [React.ReactElement, React.ReactElement, ...React.ReactElement[]];
+  children: React.ReactElement[];
   minWidth?: React.CSSProperties['minWidth'];
   maxWidth?: React.CSSProperties['maxWidth'];
   flexBasis?: React.CSSProperties['flexBasis'];

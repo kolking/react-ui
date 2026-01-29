@@ -30,11 +30,11 @@
     "dist": "yarn build && VITE_DIST='true' vite",
     "build": "tsc -b ./tsconfig.lib.json && vite -c ./vite.config.lib.ts build",
     "lint": "eslint .",
-    "test": "vitest --coverage.enabled=true",
+    "test": "vitest --coverage",
     "test-all": "yarn test run",
     "preview": "vite preview",
     "validate": "yarn tsc -b && yarn lint --fix && yarn test-all -u",
-    "coverage": "yarn test-all --coverage",
+    "validate-ci": "yarn tsc -b && yarn lint && yarn test-all",
     "prepublishOnly": "yarn build"
   },
   "peerDependencies": {
