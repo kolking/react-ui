@@ -2,19 +2,24 @@ import { md5 } from 'js-md5';
 
 export function getGravatarUri(size: number, email: string) {
   const emailHash = md5(email.toLowerCase().trim());
-  const pixelSize = window.devicePixelRatio * size;
+  const dpr = window.devicePixelRatio || 1;
+  const pixelSize = Math.round(dpr * size);
+
   return `https://www.gravatar.com/avatar/${emailHash}?s=${pixelSize}&d=404`;
 }
 
 export function getInitials(name: string) {
-  const initials = name.trim().split(/\s+/gu) || [];
-  let output = [...(initials.shift() || '')][0];
+  // Split the name string into words array
+  const words = name.trim().split(/\s+/gu).filter(Boolean);
 
-  if (initials.length > 0) {
-    output += [...(initials.pop() || '')][0];
+  if (words.length === 0) {
+    return '';
   }
 
-  return output.toUpperCase();
+  // First letter of the first word + first letter of the last word (if more than 1 word)
+  const initials = [...words[0]][0] + (words.length > 1 ? [...words[words.length - 1]][0] : '');
+
+  return initials.toUpperCase();
 }
 
 export function getStringColor(string: string) {
@@ -27,5 +32,8 @@ export function getStringColor(string: string) {
     }
   }
 
-  return `hsl(${hash % 360}, 75%, 50%)`;
+  // Avoid negative hue values
+  const hue = ((hash % 360) + 360) % 360;
+
+  return `hsl(${hue}, 75%, 50%)`;
 }
