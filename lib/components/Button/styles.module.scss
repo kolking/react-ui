@@ -171,7 +171,6 @@ $schemes: (
   max-width: var(--max-width);
 
   [data-button] {
-    min-width: 0;
     flex: 1 1 var(--flex-basis);
 
     &:not(:first-child) {

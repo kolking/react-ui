@@ -23,8 +23,8 @@ describe('Badge', () => {
     render(<Badge data-testid="badge" value={1} scheme="blue" placement="bottom-left" />);
 
     const root = screen.getByTestId('badge');
-    expect(root).toHaveAttribute('data-badge', 'blue');
-    expect(root).toHaveAttribute('data-placement', 'bottom-left');
+    expect(root.dataset.badge).toBe('blue');
+    expect(root.dataset.placement).toBe('bottom-left');
   });
 
   it('adds appear class when becoming visible', () => {
