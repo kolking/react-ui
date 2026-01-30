@@ -7,13 +7,38 @@ import styles from './styles.module.scss';
 
 type Scheme = 'info' | 'warning' | 'error' | 'success' | 'neutral';
 
-const icons: { [key: string]: IconProps['name'] } = {
-  info: 'info-circle',
-  warning: 'warning',
-  error: 'error-circle',
-  success: 'checkmark-circle',
-  neutral: 'info-outline',
+type SchemeIcons = {
+  [key in Scheme]: {
+    name: IconProps['name'];
+    label: string;
+  };
 };
+
+const icons: SchemeIcons = {
+  info: {
+    name: 'info-circle',
+    label: 'info icon',
+  },
+  warning: {
+    name: 'warning',
+    label: 'warning icon',
+  },
+  error: {
+    name: 'error-circle',
+    label: 'error icon',
+  },
+  success: {
+    name: 'checkmark-circle',
+    label: 'checkmark icon',
+  },
+  neutral: {
+    name: 'info-outline',
+    label: 'info icon',
+  },
+};
+
+const getSchemeIcon = (scheme: Scheme) =>
+  icons[scheme] && <Icon name={icons[scheme].name} aria-label={icons[scheme].label} />;
 
 export type NoticeProps = React.HTMLAttributes<HTMLDivElement> & {
   error?: unknown;
@@ -50,7 +75,7 @@ export const Notice = ({
     style={{ ...style, ...cssProps({ size, margin, padding }) }}
   >
     <div data-notice-content className={styles.content}>
-      {icon !== undefined ? icon : icons[scheme] && <Icon name={icons[scheme]} />}
+      {icon !== undefined ? icon : getSchemeIcon(scheme)}
       <div data-notice-message className={styles.message}>
         {error ? getErrorMessage(error) : children}
       </div>
