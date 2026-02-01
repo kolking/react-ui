@@ -84,7 +84,9 @@ export const Lightbox = <T extends LightboxImage>({
       // Prevent losing focus after switching to
       // the first or last image in non-looping mode
       if (!loop && (index === 0 || index === count - 1)) {
-        imagesRef.current[index]?.focus();
+        requestAnimationFrame(() => {
+          imagesRef.current[index]?.focus();
+        });
       }
     },
     [loop, count],
@@ -153,7 +155,13 @@ export const Lightbox = <T extends LightboxImage>({
           data-floating-root
           className={cn(styles.lightbox, className)}
         >
-          <div data-lightbox-content className={styles.content}>
+          <div
+            role="region"
+            aria-label="images"
+            aria-roledescription="carousel"
+            data-lightbox-content
+            className={styles.content}
+          >
             <div data-lightbox-images className={styles.images}>
               {images.map((image, index) => (
                 <figure
@@ -161,9 +169,13 @@ export const Lightbox = <T extends LightboxImage>({
                   ref={(node) => {
                     imagesRef.current[index] = node;
                   }}
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`${index + 1} of ${count}`}
                   id={`${id}${index}`}
                   data-lightbox-image={index}
                   data-selected={index === selected}
+                  aria-current={index === selected}
                   tabIndex={index === selected ? 0 : -1}
                   {...getItemProps()}
                 >
