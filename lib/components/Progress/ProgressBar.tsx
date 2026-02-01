@@ -33,10 +33,11 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
     ref,
   ) => {
     const progress = value ? clamp(value, 0, 100) : undefined;
+    const label = progress !== undefined ? `${progress} percent` : 'indeterminate';
 
     return (
       <div
-        aria-label={progress ? `${progress} percent` : 'indeterminate'}
+        aria-label={label}
         {...props}
         ref={ref}
         role="progressbar"
