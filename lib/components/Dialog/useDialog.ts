@@ -1,11 +1,14 @@
 import { useCallback, useRef, useState } from 'react';
 import { afterTransition } from '../../utils/helpers';
 
-export type DialogOptions<T, R> = {
+type DialogShowOptions<R> = {
+  onConfirm?: (values: R) => void;
+  onCancel?: () => void;
+};
+
+export type DialogOptions<T, R> = DialogShowOptions<R> & {
   defaultOpen?: boolean;
   onShow?: (values: T) => void;
-  onConfirm?: (result: R) => void;
-  onCancel?: () => void;
 };
 
 export type DialogType<T, R> = ReturnType<typeof useDialog<T, R>>;
@@ -15,17 +18,19 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   const refOptions = useRef(options);
   const refDisabled = useRef(false);
   const [triggerProps, setTriggerProps] = useState({});
-  const [open, setOpen] = useState(options?.defaultOpen ?? false);
+  const [open, setOpen] = useState<DialogShowOptions<R> | undefined>(
+    options?.defaultOpen ? {} : undefined,
+  );
   const [data, setData] = useState<T>();
 
   refOptions.current = options;
 
-  const show = useCallback((values: T) => {
+  const show = useCallback((values: T, options: DialogShowOptions<R> = {}) => {
     if (refDisabled.current) {
       return;
     }
 
-    setOpen(true);
+    setOpen(options);
     setData(values);
     refOptions.current?.onShow?.(values);
   }, []);
@@ -45,7 +50,17 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
         refOptions.current?.onCancel?.();
       }
 
-      setOpen(false);
+      setOpen((open) => {
+        if (open) {
+          if (result !== undefined) {
+            open.onConfirm?.(result);
+          } else {
+            open.onCancel?.();
+          }
+        }
+        return undefined;
+      });
+
       setData(undefined);
       refDisabled.current = false;
     });
@@ -66,7 +81,7 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   }, []);
 
   return {
-    props: { ref, open, setTriggerProps, requestClose: cancel },
+    props: { ref, open: open != null, setTriggerProps, requestClose: cancel },
     trigger: { ...triggerProps, onClick: show },
     data,
     show,

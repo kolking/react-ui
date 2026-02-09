@@ -57,7 +57,19 @@ export const Dialogs = () => {
                 variant="tertiary"
                 className={styles.swatch}
                 style={{ backgroundColor: palette[color][500] }}
-                onClick={() => dialog.show({ color, colors, deleteColor })}
+                onClick={() => {
+                  dialog.show(
+                    { color, colors, deleteColor },
+                    {
+                      onConfirm(color) {
+                        console.log(`dialog.show: ${color} color deleted`);
+                      },
+                      onCancel() {
+                        console.log(`dialog.show: cancelled`);
+                      },
+                    },
+                  );
+                }}
               />
             ))}
           </Flex>
