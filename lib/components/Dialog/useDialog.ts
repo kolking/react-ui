@@ -1,29 +1,35 @@
 import { useCallback, useRef, useState } from 'react';
 import { afterTransition } from '../../utils/helpers';
 
-export type DialogOptions<T, R> = {
+type DialogShowOptions<R> = {
+  onConfirm?: (values: R) => void;
+  onCancel?: () => void;
+};
+
+export type DialogOptions<T, R> = DialogShowOptions<R> & {
   defaultOpen?: boolean;
   onShow?: (values: T) => void;
-  onConfirm?: (result: R) => void;
-  onCancel?: () => void;
 };
 
 export type DialogType<T, R> = ReturnType<typeof useDialog<T, R>>;
 
 export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   const ref = useRef<HTMLDivElement>(null);
-  const refOptions = useRef(options);
   const refDisabled = useRef(false);
+  const refOptions = useRef(options);
+  const refShowOptions = useRef<DialogShowOptions<R>>(undefined);
   const [triggerProps, setTriggerProps] = useState({});
   const [open, setOpen] = useState(options?.defaultOpen ?? false);
   const [data, setData] = useState<T>();
 
   refOptions.current = options;
 
-  const show = useCallback((values: T) => {
+  const show = useCallback((values: T, showOptions: DialogShowOptions<R> = {}) => {
     if (refDisabled.current) {
       return;
     }
+
+    refShowOptions.current = showOptions;
 
     setOpen(true);
     setData(values);
@@ -41,8 +47,10 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
     afterTransition(ref.current, () => {
       if (result !== undefined) {
         refOptions.current?.onConfirm?.(result);
+        refShowOptions.current?.onConfirm?.(result);
       } else {
         refOptions.current?.onCancel?.();
+        refShowOptions.current?.onCancel?.();
       }
 
       setOpen(false);
