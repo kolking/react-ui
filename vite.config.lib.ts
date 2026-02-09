@@ -21,6 +21,7 @@ export default defineConfig({
     }),
     dts({
       tsconfigPath: resolve(__dirname, 'tsconfig.lib.json'),
+      exclude: ['lib/setupTests.ts', 'lib/**/*.test.{ts,tsx}'],
     }),
     // Copy SCSS files to dist/styles
     viteStaticCopy({
@@ -49,7 +50,7 @@ export default defineConfig({
       input: Object.fromEntries(
         glob
           .sync('lib/**/*.{ts,tsx}', {
-            ignore: ['lib/**/*.d.ts'],
+            ignore: ['lib/**/*.d.ts', 'lib/setupTests.ts', 'lib/**/*.test.{ts,tsx}'],
           })
           .map((file) => [
             // The name of the entry point
