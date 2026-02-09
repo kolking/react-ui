@@ -43,15 +43,13 @@ export const Badge = ({
   }, [prevHidden, hidden]);
 
   useEffect(() => {
-    if (!hidden && placement && ref.current) {
+    if (!hidden && placement && ref.current?.parentElement) {
       const height = ref.current.clientHeight;
       const parent = ref.current.parentElement;
-      const parentRadius = parent
-        ? Math.min(
-            parseInt(getComputedStyle(parent).getPropertyValue('border-radius')),
-            parent.clientHeight / 2,
-          )
-        : 0;
+      const parentRadius = Math.min(
+        parseInt(getComputedStyle(parent).getPropertyValue('border-radius')) || 0,
+        parent.clientHeight / 2,
+      );
 
       // To precisely place the badge at the parent's edge we need to find the distance
       // between the containing area corner and the point with polar coordinates (r,45°)

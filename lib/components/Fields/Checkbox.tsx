@@ -12,7 +12,7 @@ export type CheckboxProps = BaseInputProps & {
 
 export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
   ({ size, error, label, className, style, required, indeterminate, ...props }, ref) => {
-    const checked = props.checked;
+    const checked = props.checked || props.defaultChecked;
     const innerRef = useRef<HTMLInputElement>(null);
 
     useImperativeHandle(ref, () => innerRef.current!);

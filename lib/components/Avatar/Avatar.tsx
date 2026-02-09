@@ -43,7 +43,7 @@ export const Avatar = ({
   }, []);
 
   return (
-    <div
+    <figure
       {...props}
       data-avatar
       className={cn(styles.avatar, className)}
@@ -58,13 +58,13 @@ export const Avatar = ({
           onError={handleError}
         />
       ) : userName ? (
-        <span data-avatar-initials className={styles.initials}>
+        <figcaption data-avatar-initials className={styles.initials}>
           {getInitials(userName)}
-        </span>
+        </figcaption>
       ) : (
         <SvgAvatar aria-hidden data-avatar-default className={styles.default} />
       )}
       {children}
-    </div>
+    </figure>
   );
 };

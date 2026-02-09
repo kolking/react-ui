@@ -6,7 +6,7 @@ import { glob } from 'glob';
 import react from '@vitejs/plugin-react';
 import autoprefixer from 'autoprefixer';
 import svgr from 'vite-plugin-svgr';
-import dts from 'vite-plugin-dts';
+import dts from 'unplugin-dts/vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 // Library mode config is based on the guide:

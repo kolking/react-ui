@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import { defineConfig, loadEnv } from 'vite';
 import path from 'path';
 
@@ -49,6 +51,19 @@ export default defineConfig(({ mode }) => {
       },
       modules: {
         generateScopedName: '[folder]_[local]_[hash:base64:5]',
+      },
+    },
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      include: ['./lib/**/*.test.ts?(x)'],
+      setupFiles: './lib/setupTests.ts',
+      css: true,
+      coverage: {
+        exclude: ['*.d.ts'],
+        include: ['./lib/**/*.[jt]s?(x)'],
+        reporter: ['text', 'json-summary', 'json'],
+        reportOnFailure: true,
       },
     },
     resolve: {

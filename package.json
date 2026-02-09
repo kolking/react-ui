@@ -30,8 +30,11 @@
     "dist": "yarn build && VITE_DIST='true' vite",
     "build": "tsc -b ./tsconfig.lib.json && vite -c ./vite.config.lib.ts build",
     "lint": "eslint .",
+    "test": "vitest --coverage",
+    "test-all": "yarn test run",
     "preview": "vite preview",
-    "validate": "yarn tsc -b && yarn lint --fix",
+    "validate": "yarn tsc -b && yarn lint --fix && yarn test-all -u",
+    "validate-ci": "yarn tsc -b && yarn lint && yarn test-all",
     "prepublishOnly": "yarn build"
   },
   "peerDependencies": {
@@ -46,10 +49,15 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^22.19.3",
     "@types/react": "^19.2.3",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.2",
+    "@vitest/coverage-v8": "^4.0.18",
     "autoprefixer": "^10.4.23",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
@@ -58,6 +66,7 @@
     "eslint-plugin-react-refresh": "^0.4.25",
     "glob": "^13.0.0",
     "globals": "^16.5.0",
+    "jsdom": "^27.4.0",
     "postcss": "^8.5.6",
     "postcss-prefixwrap": "^1.57.2",
     "prettier": "^3.7.4",
@@ -67,11 +76,12 @@
     "sass": "1.94.3",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.49.0",
+    "unplugin-dts": "^1.0.0-beta.6",
     "vite": "^7.3.0",
-    "vite-plugin-dts": "^4.5.4",
     "vite-plugin-static-copy": "^3.1.4",
     "vite-plugin-svgr": "^4.5.0",
-    "vite-plugin-watch-and-run": "^1.7.5"
+    "vite-plugin-watch-and-run": "^1.7.5",
+    "vitest": "^4.0.18"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",

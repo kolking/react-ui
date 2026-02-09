@@ -57,6 +57,7 @@ export const Gallery = ({
       loop={loop}
       cols={columns}
       data-gallery
+      data-gallery-cols={columns}
       className={cn(styles.gallery, className)}
       style={{
         ...style,

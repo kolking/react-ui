@@ -46,10 +46,11 @@ export const ProgressCircular = React.forwardRef<HTMLDivElement, ProgressCircula
     ref,
   ) => {
     const progress = value !== null ? clamp(value, min, max) : undefined;
+    const label = progress !== undefined ? `${progress} percent` : 'indeterminate';
 
     return (
       <div
-        aria-label={progress ? `${progress} percent` : 'indeterminate'}
+        aria-label={label}
         {...props}
         ref={ref}
         role="progressbar"
