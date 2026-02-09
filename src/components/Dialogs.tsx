@@ -48,7 +48,7 @@ export const Dialogs = () => {
         <Button type="button" title="Form dialog" />
       </DialogForm>
       <DeleteDialog onConfirm={(color) => console.log(`${color} color deleted`)}>
-        {(dialog) => (
+        {(deleteDialog) => (
           <Flex gap="xs" wrap="wrap">
             {colors.map((color) => (
               <Button
@@ -58,7 +58,7 @@ export const Dialogs = () => {
                 className={styles.swatch}
                 style={{ backgroundColor: palette[color][500] }}
                 onClick={() => {
-                  dialog.show(
+                  deleteDialog.show(
                     { color, colors, deleteColor },
                     {
                       onConfirm(color) {
