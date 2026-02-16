@@ -20,7 +20,7 @@ export function withDialog<T extends object, R>(
 ) {
   const Context = React.createContext({
     props: {} as Record<string, unknown>,
-    show(_props: T, _options?: DialogShowOptions<R>): void {
+    show(_values: T, _showOptions?: DialogShowOptions<R>): void {
       throw new Error('Dialog context is not available');
     },
   });
