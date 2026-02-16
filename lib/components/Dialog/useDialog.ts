@@ -18,7 +18,7 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   const refDisabled = useRef(false);
   const refOptions = useRef(options);
   const refShowOptions = useRef<DialogShowOptions<R>>(undefined);
-  const [triggerProps, setTriggerProps] = useState({});
+  const [triggerProps, setTriggerProps] = useState<Record<string, unknown>>({});
   const [open, setOpen] = useState(options?.defaultOpen ?? false);
   const [data, setData] = useState<T>();
 
@@ -75,6 +75,7 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
 
   return {
     props: { ref, open, setTriggerProps, requestClose: cancel },
+    triggerProps,
     trigger: { ...triggerProps, onClick: show },
     data,
     show,
