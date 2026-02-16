@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
 import { Dialog, DialogProps } from './Dialog';
-import { DialogOptions, DialogType, useDialog } from './useDialog';
+import { DialogOptions, DialogShowOptions, DialogType, useDialog } from './useDialog';
 
 type PartialDialogProps = Omit<DialogProps, 'children' | 'ref' | 'requestClose'>;
 
@@ -20,7 +20,7 @@ export function withDialog<T extends object, R>(
 ) {
   const Context = React.createContext({
     props: {} as Record<string, unknown>,
-    show(_props: T, _options?: DialogOptions<T, R>): void {
+    show(_props: T, _options?: DialogShowOptions<R>): void {
       throw new Error('Dialog context is not available');
     },
   });

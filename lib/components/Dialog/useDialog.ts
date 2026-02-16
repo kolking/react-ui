@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { afterTransition } from '../../utils/helpers';
 
-type DialogShowOptions<R> = {
+export type DialogShowOptions<R> = {
   onConfirm?: (values: R) => void;
   onCancel?: () => void;
 };
