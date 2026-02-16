@@ -15,6 +15,39 @@ import { DialogForm } from './DialogForm';
 import { DeleteDialog } from './DeleteDialog';
 import styles from './styles.module.scss';
 
+type ColorButtonProps = {
+  color: PaletteColor;
+  colors: PaletteColor[];
+  deleteColor: (color: string) => void;
+};
+
+const ColorButton = ({ color, colors, deleteColor }: ColorButtonProps) => {
+  const showDeleteDialog = DeleteDialog.useContext();
+
+  return (
+    <Button
+      key={color}
+      type="button"
+      variant="tertiary"
+      className={styles.swatch}
+      style={{ backgroundColor: palette[color][500] }}
+      onClick={() => {
+        showDeleteDialog(
+          { color, colors, deleteColor },
+          {
+            onConfirm(color) {
+              console.log(`dialog.show: ${color} color deleted`);
+            },
+            onCancel() {
+              console.log(`dialog.show: cancelled`);
+            },
+          },
+        );
+      }}
+    />
+  );
+};
+
 export const Dialogs = () => {
   const [colors, setColors] = useState(Object.keys(palette) as PaletteColor[]);
 
@@ -74,6 +107,13 @@ export const Dialogs = () => {
             ))}
           </Flex>
         )}
+      </DeleteDialog>
+      <DeleteDialog onConfirm={(color) => console.log(`${color} color deleted`)}>
+        <Flex gap="xs" wrap="wrap">
+          {colors.map((color) => (
+            <ColorButton key={color} color={color} colors={colors} deleteColor={deleteColor} />
+          ))}
+        </Flex>
       </DeleteDialog>
     </Flex>
   );
