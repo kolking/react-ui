@@ -90,4 +90,37 @@ describe('withDialog HOC', () => {
     // After cancel, dialog content should be gone
     expect(screen.queryByRole('button', { name: 'Cancel' })).toBeNull();
   });
+
+  it('returns trigger api from useTrigger inside wrapper context', async () => {
+    const Content = ({ name }: WithDialogProps<{ name: string }, string>) => <span>{name}</span>;
+    const Wrapped = withDialog(Content);
+
+    const Trigger = () => {
+      const { show } = Wrapped.useTrigger();
+      return <button onClick={() => show({ name: 'Alice' })}>Open</button>;
+    };
+
+    render(
+      <Wrapped>
+        <Trigger />
+      </Wrapped>,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Open' }));
+
+    expect(await screen.findByText('Alice')).toBeInTheDocument();
+  });
+
+  it('throws when useTrigger.show is called outside wrapper context', () => {
+    const Content = ({ name }: WithDialogProps<{ name: string }, string>) => <span>{name}</span>;
+    const Wrapped = withDialog(Content);
+
+    const OutsideTrigger = () => {
+      const { show } = Wrapped.useTrigger();
+      show({ name: 'Bob' });
+      return null;
+    };
+
+    expect(() => render(<OutsideTrigger />)).toThrow('Dialog context is not available');
+  });
 });
