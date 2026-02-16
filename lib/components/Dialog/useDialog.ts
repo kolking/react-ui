@@ -76,6 +76,9 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   return {
     props: { ref, open, setTriggerProps, requestClose: cancel },
     triggerProps,
+    /**
+     * @deprecated The property will be removed in the next major release
+     */
     trigger: { ...triggerProps, onClick: show },
     data,
     show,

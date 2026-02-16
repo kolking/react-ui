@@ -86,6 +86,7 @@ export const Dialogs = () => {
           <Flex gap="xs" wrap="wrap">
             {colors.map((color) => (
               <Button
+                {...deleteDialog.triggerProps}
                 key={color}
                 type="button"
                 variant="tertiary"

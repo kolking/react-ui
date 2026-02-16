@@ -17,16 +17,11 @@ export type WithDialogProps<T extends object, R> = T & {
 export function withDialog<T extends object, R>(
   Component: React.ComponentType<WithDialogProps<T, R>>,
   withProps?: PartialDialogProps,
-): React.ComponentType<ComponentProps<T, R>> & {
-  useTrigger: () => {
-    props: Record<string, unknown>;
-    show: (props: T, options?: DialogOptions<T, R>) => void;
-  };
-} {
+) {
   const Context = React.createContext({
     props: {} as Record<string, unknown>,
     show(_props: T, _options?: DialogOptions<T, R>): void {
-      throw new Error('Dialog context is not availble');
+      throw new Error('Dialog context is not available');
     },
   });
 
