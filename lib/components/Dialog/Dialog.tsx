@@ -25,7 +25,7 @@ export type DialogProps = React.HTMLAttributes<HTMLDivElement> & {
   width?: React.CSSProperties['width'];
   lockScroll?: boolean;
   requestClose: () => void;
-  setTriggerProps?: React.Dispatch<React.SetStateAction<object>>;
+  setTriggerProps?: React.Dispatch<React.SetStateAction<Record<string, unknown>>>;
 };
 
 export const Dialog = React.forwardRef<HTMLDivElement, DialogProps>(

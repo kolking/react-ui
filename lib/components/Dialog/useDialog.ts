@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { afterTransition } from '../../utils/helpers';
 
-type DialogShowOptions<R> = {
+export type DialogShowOptions<R> = {
   onConfirm?: (values: R) => void;
   onCancel?: () => void;
 };
@@ -18,7 +18,7 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   const refDisabled = useRef(false);
   const refOptions = useRef(options);
   const refShowOptions = useRef<DialogShowOptions<R>>(undefined);
-  const [triggerProps, setTriggerProps] = useState({});
+  const [triggerProps, setTriggerProps] = useState<Record<string, unknown>>({});
   const [open, setOpen] = useState(options?.defaultOpen ?? false);
   const [data, setData] = useState<T>();
 
@@ -75,6 +75,10 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
 
   return {
     props: { ref, open, setTriggerProps, requestClose: cancel },
+    triggerProps,
+    /**
+     * @deprecated The property will be removed in the next major release
+     */
     trigger: { ...triggerProps, onClick: show },
     data,
     show,
