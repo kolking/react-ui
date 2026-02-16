@@ -22,18 +22,18 @@ type ColorButtonProps = {
 };
 
 const ColorButton = ({ color, colors, deleteColor }: ColorButtonProps) => {
-  const deleteDialog = DeleteDialog.useContext();
+  const { show, props: triggerProps } = DeleteDialog.useTrigger();
 
   return (
     <Button
-      {...deleteDialog.triggerProps}
+      {...triggerProps}
       key={color}
       type="button"
       variant="tertiary"
       className={styles.swatch}
       style={{ backgroundColor: palette[color][500] }}
       onClick={() => {
-        deleteDialog.show(
+        show(
           { color, colors, deleteColor },
           {
             onConfirm(color) {
