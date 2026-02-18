@@ -22,11 +22,10 @@ type ColorButtonProps = {
 };
 
 const ColorButton = ({ color, colors, deleteColor }: ColorButtonProps) => {
-  const { show, props: triggerProps } = DeleteDialog.useTrigger();
+  const show = DeleteDialog.useDialogShow();
 
   return (
     <Button
-      {...triggerProps}
       key={color}
       type="button"
       variant="tertiary"

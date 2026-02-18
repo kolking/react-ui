@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { Dialog, DialogProps } from './Dialog';
 import { DialogOptions, DialogShowOptions, DialogType, useDialog } from './useDialog';
@@ -18,11 +18,8 @@ export function withDialog<T extends object, R>(
   Component: React.ComponentType<WithDialogProps<T, R>>,
   withProps?: PartialDialogProps,
 ) {
-  const Context = React.createContext({
-    props: {} as Record<string, unknown>,
-    show(_values: T, _showOptions?: DialogShowOptions<R>): void {
-      throw new Error('Dialog context is not available');
-    },
+  const Context = React.createContext((_values: T, _showOptions?: DialogShowOptions<R>): void => {
+    throw new Error('Dialog context is not available');
   });
 
   function Wrapper({
@@ -35,16 +32,10 @@ export function withDialog<T extends object, R>(
   }: ComponentProps<T, R>) {
     const dialog = useDialog<T, R>({ defaultOpen, onShow, onConfirm, onCancel });
     const dialogProps = { ...withProps, ...props, ...dialog.props };
-    const context = useMemo(() => {
-      return {
-        props: dialog.triggerProps,
-        show: dialog.show,
-      };
-    }, [dialog.show, dialog.triggerProps]);
 
     return (
       <>
-        <Context value={context}>
+        <Context value={dialog.show}>
           {typeof children === 'function' ? children(dialog) : children}
         </Context>
         <Dialog {...dialogProps}>
@@ -54,7 +45,7 @@ export function withDialog<T extends object, R>(
     );
   }
 
-  Wrapper.useTrigger = () => {
+  Wrapper.useDialogShow = () => {
     return React.useContext(Context);
   };
 
