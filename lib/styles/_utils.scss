@@ -11,11 +11,11 @@
     @if meta.type-of($value) == map {
       $new-prefix: $prefix;
       @if string.slice($name, 1, 1) != '-' {
-        $new-prefix: if($prefix, #{$prefix}-#{$name}, #{$name});
+        $new-prefix: if(sass($prefix): #{$prefix}-#{$name}; else: #{$name});
       }
       @include vars($value, $new-prefix);
     } @else {
-      $var-name: if($prefix, --#{$prefix}-#{$name}, --#{$name});
+      $var-name: if(sass($prefix): --#{$prefix}-#{$name}; else: --#{$name});
       #{$var-name}: #{$value};
     }
   }
@@ -28,7 +28,7 @@
   @each $name, $color in map.get($palette, colors) {
     @each $level, $amount in map.get($palette, tints) {
       $var-name: #{$name}-#{$level};
-      $mix-with: if($amount > 0, $bg, $fg);
+      $mix-with: if(sass($amount > 0): $bg; else: $fg);
       $mixed-color: color.mix($mix-with, $color, math.abs($amount), $method: rgb);
       $output: map.set($output, $var-name, to-hex($mixed-color));
     }
@@ -94,6 +94,26 @@
 @function to-hex($color) {
   $ie-hex: color.ie-hex-str($color);
   @return string.unquote('#' + string.slice($ie-hex, 4));
+}
+
+// Round a float number with precision
+@function round-to($number, $precision: 3) {
+  $factor: math.pow(10, $precision);
+  @return math.div(math.round($number * $factor), $factor);
+}
+
+// Generate linear scale with clamp()
+// From $min-size at $min-width to $max-size at $max-width
+// https://clamp.font-size.app
+@function clamp-builder($min-size, $max-size, $min-width, $max-width, $rem: 16px) {
+  $min-size-rem: math.div($min-size, $rem);
+  $max-size-rem: math.div($max-size, $rem);
+
+  $slope: math.div($max-size - $min-size, $max-width - $min-width);
+  $intersection: round-to(math.div(-$min-width * $slope + $min-size, $rem));
+  $slope-vw: round-to($slope * 100);
+
+  @return clamp(#{$min-size-rem}rem, #{$intersection}rem + #{$slope-vw}vw, #{$max-size-rem}rem);
 }
 
 @mixin focus-visible($color: var(--color-focus)) {

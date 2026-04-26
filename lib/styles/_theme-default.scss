@@ -1,3 +1,5 @@
+@use './utils' as *;
+
 $font-family: (
   body: (-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"),
   mono: (Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace),
@@ -12,19 +14,20 @@ $font-weight: (
   heading: 700,
 );
 
+// https://clamp.font-size.app
 $font-size: (
   em: 16px,
-  xs: 0.750rem, // 12
-  sm: 0.875rem, // 14
-  md: 1.000rem, // 16
-  lg: 1.125rem, // 18
-  xl: 1.250rem, // 20
-  h6: clamp(1.000rem, 2.25vw, 1.125rem), // 16 → 18
-  h5: clamp(1.125rem, 2.50vw, 1.250rem), // 18 → 20
-  h4: clamp(1.250rem, 3.00vw, 1.500rem), // 20 → 24
-  h3: clamp(1.500rem, 3.50vw, 1.750rem), // 24 → 28
-  h2: clamp(1.750rem, 4.00vw, 2.000rem), // 28 → 32
-  h1: clamp(2.000rem, 5.00vw, 2.500rem), // 32 → 40
+  xs: 0.750rem, // 12px
+  sm: 0.875rem, // 14px
+  md: 1.000rem, // 16px
+  lg: 1.125rem, // 18px
+  xl: 1.250rem, // 20px
+  h6: clamp-builder(16px, 18px, 560px, 960px),
+  h5: clamp-builder(18px, 20px, 560px, 960px),
+  h4: clamp-builder(20px, 24px, 560px, 960px),
+  h3: clamp-builder(24px, 28px, 560px, 960px),
+  h2: clamp-builder(28px, 32px, 560px, 960px),
+  h1: clamp-builder(32px, 40px, 560px, 960px),
 );
 
 $line-height: (
@@ -36,21 +39,21 @@ $line-height: (
 );
 
 $border-radius: (
-  xs: 0.1875rem, // 03
-  sm: 0.3125rem, // 05
-  md: 0.5000rem, // 08
-  lg: 0.7500rem, // 12
-  xl: 1.1250rem, // 18
+  xs: 0.1875rem, //  3px
+  sm: 0.3125rem, //  5px
+  md: 0.5000rem, //  8px
+  lg: 0.7500rem, // 12px
+  xl: 1.1250rem, // 18px
 );
 
 $spacing: (
-  2xs: clamp(0.500rem, 1.25vw, 0.625rem), // 08 → 10
-  xs:  clamp(0.750rem, 1.75vw, 0.875rem), // 12 → 14
-  sm:  clamp(1.000rem, 2.50vw, 1.250rem), // 16 → 20
-  md:  clamp(1.375rem, 3.50vw, 1.750rem), // 22 → 28
-  lg:  clamp(1.875rem, 4.75vw, 2.375rem), // 30 → 38
-  xl:  clamp(2.500rem, 6.25vw, 3.125rem), // 40 → 50
-  2xl: clamp(3.250rem, 8.00vw, 4.000rem), // 52 → 64
+  2xs: clamp-builder(08px, 10px, 560px, 960px),
+  xs:  clamp-builder(12px, 14px, 560px, 960px),
+  sm:  clamp-builder(16px, 20px, 560px, 960px),
+  md:  clamp-builder(22px, 28px, 560px, 960px),
+  lg:  clamp-builder(30px, 38px, 560px, 960px),
+  xl:  clamp-builder(40px, 50px, 560px, 960px),
+  2xl: clamp-builder(52px, 64px, 560px, 960px),
 );
 
 $drop-shadow: (
@@ -61,7 +64,7 @@ $drop-shadow: (
   rgb(0 0 0 / 2%) 0 10px 10px
 );
 
-$ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+$ease-out-cubic:  cubic-bezier(0.215, 0.61, 0.355, 1);
 $ease-out-bounce: cubic-bezier(0.1, 1.3, 0.7, 1.1);
 
 $light-colors: (
