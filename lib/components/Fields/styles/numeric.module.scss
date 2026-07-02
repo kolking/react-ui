@@ -31,7 +31,7 @@
     --text-color: var(--color-gray-700);
     --background-color: var(--color-gray-100);
 
-    &[disabled] {
+    &:disabled {
       pointer-events: none;
       --text-color: var(--color-gray-300);
       --border-color: var(--color-gray-200);

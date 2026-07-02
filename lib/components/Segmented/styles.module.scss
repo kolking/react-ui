@@ -90,7 +90,7 @@
     box-shadow: 0 0 var(--padding) rgb(0 0 0 / 10%);
   }
 
-  &[disabled] {
+  &:disabled {
     --text-color: var(--disabled-text-color);
     cursor: default;
   }
