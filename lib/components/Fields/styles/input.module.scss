@@ -69,7 +69,7 @@
     --background-color: var(--input-error-background-color);
   }
 
-  &[disabled] {
+  &:disabled {
     --text-color: var(--input-disabled-text-color);
     --border-color: var(--input-disabled-border-color);
     --background-color: var(--input-disabled-background-color);

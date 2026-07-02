@@ -53,7 +53,7 @@
     transition: color 0.2s, background-color 0.2s, border-color 0.2s, outline 0.1s;
   }
 
-  &[disabled] {
+  &:disabled {
     cursor: default;
   }
 
@@ -106,7 +106,7 @@ $schemes: (
       --background-color: var(--color-#{$color}-600);
     }
 
-    &[disabled] {
+    &:disabled {
       --text-color: var(--color-gray-100);
       --border-color: var(--color-gray-400);
       --background-color: var(--color-gray-400);  
@@ -125,7 +125,7 @@ $schemes: (
       --background-color: var(--color-#{$color}-200);
     }
 
-    &[disabled] {
+    &:disabled {
       --text-color: var(--color-gray-400);
       --border-color: var(--color-gray-200);
       --background-color: var(--color-gray-100);
@@ -149,7 +149,7 @@ $schemes: (
       --text-color: var(--color-#{$color}-600);
     }
 
-    &[disabled] {
+    &:disabled {
       --text-color: var(--color-gray-400);
     }
   }

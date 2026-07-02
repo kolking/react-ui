@@ -79,7 +79,7 @@
     --background-color: var(--input-error-background-color);
   }
 
-  &[disabled] {
+  &:disabled {
     --checked-color: var(--color-gray-400);
     --border-color: var(--input-disabled-border-color);
     --background-color: var(--input-disabled-background-color);

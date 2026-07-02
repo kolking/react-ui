@@ -57,7 +57,7 @@
     outline: none;
   }
 
-  &[disabled] {
+  &:disabled {
     --text-color: var(--color-gray-400);
     --icon-color: var(--color-gray-300);
     cursor: default;
