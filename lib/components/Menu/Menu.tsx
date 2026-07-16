@@ -29,6 +29,7 @@ export type MenuProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> &
   trigger: React.JSX.Element;
   offset?: number;
   unmount?: boolean;
+  hideWhenEmpty?: boolean;
   minWidth?: React.CSSProperties['minWidth'];
   maxWidth?: React.CSSProperties['maxWidth'];
   minHeight?: React.CSSProperties['minHeight'];
@@ -42,6 +43,7 @@ export const Menu = ({
   trigger,
   offset: customOffset = 5,
   unmount = true,
+  hideWhenEmpty,
   minWidth,
   maxWidth,
   minHeight,
@@ -106,6 +108,10 @@ export const Menu = ({
     const floatingRoot = refs.domReference.current?.closest('[data-floating-root]') as HTMLElement;
     portalRef.current = floatingRoot ?? document.body;
   }, [refs]);
+
+  if (hideWhenEmpty && React.Children.toArray(children).length === 0) {
+    return null;
+  }
 
   return (
     <>

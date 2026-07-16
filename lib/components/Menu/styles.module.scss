@@ -84,6 +84,11 @@
   border: none;
   margin-block: 0.375em;
   background: var(--color-gray-300);
+
+  &:first-child,
+  &:last-child {
+    display: none;
+  }
 }
 
 // ---------------------------
