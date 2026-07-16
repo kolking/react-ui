@@ -2,6 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import { Menu } from './Menu';
 import { MenuItem } from './MenuItem';
+import { MenuSeparator } from './MenuSeparator';
 
 vi.mock('@floating-ui/react', async () => {
   const actual = await vi.importActual('@floating-ui/react');
@@ -48,6 +49,7 @@ describe('Menu', () => {
   it('hides menu when hideWhenEmpty=true and no children provided', () => {
     render(
       <Menu hideWhenEmpty={true} trigger={<button>Open</button>}>
+        <MenuSeparator />
         {null}
       </Menu>,
     );
