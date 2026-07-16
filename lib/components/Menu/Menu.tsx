@@ -20,6 +20,7 @@ import {
 import cn from 'classnames';
 
 import { MenuContext, MenuContextProps } from './MenuContext';
+import { MenuSeparator } from './MenuSeparator';
 import { cssProps, getElementRef } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
@@ -109,7 +110,12 @@ export const Menu = ({
     portalRef.current = floatingRoot ?? document.body;
   }, [refs]);
 
-  if (hideWhenEmpty && React.Children.toArray(children).length === 0) {
+  if (
+    hideWhenEmpty &&
+    React.Children.toArray(children).filter(
+      (child) => !(React.isValidElement(child) && child.type === MenuSeparator),
+    ).length === 0
+  ) {
     return null;
   }
 

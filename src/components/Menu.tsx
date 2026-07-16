@@ -16,17 +16,17 @@ export const MenuDemo = () => {
     <Flex>
       <Button type="button" title="Toggle" onClick={toggleIsEmpty} />
       <Menu hideWhenEmpty={true} trigger={<Button {...triggerProps} title="Menu" />}>
+        <MenuSeparator />
         {!isEmpty && (
           <>
-            <MenuSeparator />
             <MenuItem title="First action" />
             <MenuItem title="Second action" />
             <MenuSeparator />
             <MenuItem as="a" title="Link action" href="https://google.com/" target="_blank" />
             <MenuItem title="Third action" scheme="negative" />
-            <MenuSeparator />
           </>
         )}
+        <MenuSeparator />
       </Menu>
       <Menu
         placement="bottom-end"
