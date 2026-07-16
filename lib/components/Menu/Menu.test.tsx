@@ -45,6 +45,16 @@ describe('Menu', () => {
     expect(screen.queryByRole('menu')).toBeInTheDocument();
   });
 
+  it('hides menu when hideWhenEmpty=true and no children provided', () => {
+    render(
+      <Menu hideWhenEmpty={true} trigger={<button>Open</button>}>
+        {null}
+      </Menu>,
+    );
+
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+  });
+
   it('applies size as CSS variable', async () => {
     render(
       <Menu size="md" trigger={<button>Open</button>}>

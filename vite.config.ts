@@ -67,7 +67,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     resolve: {
-      // The @lib alias points to the /lib forder by default
+      // The @lib alias points to the /lib folder by default
       // or to the /dist folder when VITE_DIST defined
       alias: [
         {
