@@ -15,6 +15,7 @@ export * from './components/Popover';
 export * from './components/Progress';
 export * from './components/Segmented';
 export * from './components/Spinner';
+export * from './components/Stepper';
 export * from './components/Tag';
 export * from './components/ToggleButton';
 export * from './components/Tooltip';
