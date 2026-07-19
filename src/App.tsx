@@ -15,6 +15,7 @@ import { Tags } from './components/Tags';
 import { Switches } from './components/Switches';
 import { Ranges } from './components/Ranges';
 import { BreadcrumbsDemo } from './components/Breadcrumbs';
+import { StepperDemo } from './components/Stepper';
 import { PopoverDemo } from './components/Popover';
 import { LightboxDemo } from './components/Lightbox';
 
@@ -66,6 +67,8 @@ function App() {
       <Notices />
       <SegmentedDemo />
       <BreadcrumbsDemo />
+      <Heading title="Stepper" />
+      <StepperDemo />
       <LightboxDemo />
     </main>
   );
