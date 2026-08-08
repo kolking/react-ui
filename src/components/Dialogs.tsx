@@ -61,7 +61,7 @@ export const Dialogs = () => {
   }, []);
 
   return (
-    <Flex as="form">
+    <Flex as="form" wrap="wrap">
       <Button {...dialog.trigger} type="button" title="Open dialog" />
       <Dialog {...dialog.props} size="sm">
         <DialogTitle>The Dialog element</DialogTitle>
