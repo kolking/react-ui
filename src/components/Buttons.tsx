@@ -2,7 +2,8 @@ import { Button, ButtonGroup, Flex, Icon, ToggleButton, ToggleGroup, Tooltip } f
 import { useState } from 'react';
 
 export const Buttons = () => {
-  const [toggleButton, setToggleButton] = useState(false);
+  const [toggleGroup, setToggleGroup] = useState<number>();
+  const [toggleButton, setToggleButton] = useState<number>();
 
   return (
     <Flex as="section" direction="column" gap="xl">
@@ -118,27 +119,31 @@ export const Buttons = () => {
       <Flex wrap="wrap">
         <ToggleButton
           title="Toggle me"
-          selected={toggleButton}
-          onClick={() => setToggleButton(!toggleButton)}
+          selected={toggleButton === 1}
+          onClick={() => setToggleButton((v) => (v === 1 ? undefined : 1))}
         />
         <ToggleButton
           title="Toggle me"
           scheme="positive"
-          selected={toggleButton}
-          onClick={() => setToggleButton(!toggleButton)}
+          selected={toggleButton === 2}
+          onClick={() => setToggleButton((v) => (v === 2 ? undefined : 2))}
         />
         <ToggleButton
           title="Toggle me"
           scheme="negative"
-          selected={toggleButton}
-          onClick={() => setToggleButton(!toggleButton)}
+          selected={toggleButton === 3}
+          onClick={() => setToggleButton((v) => (v === 3 ? undefined : 3))}
         />
-        <ToggleGroup>
-          {['First', 'Second', 'Third'].map((title) => (
+        <ToggleGroup selected={2} buttonWidth="minmax(0,1fr)" onSelect={setToggleGroup}>
+          {['First', 'Second', 'Third'].map((title, index) => (
             <ToggleButton
               key={title}
               title={title}
-              onClick={() => console.log('ToggleGroup:', title)}
+              selected={index === toggleGroup}
+              onClick={() => {
+                //setToggleGroup(index);
+                console.log('ToggleGroup:', title);
+              }}
             />
           ))}
         </ToggleGroup>

@@ -12,16 +12,16 @@ export type ToggleGroupProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSel
   children: React.ReactElement[];
   minWidth?: React.CSSProperties['minWidth'];
   maxWidth?: React.CSSProperties['maxWidth'];
-  flexBasis?: React.CSSProperties['flexBasis'];
+  buttonWidth?: React.CSSProperties['gridAutoColumns'];
   onSelect?: (index: number) => void;
 };
 
 export const ToggleGroup = ({
-  selected = 0,
+  selected,
   disabled,
   minWidth,
   maxWidth,
-  flexBasis,
+  buttonWidth,
   className,
   style,
   children,
@@ -40,7 +40,7 @@ export const ToggleGroup = ({
       role="radiogroup"
       data-toggle-group
       className={cn(styles.group, className)}
-      style={{ ...style, ...cssProps({ flexBasis, minWidth, maxWidth }) }}
+      style={{ ...style, ...cssProps({ minWidth, maxWidth, buttonWidth }) }}
     >
       {React.Children.map(children, (child, index) => {
         const button = child as React.ReactElement<ToggleButtonProps>;
@@ -49,8 +49,8 @@ export const ToggleGroup = ({
           <CompositeItem
             render={React.cloneElement(button, {
               role: 'radio',
-              disabled: disabled || button.props?.disabled,
-              selected: index === selectedIndex,
+              disabled: button.props?.disabled ?? disabled,
+              selected: button.props?.selected ?? index === selectedIndex,
               onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
                 setSelectedIndex(index);
                 onSelect?.(index);

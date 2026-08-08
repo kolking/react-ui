@@ -20,11 +20,11 @@ describe('ToggleGroup', () => {
     expect(radios.length).toBe(buttons.length);
   });
 
-  it('sets the first button as selected by default', () => {
+  it('do not select a button by default', () => {
     render(<ToggleGroup>{buttons}</ToggleGroup>);
 
     const radios = screen.getAllByRole('radio');
-    expect(radios[0].dataset.selected).toBe('true');
+    expect(radios[0].dataset.selected).toBe('false');
     expect(radios[1].dataset.selected).toBe('false');
     expect(radios[2].dataset.selected).toBe('false');
   });
@@ -38,12 +38,28 @@ describe('ToggleGroup', () => {
     expect(radios[2].dataset.selected).toBe('false');
   });
 
+  it('button’s selected prop should have higher priority', () => {
+    render(
+      <ToggleGroup selected={1}>
+        <ToggleButton title="Uno" selected={false} />
+        <ToggleButton title="Dos" selected={false} />
+        <ToggleButton title="Tres" selected={true} />
+      </ToggleGroup>,
+    );
+
+    const radios = screen.getAllByRole('radio');
+    expect(radios[0].dataset.selected).toBe('false');
+    expect(radios[1].dataset.selected).toBe('false');
+    expect(radios[2].dataset.selected).toBe('true');
+  });
+
   it('updates selected state when a button is clicked', () => {
     const handleSelect = vi.fn();
     render(<ToggleGroup onSelect={handleSelect}>{buttons}</ToggleGroup>);
 
     const radios = screen.getAllByRole('radio');
     fireEvent.click(radios[2]);
+
     expect(handleSelect).toHaveBeenCalledWith(2);
     expect(radios[0].dataset.selected).toBe('false');
     expect(radios[1].dataset.selected).toBe('false');
@@ -51,7 +67,11 @@ describe('ToggleGroup', () => {
   });
 
   it('respects disabled prop and prevents selection change', () => {
-    render(<ToggleGroup disabled>{buttons}</ToggleGroup>);
+    render(
+      <ToggleGroup selected={0} disabled>
+        {buttons}
+      </ToggleGroup>,
+    );
 
     const radios = screen.getAllByRole('radio');
     fireEvent.click(radios[1]);

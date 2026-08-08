@@ -5,16 +5,15 @@
 .group {
   --min-width: auto;
   --max-width: none;
-  --flex-basis: auto;
+  --button-width: auto;
 
-  display: inline-flex;
+  display: inline-grid;
+  grid-auto-flow: column;
   min-width: var(--min-width);
   max-width: var(--max-width);
+  grid-auto-columns: var(--button-width);
 
   [data-button] {
-    min-width: 0;
-    flex: 1 1 var(--flex-basis);
-
     &:not(:first-child) {
       border-left-width: 0;
       border-top-left-radius: 0;
