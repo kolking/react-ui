@@ -34,7 +34,7 @@
     "test-all": "yarn test run",
     "preview": "vite preview",
     "validate": "yarn tsc -b && yarn lint --fix && yarn test-all -u",
-    "validate-ci": "yarn tsc -b && yarn lint && yarn test-all",
+    "validate-ci": "yarn tsc -b && yarn lint && yarn test-all --reporter=default --reporter=junit",
     "prepublishOnly": "yarn build"
   },
   "peerDependencies": {
