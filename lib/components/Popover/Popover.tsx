@@ -23,13 +23,7 @@ import { getElementRef } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
 type TriggerEvent =
-  | 'hover'
-  | 'focus'
-  | 'click'
-  | 'hover focus'
-  | 'hover click'
-  | 'focus click'
-  | 'hover focus click';
+  'hover' | 'focus' | 'click' | 'hover focus' | 'hover click' | 'focus click' | 'hover focus click';
 
 export type PopoverProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onToggle'> & {
   open?: boolean;

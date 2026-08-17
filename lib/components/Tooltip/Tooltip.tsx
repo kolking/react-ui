@@ -23,13 +23,7 @@ import { getElementRef } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
 type Trigger =
-  | 'hover'
-  | 'focus'
-  | 'click'
-  | 'hover focus'
-  | 'hover click'
-  | 'focus click'
-  | 'hover focus click';
+  'hover' | 'focus' | 'click' | 'hover focus' | 'hover click' | 'focus click' | 'hover focus click';
 
 export type TooltipProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'content' | 'children'> & {
   trigger?: Trigger;
