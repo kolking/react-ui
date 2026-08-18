@@ -4,10 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App.tsx';
 
-if (import.meta.env.VITE_DIST) {
-  import('../dist/styles/style.css');
-}
-
+import '@lib/styles/style.css';
 import './global.scss';
 
 const router = createBrowserRouter([
