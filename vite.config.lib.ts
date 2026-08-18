@@ -25,7 +25,13 @@ export default defineConfig({
     }),
     // Copy SCSS files to dist/styles
     viteStaticCopy({
-      targets: [{ src: 'lib/styles/*.scss', dest: 'styles' }],
+      targets: [
+        {
+          src: 'lib/styles/*.scss',
+          dest: 'styles',
+          rename: { stripBase: true },
+        },
+      ],
     }),
   ],
   build: {
