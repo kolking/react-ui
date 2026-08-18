@@ -1,5 +1,5 @@
 name: Test coverage
-on: 
+on:
   pull_request:
 
 jobs:
@@ -15,13 +15,13 @@ jobs:
     - name: Install Node.js
       uses: actions/setup-node@v6
       with:
-        node-version: '20.x'
+        node-version: '22.x'
     - name: Install deps
       run: yarn
     - name: Run tests
       run: yarn validate-ci
     - name: Report coverage
-      if: always() 
+      if: always()
       uses:  davelosert/vitest-coverage-report-action@v2
       with:
         file-coverage-mode: changes-affected
