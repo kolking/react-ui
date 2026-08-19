@@ -88,4 +88,31 @@ describe('Segmented', () => {
     expect(group.classList.contains(styles.segmented)).toBe(true);
     expect(group.classList.contains('custom-class')).toBe(true);
   });
+
+  it('uses defaultSelected as the initial uncontrolled value', () => {
+    render(<Segmented items={items} defaultSelected="b" />);
+
+    const buttons = screen.getAllByRole('radio');
+    expect(buttons[0]).toHaveAttribute('aria-checked', 'false');
+    expect(buttons[1]).toHaveAttribute('aria-checked', 'true');
+
+    fireEvent.click(buttons[0]);
+
+    expect(buttons[0]).toHaveAttribute('aria-checked', 'true');
+  });
+
+  it('updates controlled selection only through selected prop', () => {
+    const handleSelect = vi.fn();
+    const { rerender } = render(<Segmented items={items} selected="a" onSelect={handleSelect} />);
+
+    const buttons = screen.getAllByRole('radio');
+    fireEvent.click(buttons[1]);
+
+    expect(handleSelect).toHaveBeenCalledWith('b');
+    expect(buttons[0]).toHaveAttribute('aria-checked', 'true');
+
+    rerender(<Segmented items={items} selected="b" onSelect={handleSelect} />);
+
+    expect(buttons[1]).toHaveAttribute('aria-checked', 'true');
+  });
 });
