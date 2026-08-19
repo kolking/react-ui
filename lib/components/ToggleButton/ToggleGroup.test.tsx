@@ -89,4 +89,39 @@ describe('ToggleGroup', () => {
     expect(group.classList.contains(styles.group)).toBe(true);
     expect(group.classList.contains('custom-class')).toBe(true);
   });
+
+  it('uses defaultSelected as the initial uncontrolled value', () => {
+    render(<ToggleGroup defaultSelected={1}>{buttons}</ToggleGroup>);
+
+    const radios = screen.getAllByRole('radio');
+    expect(radios[1]).toHaveAttribute('aria-checked', 'true');
+
+    fireEvent.click(radios[2]);
+
+    expect(radios[2]).toHaveAttribute('aria-checked', 'true');
+  });
+
+  it('updates controlled selection only through selected prop', () => {
+    const handleSelect = vi.fn();
+    const { rerender } = render(
+      <ToggleGroup selected={0} onSelect={handleSelect}>
+        {buttons}
+      </ToggleGroup>,
+    );
+
+    const radios = screen.getAllByRole('radio');
+    fireEvent.click(radios[2]);
+
+    expect(handleSelect).toHaveBeenCalledWith(2);
+    expect(radios[0]).toHaveAttribute('aria-checked', 'true');
+    expect(radios[2]).toHaveAttribute('aria-checked', 'false');
+
+    rerender(
+      <ToggleGroup selected={2} onSelect={handleSelect}>
+        {buttons}
+      </ToggleGroup>,
+    );
+
+    expect(radios[2]).toHaveAttribute('aria-checked', 'true');
+  });
 });

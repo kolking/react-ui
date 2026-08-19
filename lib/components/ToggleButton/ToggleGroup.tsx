@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Composite, CompositeItem } from '@floating-ui/react';
 
 import { ToggleButtonProps } from './ToggleButton';
@@ -8,6 +8,7 @@ import styles from './styles.module.scss';
 
 export type ToggleGroupProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
   selected?: number;
+  defaultSelected?: number;
   disabled?: boolean;
   children: React.ReactElement[];
   minWidth?: React.CSSProperties['minWidth'];
@@ -18,6 +19,7 @@ export type ToggleGroupProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSel
 
 export const ToggleGroup = ({
   selected,
+  defaultSelected,
   disabled,
   minWidth,
   maxWidth,
@@ -28,11 +30,10 @@ export const ToggleGroup = ({
   onSelect,
   ...props
 }: ToggleGroupProps) => {
-  const [selectedIndex, setSelectedIndex] = useState(selected);
+  const [internalSelected, setInternalSelected] = useState(defaultSelected);
 
-  useEffect(() => {
-    setSelectedIndex(selected);
-  }, [selected]);
+  const isControlled = selected !== undefined;
+  const selectedIndex = isControlled ? selected : internalSelected;
 
   return (
     <Composite
@@ -52,7 +53,9 @@ export const ToggleGroup = ({
               disabled: button.props?.disabled ?? disabled,
               selected: button.props?.selected ?? index === selectedIndex,
               onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
-                setSelectedIndex(index);
+                if (!isControlled) {
+                  setInternalSelected(index);
+                }
                 onSelect?.(index);
                 button.props?.onClick?.(e);
               },
