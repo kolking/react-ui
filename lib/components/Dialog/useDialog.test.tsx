@@ -19,20 +19,26 @@ const TestComponent = ({
   onConfirm,
   onCancel,
 }: DialogOptions<Data, string>) => {
-  const dialog = useDialog<Data, string>({ defaultOpen, onShow, onConfirm, onCancel });
+  const {
+    props: { ref, open },
+    data,
+    show,
+    confirm,
+    cancel,
+  } = useDialog<Data, string>({ defaultOpen, onShow, onConfirm, onCancel });
 
   return (
     <div>
-      <button onClick={() => dialog.show({ name: 'Alice' })}>show</button>
-      <button onClick={() => dialog.confirm('ok')}>confirm</button>
-      <button onClick={() => dialog.cancel()}>cancel</button>
+      <button onClick={() => show({ name: 'Alice' })}>show</button>
+      <button onClick={() => confirm('ok')}>confirm</button>
+      <button onClick={cancel}>cancel</button>
 
       {/* expose ref to observe attribute changes */}
-      <div ref={dialog.props.ref} data-testid="dialog" />
+      <div ref={ref} data-testid="dialog" />
 
       {/* render state */}
-      {dialog.props.open && <div data-testid="open">open</div>}
-      {dialog.data && <div data-testid="content">{dialog.data.name}</div>}
+      {open && <div data-testid="open">open</div>}
+      {data && <div data-testid="content">{data.name}</div>}
     </div>
   );
 };
@@ -89,27 +95,39 @@ describe('useDialog', () => {
 
   it('preventClose prevents closing while promise is pending', async () => {
     const Controlled = ({ onShow, onConfirm }: DialogOptions<Data, string>) => {
-      const dialog = useDialog<Data, string>({ onShow, onConfirm });
-      const resolverRef = React.useRef<() => void>(() => {});
-      const promise = new Promise<void>((res) => (resolverRef.current = res));
+      const {
+        props: { open },
+        show,
+        cancel,
+        confirm,
+        preventClose,
+      } = useDialog<Data, string>({ onShow, onConfirm });
+      const [deferred] = React.useState(() => {
+        let resolve = () => {};
+        const promise = new Promise<void>((res) => {
+          resolve = res;
+        });
+
+        return { promise, resolve };
+      });
       const [finished, setFinished] = React.useState(false);
 
       const handleConfirm = async () => {
-        await dialog.preventClose(promise);
+        await preventClose(deferred.promise);
 
         setFinished(true);
-        dialog.confirm('ok');
+        confirm('ok');
       };
 
       return (
         <div>
-          <button onClick={() => dialog.show({ name: 'Bob' })}>show</button>
-          <button onClick={() => dialog.cancel()}>cancel</button>
+          <button onClick={() => show({ name: 'Bob' })}>show</button>
+          <button onClick={cancel}>cancel</button>
           <button onClick={handleConfirm}>confirm</button>
-          <button onClick={() => resolverRef.current()}>resolve</button>
+          <button onClick={deferred.resolve}>resolve</button>
 
           {finished && <div data-testid="done">done</div>}
-          {dialog.props.open && <div data-testid="open">open</div>}
+          {open && <div data-testid="open">open</div>}
         </div>
       );
     };
