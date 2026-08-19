@@ -72,4 +72,15 @@ describe('Avatar', () => {
 
     expect(screen.getByTestId('child')).toBeInTheDocument();
   });
+
+  it('retries loading when image source changes', () => {
+    const { rerender } = render(<Avatar src="broken.png" name="John Doe" />);
+
+    fireEvent.error(screen.getByRole('img'));
+    expect(screen.getByText('JD')).toBeInTheDocument();
+
+    rerender(<Avatar src="valid.png" name="John Doe" />);
+
+    expect(screen.getByRole('img')).toHaveAttribute('src', 'valid.png');
+  });
 });

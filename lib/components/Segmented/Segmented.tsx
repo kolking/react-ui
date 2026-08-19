@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Composite, CompositeItem } from '@floating-ui/react';
 
 import { cssProps, wrapNode } from '../../utils/helpers';
@@ -15,6 +15,7 @@ export type SegmentedProps<T> = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSe
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   items: SegmentedItem<T>[];
   selected?: T;
+  defaultSelected?: T;
   disabled?: boolean;
   segmentsWidth?: 'auto' | 'equal';
   margin?: React.CSSProperties['margin'];
@@ -24,8 +25,9 @@ export type SegmentedProps<T> = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSe
 export const Segmented = <T,>({
   size,
   items,
-  selected = items[0].value,
+  selected,
   disabled,
+  defaultSelected,
   segmentsWidth = 'auto',
   margin,
   children,
@@ -35,11 +37,12 @@ export const Segmented = <T,>({
   ...props
 }: SegmentedProps<T>) => {
   const flexBasis = segmentsWidth === 'equal' ? 0 : undefined;
-  const [selectedValue, setSelectedValue] = useState(selected);
+  const [internalSelected, setInternalSelected] = useState(() =>
+    defaultSelected !== undefined ? defaultSelected : items[0]?.value,
+  );
 
-  useEffect(() => {
-    setSelectedValue(selected);
-  }, [selected]);
+  const isControlled = selected !== undefined;
+  const selectedValue = isControlled ? selected : internalSelected;
 
   return (
     <Composite
@@ -63,7 +66,9 @@ export const Segmented = <T,>({
           data-selected={item.value === selectedValue}
           className={styles.button}
           onClick={() => {
-            setSelectedValue(item.value);
+            if (!isControlled) {
+              setInternalSelected(item.value);
+            }
             onSelect?.(item.value);
           }}
         >

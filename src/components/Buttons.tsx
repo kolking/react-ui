@@ -134,7 +134,12 @@ export const Buttons = () => {
           selected={toggleButton === 3}
           onClick={() => setToggleButton((v) => (v === 3 ? undefined : 3))}
         />
-        <ToggleGroup selected={2} buttonWidth="minmax(0,1fr)" onSelect={setToggleGroup}>
+        <ToggleGroup
+          buttonWidth="minmax(0,1fr)"
+          defaultSelected={2}
+          selected={toggleGroup}
+          onSelect={setToggleGroup}
+        >
           {['First', 'Second', 'Third'].map((title, index) => (
             <ToggleButton
               key={title}
