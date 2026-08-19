@@ -28,7 +28,6 @@ export default tseslint.config(
         { argsIgnorePattern: '^_', ignoreRestSiblings: true },
       ],
       'react-hooks/refs': 'off',
-      'react-hooks/set-state-in-effect': 'off',
       'react-refresh/only-export-components': 'off',
     },
   },

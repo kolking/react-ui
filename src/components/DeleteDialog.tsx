@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   Button,
   DialogClose,
@@ -22,25 +22,24 @@ type DialogProps = WithDialogProps<Props, string>;
 const Dialog = ({ dialog, color, colors, deleteColor }: DialogProps) => {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
-  const [selected, setSelected] = useState(color);
-
-  useEffect(() => {
-    setSelected(color);
-  }, [color]);
-
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelected(e.target.value);
-  }, []);
 
   const handleDelete = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
+    async (e: React.SubmitEvent<HTMLFormElement>) => {
       e.preventDefault();
+
+      const selected = new FormData(e.currentTarget).get('color');
+
+      if (typeof selected !== 'string') {
+        return;
+      }
+
       setBusy(true);
 
       await dialog.preventClose<void>(
         new Promise((resolve, reject) =>
           setTimeout(() => {
             setBusy(false);
+
             if (selected === 'red') {
               setError('Failed to delete red color');
               reject();
@@ -54,7 +53,7 @@ const Dialog = ({ dialog, color, colors, deleteColor }: DialogProps) => {
 
       dialog.confirm(selected);
     },
-    [dialog, selected, deleteColor],
+    [dialog, deleteColor],
   );
 
   return (
@@ -63,7 +62,7 @@ const Dialog = ({ dialog, color, colors, deleteColor }: DialogProps) => {
       <DialogContent>
         {error && <Notice error={error} variant="plain" />}
         <p>Select a color to delete:</p>
-        <Select value={selected} onChange={handleChange}>
+        <Select name="color" defaultValue={color}>
           {colors.map((color) => (
             <option key={color} value={color}>
               {color}
