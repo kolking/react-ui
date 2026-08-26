@@ -48,7 +48,11 @@ export const Lightbox = <T extends LightboxImage>({
   const showPrev = count > 1 && (loop || selected > 0);
   const showNext = count > 1 && (loop || selected < count - 1);
 
-  const { refs, context, elements } = useFloating({
+  const {
+    refs: { setFloating },
+    context,
+    elements,
+  } = useFloating({
     open,
     onOpenChange: (open) => {
       if (!open) {
@@ -150,7 +154,7 @@ export const Lightbox = <T extends LightboxImage>({
       <FloatingFocusManager context={context}>
         <div
           {...getFloatingProps(props)}
-          ref={refs.setFloating}
+          ref={setFloating}
           data-lightbox
           data-floating-root
           className={cn(styles.lightbox, className)}

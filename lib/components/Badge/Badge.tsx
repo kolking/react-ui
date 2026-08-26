@@ -5,14 +5,6 @@ import { cssProps, wrapNode } from '../../utils/helpers';
 import { PaletteColor } from '../../utils/colors';
 import styles from './styles.module.scss';
 
-function usePrevious<T>(value: T) {
-  const ref = useRef<T>(undefined);
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
-
 export type BadgeProps = React.HTMLAttributes<HTMLSpanElement> & {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   scheme?: PaletteColor;
@@ -32,15 +24,18 @@ export const Badge = ({
   ...props
 }: BadgeProps) => {
   const hidden = !value;
-  const prevHidden = usePrevious(hidden);
+  const prevHiddenRef = useRef(hidden);
   const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    // Apply CSS transition only if the badge was initially hidden
+    const prevHidden = prevHiddenRef.current;
+    prevHiddenRef.current = hidden;
+
+    // Apply the transition when the badge changes from hidden to visible
     if (prevHidden && !hidden) {
       ref.current?.classList.add(styles.appear);
     }
-  }, [prevHidden, hidden]);
+  }, [hidden]);
 
   useEffect(() => {
     if (!hidden && placement && ref.current?.parentElement) {

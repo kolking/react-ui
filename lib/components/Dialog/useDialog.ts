@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { afterTransition } from '../../utils/helpers';
 
 export type DialogShowOptions<R> = {
@@ -22,7 +22,9 @@ export function useDialog<T, R>(options?: DialogOptions<T, R>) {
   const [open, setOpen] = useState(options?.defaultOpen ?? false);
   const [data, setData] = useState<T>();
 
-  refOptions.current = options;
+  useEffect(() => {
+    refOptions.current = options;
+  }, [options]);
 
   const show = useCallback((values: T, showOptions: DialogShowOptions<R> = {}) => {
     if (refDisabled.current) {

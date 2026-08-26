@@ -55,7 +55,11 @@ export const Tooltip = ({
   const [open, setOpen] = useState(false);
   const [staticOffset, setStaticOffset] = useState(false);
 
-  const { refs, context, floatingStyles } = useFloating({
+  const {
+    refs: { domReference, setReference, setPositionReference, setFloating },
+    context,
+    floatingStyles,
+  } = useFloating({
     open,
     placement,
     onOpenChange: setOpen,
@@ -83,22 +87,22 @@ export const Tooltip = ({
   ]);
 
   // Preserve child component's ref
-  const ref = useMergeRefs([refs.setReference, getElementRef(children)]);
+  const ref = useMergeRefs([setReference, getElementRef(children)]);
 
   useEffect(() => {
     // Find the closest parent with the data-floating-root attribute
-    const floatingRoot = refs.domReference.current?.closest('[data-floating-root]') as HTMLElement;
+    const floatingRoot = domReference.current?.closest('[data-floating-root]') as HTMLElement;
     if (!disabled && floatingRoot) {
       portalRef.current = floatingRoot;
     }
-  }, [refs, disabled]);
+  }, [disabled, domReference]);
 
   useLayoutEffect(() => {
     // Separate events reference and the positioning reference
     if (anchor) {
-      refs.setPositionReference(anchor);
+      setPositionReference(anchor);
     }
-  }, [refs, anchor]);
+  }, [anchor, setPositionReference]);
 
   if (disabled) {
     return children;
@@ -111,7 +115,7 @@ export const Tooltip = ({
         <FloatingPortal root={portalRef}>
           <div
             {...getFloatingProps(props)}
-            ref={refs.setFloating}
+            ref={setFloating}
             data-tooltip={placement}
             className={cn(styles.tooltip, className)}
             style={{ ...floatingStyles, minWidth, maxWidth }}

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import {
   useFloating,
@@ -57,10 +57,14 @@ export const Menu = ({
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<number | null>(null);
   const [sizeBounds, setSizeBounds] = useState<React.CSSProperties>({});
+  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
   const listRef = useRef<Array<HTMLElement | null>>([]);
-  const portalRef = useRef<HTMLElement | null>(null);
 
-  const { refs, context, floatingStyles } = useFloating({
+  const {
+    refs: { setReference, setFloating },
+    context,
+    floatingStyles,
+  } = useFloating({
     open,
     placement,
     onOpenChange: setOpen,
@@ -101,14 +105,17 @@ export const Menu = ({
     [active, getItemProps, onSelect],
   );
 
-  // Preserve trigger component's ref
-  const ref = useMergeRefs([refs.setReference, getElementRef(trigger)]);
+  const setTriggerRef = useCallback(
+    (node: Element | null) => {
+      setReference(node);
+      // Find the closest parent with the data-floating-root attribute
+      setPortalRoot((node?.closest('[data-floating-root]') as HTMLElement | null) ?? document.body);
+    },
+    [setReference],
+  );
 
-  useEffect(() => {
-    // Find the closest parent with the data-floating-root attribute
-    const floatingRoot = refs.domReference.current?.closest('[data-floating-root]') as HTMLElement;
-    portalRef.current = floatingRoot ?? document.body;
-  }, [refs]);
+  // Preserve trigger component's ref
+  const ref = useMergeRefs([setTriggerRef, getElementRef(trigger)]);
 
   if (
     hideWhenEmpty &&
@@ -127,11 +134,11 @@ export const Menu = ({
       )}
       <MenuContext.Provider value={menuContext}>
         {(open || !unmount) && (
-          <FloatingPortal root={portalRef.current}>
+          <FloatingPortal root={portalRoot}>
             <FloatingFocusManager context={context} modal={false} initialFocus={-1}>
               <div
                 {...getFloatingProps(props)}
-                ref={refs.setFloating}
+                ref={setFloating}
                 data-open={open}
                 data-menu={placement}
                 className={cn(styles.menu, className)}
