@@ -7,12 +7,15 @@ const COLORS: PaletteColor[] = [
   'red',
   'orange',
   'yellow',
+  'olive',
   'green',
+  'mint',
   'teal',
   'cyan',
   'blue',
   'indigo',
   'purple',
+  'plum',
   'pink',
 ];
 
