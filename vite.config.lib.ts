@@ -23,11 +23,11 @@ export default defineConfig({
       tsconfigPath: resolve(__dirname, 'tsconfig.lib.json'),
       exclude: ['lib/setupTests.ts', 'lib/**/*.test.{ts,tsx}'],
     }),
-    // Copy SCSS files to dist/styles
+    // Copy SCSS files to dist/styles excluding css-theme.scss
     viteStaticCopy({
       targets: [
         {
-          src: 'lib/styles/*.scss',
+          src: ['lib/styles/*.scss', '!lib/styles/css-theme.scss'],
           dest: 'styles',
           rename: { stripBase: true },
         },
@@ -35,6 +35,7 @@ export default defineConfig({
     }),
   ],
   build: {
+    cssMinify: false,
     copyPublicDir: false,
     lib: {
       entry: resolve(__dirname, 'lib/index.ts'),
