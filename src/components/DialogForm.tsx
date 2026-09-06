@@ -20,8 +20,8 @@ const initialData = {
 
 function validate(data: typeof initialData) {
   const errors = {
-    name: !data.name ? 'Your name is required' : '',
-    email: !data.email ? 'Your email is required' : '',
+    name: !data.name ? 'Name is required' : '',
+    email: !data.email ? 'Email is required' : '',
   };
   const valid = !errors.name && !errors.email;
   return { valid, errors };
@@ -57,7 +57,7 @@ export const DialogForm = ({ children }: Props) => {
 
   return (
     <>
-      {React.cloneElement(children, dialog.trigger)}
+      {React.cloneElement(children, { ...dialog.triggerProps, onClick: dialog.show })}
       <Dialog {...dialog.props}>
         <DialogTitle>Form dialog</DialogTitle>
         <DialogContent>

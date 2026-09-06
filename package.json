@@ -20,7 +20,7 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./styles/": "./dist/styles/"
+    "./styles/*": "./dist/styles/*"
   },
   "files": [
     "dist"
@@ -28,7 +28,8 @@
   "scripts": {
     "dev": "vite",
     "dist": "yarn build && VITE_DIST='true' vite",
-    "build": "tsc -b ./tsconfig.lib.json && vite -c ./vite.config.lib.ts build",
+    "build": "tsc -b ./tsconfig.lib.json && vite -c ./vite.config.lib.ts build && yarn build:theme",
+    "build:theme": "sass lib/styles/css-theme.scss dist/styles/theme.css --no-source-map",
     "lint": "eslint .",
     "test": "vitest --coverage",
     "test-all": "yarn test run",

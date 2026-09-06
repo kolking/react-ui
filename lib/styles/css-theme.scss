@@ -1,0 +1,19 @@
+@use './utils';
+@use './theme';
+
+:root {
+  @include utils.vars(theme.$variables);
+  @include utils.vars(theme.$light-colors, 'color');
+
+  @media screen and (prefers-color-scheme: dark) {
+    @include utils.vars(theme.$dark-colors, 'color');
+  }
+}
+
+:focus-visible {
+  @include utils.focus-visible();
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
