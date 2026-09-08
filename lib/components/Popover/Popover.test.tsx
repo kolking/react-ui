@@ -114,6 +114,22 @@ describe('Popover', () => {
     expect(floatingRoot.tagName).toBe('DIV');
   });
 
+  it('renders an initially open portal inside closest data-floating-root', async () => {
+    render(
+      <section data-floating-root>
+        <div data-floating-root>
+          <Popover open trigger={<button>Open</button>}>
+            <div>Initially open content</div>
+          </Popover>
+        </div>
+      </section>,
+    );
+
+    const content = await screen.findByText('Initially open content');
+    const floatingRoot = content.closest('[data-floating-root]')!;
+    expect(floatingRoot.tagName).toBe('DIV');
+  });
+
   it('uses anchor element as position reference', async () => {
     const user = userEvent.setup();
     const anchor = document.createElement('a');

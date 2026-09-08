@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useState } from 'react';
 import cn from 'classnames';
 import {
   autoUpdate,
@@ -57,13 +57,17 @@ export const Popover = ({
   onToggle: setControlledOpen,
   ...props
 }: PopoverProps) => {
-  const portalRef = useRef<HTMLElement | null>(null);
+  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
 
   const open = controlledOpen ?? uncontrolledOpen;
   const setOpen = setControlledOpen ?? setUncontrolledOpen;
 
-  const { refs, context, floatingStyles } = useFloating({
+  const {
+    refs: { setReference, setPositionReference, setFloating },
+    context,
+    floatingStyles,
+  } = useFloating({
     open,
     placement,
     onOpenChange: setOpen,
@@ -83,23 +87,24 @@ export const Popover = ({
     useClick(context, { enabled: event.includes('click') }),
   ]);
 
-  // Preserve trigger component's ref
-  const ref = useMergeRefs([refs.setReference, getElementRef(trigger)]);
+  const setTriggerRef = useCallback(
+    (node: Element | null) => {
+      setReference(node);
+      // Find the closest parent with the data-floating-root attribute
+      setPortalRoot((node?.closest('[data-floating-root]') as HTMLElement | null) ?? document.body);
+    },
+    [setReference],
+  );
 
-  useEffect(() => {
-    // Find the closest parent with the data-floating-root attribute
-    const floatingRoot = refs.domReference.current?.closest('[data-floating-root]') as HTMLElement;
-    if (!disabled && floatingRoot) {
-      portalRef.current = floatingRoot;
-    }
-  }, [refs, disabled]);
+  // Preserve trigger component's ref
+  const ref = useMergeRefs([setTriggerRef, getElementRef(trigger)]);
 
   useLayoutEffect(() => {
     // Separate events reference and the positioning reference
     if (anchor) {
-      refs.setPositionReference(anchor);
+      setPositionReference(anchor);
     }
-  }, [refs, anchor]);
+  }, [setPositionReference, anchor]);
 
   if (disabled) {
     return trigger;
@@ -109,11 +114,11 @@ export const Popover = ({
     <>
       {React.cloneElement(trigger, getReferenceProps({ ...trigger.props, ref }))}
       {open && (
-        <FloatingPortal root={portalRef}>
+        <FloatingPortal root={portalRoot}>
           <FloatingFocusManager context={context} modal={modal} visuallyHiddenDismiss={modal}>
             <div
               {...getFloatingProps(props)}
-              ref={refs.setFloating}
+              ref={setFloating}
               data-popover={placement}
               className={cn(styles.popover, className)}
               style={{ ...floatingStyles, minWidth, maxWidth }}
