@@ -131,10 +131,19 @@
     margin: 0;
     width: 1em;
     height: 1em;
+    cursor: pointer;
     appearance: none;
     align-self: center;
     background: var(--color-gray-500);
     mask-image: svg-uri(16, 16, '<path fill="none" stroke="red" stroke-linecap="round" stroke-width="2" d="m11.5 4.5-7 7m0-7 7 7"/>');
+
+    &:hover {
+      background: var(--color-accent-500);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: background-color 0.1s;
+    }
   }
 }
 
@@ -144,16 +153,19 @@
     padding: 0;
     width: 1em;
     height: 1em;
+    cursor: pointer;
     appearance: none;
-    border-radius: 1px;
+    outline-width: 0.5em;
+    outline-offset: -0.5em;
     background: var(--color-gray-500);
+    outline-color: var(--color-accent-500);
 
-    &:focus-visible {
-      @include focus-visible();
+    &:hover {
+      background: var(--color-accent-500);
     }
 
     @media (prefers-reduced-motion: no-preference) {
-      transition: outline 0.1s;
+      transition: outline 0.1s, background-color 0.1s;
     }
   }
 }
