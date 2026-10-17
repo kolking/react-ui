@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Popover } from './Popover';
@@ -126,5 +126,60 @@ describe('Popover', () => {
 
     await user.click(screen.getByText('Open'));
     expect(screen.getByText('Content')).toBeInTheDocument();
+  });
+
+  it('opens without a trigger and dismisses on outside click', async () => {
+    const user = userEvent.setup();
+    const onToggle = vi.fn();
+
+    render(
+      <div>
+        <button>Outside</button>
+        <Popover open anchor={document.body} onToggle={onToggle}>
+          <div>Content</div>
+        </Popover>
+      </div>,
+    );
+
+    expect(screen.getByText('Content')).toBeInTheDocument();
+    await user.click(screen.getByText('Outside'));
+    expect(onToggle).toHaveBeenCalledWith(false, expect.any(PointerEvent), 'outside-press');
+  });
+
+  it('renders a triggerless popover in the floating root containing its anchor', () => {
+    const floatingRoot = document.createElement('section');
+    floatingRoot.dataset.floatingRoot = '';
+    document.body.append(floatingRoot);
+    const anchor = document.createElement('a');
+    floatingRoot.append(anchor);
+
+    render(
+      <Popover open anchor={anchor}>
+        <div>Content</div>
+      </Popover>,
+    );
+
+    expect(screen.getByText('Content').closest('[data-floating-root]')).toBe(floatingRoot);
+    floatingRoot.remove();
+  });
+
+  it('updates a virtual anchor when its context scrolls', async () => {
+    const contextElement = document.createElement('div');
+    document.body.append(contextElement);
+    const getBoundingClientRect = vi.fn(() => new DOMRect(10, 20, 30, 40));
+
+    render(
+      <Popover open anchor={{ contextElement, getBoundingClientRect }}>
+        <div>Content</div>
+      </Popover>,
+    );
+
+    await waitFor(() => expect(getBoundingClientRect).toHaveBeenCalled());
+    const callsBeforeScroll = getBoundingClientRect.mock.calls.length;
+    fireEvent.scroll(window);
+    await waitFor(() =>
+      expect(getBoundingClientRect.mock.calls.length).toBeGreaterThan(callsBeforeScroll),
+    );
+    contextElement.remove();
   });
 });

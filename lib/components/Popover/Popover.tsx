@@ -8,6 +8,8 @@ import {
   FloatingPortal,
   offset,
   Placement,
+  ReferenceType,
+  VirtualElement,
   shift,
   useClick,
   useDismiss,
@@ -25,20 +27,24 @@ import styles from './styles.module.scss';
 type TriggerEvent =
   'hover' | 'focus' | 'click' | 'hover focus' | 'hover click' | 'focus click' | 'hover focus click';
 
-export type PopoverProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onToggle'> & {
+type BasePopoverProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onToggle'> & {
   open?: boolean;
   event?: TriggerEvent;
   placement?: Placement;
-  trigger: React.JSX.Element;
   offset?: number;
   modal?: boolean;
   disabled?: boolean;
-  anchor?: Element | null;
   boundary?: Boundary;
   minWidth?: React.CSSProperties['minWidth'];
   maxWidth?: React.CSSProperties['maxWidth'];
   onToggle?: (open: boolean) => void;
 };
+
+export type PopoverProps = BasePopoverProps &
+  (
+    | { trigger: React.JSX.Element; anchor?: ReferenceType | null }
+    | { trigger?: never; anchor: ReferenceType; open: boolean }
+  );
 
 export const Popover = ({
   open: controlledOpen,
@@ -57,7 +63,13 @@ export const Popover = ({
   onToggle: setControlledOpen,
   ...props
 }: PopoverProps) => {
-  const portalRef = useRef<HTMLElement | null>(null);
+  const anchorElement =
+    typeof Element !== 'undefined' && anchor instanceof Element
+      ? anchor
+      : (anchor as VirtualElement | null)?.contextElement;
+  const portalRef = useRef<HTMLElement | null>(
+    (anchorElement?.closest('[data-floating-root]') as HTMLElement | null) ?? null,
+  );
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
 
   const open = controlledOpen ?? uncontrolledOpen;
@@ -78,36 +90,35 @@ export const Popover = ({
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useDismiss(context),
     useRole(context, { role: 'dialog' }),
-    useHover(context, { move: false, enabled: event.includes('hover') }),
-    useFocus(context, { enabled: event.includes('focus') }),
-    useClick(context, { enabled: event.includes('click') }),
+    useHover(context, { move: false, enabled: Boolean(trigger) && event.includes('hover') }),
+    useFocus(context, { enabled: Boolean(trigger) && event.includes('focus') }),
+    useClick(context, { enabled: Boolean(trigger) && event.includes('click') }),
   ]);
 
   // Preserve trigger component's ref
-  const ref = useMergeRefs([refs.setReference, getElementRef(trigger)]);
-
+  const ref = useMergeRefs([refs.setReference, trigger ? getElementRef(trigger) : undefined]);
   useEffect(() => {
     // Find the closest parent with the data-floating-root attribute
-    const floatingRoot = refs.domReference.current?.closest('[data-floating-root]') as HTMLElement;
+    const floatingRoot = (refs.domReference.current ?? anchorElement)?.closest(
+      '[data-floating-root]',
+    ) as HTMLElement;
     if (!disabled && floatingRoot) {
       portalRef.current = floatingRoot;
     }
-  }, [refs, disabled]);
+  }, [refs, anchorElement, disabled]);
 
   useLayoutEffect(() => {
     // Separate events reference and the positioning reference
-    if (anchor) {
-      refs.setPositionReference(anchor);
-    }
+    refs.setPositionReference(anchor ?? refs.domReference.current);
   }, [refs, anchor]);
 
   if (disabled) {
-    return trigger;
+    return trigger ?? null;
   }
 
   return (
     <>
-      {React.cloneElement(trigger, getReferenceProps({ ...trigger.props, ref }))}
+      {trigger && React.cloneElement(trigger, getReferenceProps({ ...trigger.props, ref }))}
       {open && (
         <FloatingPortal root={portalRef}>
           <FloatingFocusManager context={context} modal={modal} visuallyHiddenDismiss={modal}>
