@@ -14,50 +14,54 @@ export type DialogOptions<T, R> = DialogShowOptions<R> & {
 export type DialogType<T, R> = ReturnType<typeof useDialog<T, R>>;
 
 export function useDialog<T, R>(options?: DialogOptions<T, R>) {
+  const { onShow, onConfirm, onCancel } = options ?? {};
   const ref = useRef<HTMLDivElement>(null);
   const refDisabled = useRef(false);
-  const refOptions = useRef(options);
   const refShowOptions = useRef<DialogShowOptions<R>>(undefined);
   const [triggerProps, setTriggerProps] = useState<Record<string, unknown>>({});
   const [open, setOpen] = useState(options?.defaultOpen ?? false);
   const [data, setData] = useState<T>();
 
-  refOptions.current = options;
-
-  const show = useCallback((values: T, showOptions: DialogShowOptions<R> = {}) => {
-    if (refDisabled.current) {
-      return;
-    }
-
-    refShowOptions.current = showOptions;
-
-    setOpen(true);
-    setData(values);
-    refOptions.current?.onShow?.(values);
-  }, []);
-
-  const close = useCallback((result?: R) => {
-    if (refDisabled.current) {
-      return;
-    }
-
-    refDisabled.current = true;
-    ref.current?.setAttribute('data-open', 'false');
-
-    afterTransition(ref.current, () => {
-      if (result !== undefined) {
-        refOptions.current?.onConfirm?.(result);
-        refShowOptions.current?.onConfirm?.(result);
-      } else {
-        refOptions.current?.onCancel?.();
-        refShowOptions.current?.onCancel?.();
+  const show = useCallback(
+    (values: T, showOptions: DialogShowOptions<R> = {}) => {
+      if (refDisabled.current) {
+        return;
       }
 
-      setOpen(false);
-      setData(undefined);
-      refDisabled.current = false;
-    });
-  }, []);
+      refShowOptions.current = showOptions;
+
+      setOpen(true);
+      setData(values);
+      onShow?.(values);
+    },
+    [onShow],
+  );
+
+  const close = useCallback(
+    (result?: R) => {
+      if (refDisabled.current) {
+        return;
+      }
+
+      refDisabled.current = true;
+      ref.current?.setAttribute('data-open', 'false');
+
+      afterTransition(ref.current, () => {
+        if (result !== undefined) {
+          onConfirm?.(result);
+          refShowOptions.current?.onConfirm?.(result);
+        } else {
+          onCancel?.();
+          refShowOptions.current?.onCancel?.();
+        }
+
+        setOpen(false);
+        setData(undefined);
+        refDisabled.current = false;
+      });
+    },
+    [onConfirm, onCancel],
+  );
 
   const cancel = useCallback(() => close(), [close]);
 
