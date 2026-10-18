@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import cn from 'classnames';
 import {
   autoUpdate,
@@ -21,7 +21,7 @@ import {
   useRole,
 } from '@floating-ui/react';
 
-import { getElementRef } from '../../utils/helpers';
+import { getElementRef, getFloatingRoot } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
 type TriggerEvent =
@@ -63,19 +63,19 @@ export const Popover = ({
   onToggle: setControlledOpen,
   ...props
 }: PopoverProps) => {
-  const anchorElement =
-    typeof Element !== 'undefined' && anchor instanceof Element
-      ? anchor
-      : (anchor as VirtualElement | null)?.contextElement;
-  const portalRef = useRef<HTMLElement | null>(
-    (anchorElement?.closest('[data-floating-root]') as HTMLElement | null) ?? null,
-  );
+  const hasAnchor = typeof Element !== 'undefined' && anchor instanceof Element;
+  const anchorElement = hasAnchor ? anchor : (anchor as VirtualElement | null)?.contextElement;
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
 
   const open = controlledOpen ?? uncontrolledOpen;
   const setOpen = setControlledOpen ?? setUncontrolledOpen;
 
-  const { refs, context, floatingStyles } = useFloating({
+  const {
+    refs: { setReference, setPositionReference, setFloating },
+    elements: { domReference },
+    context,
+    floatingStyles,
+  } = useFloating({
     open,
     placement,
     onOpenChange: setOpen,
@@ -87,6 +87,12 @@ export const Popover = ({
     ],
   });
 
+  // Find the closest parent with the [data-floating-root] attribute for a trigger.
+  // Fallback to document.body for a triggerless virtual anchor without contextElement.
+  const portalRoot = trigger
+    ? getFloatingRoot(domReference)
+    : getFloatingRoot(anchorElement ?? null, true);
+
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useDismiss(context),
     useRole(context, { role: 'dialog' }),
@@ -96,21 +102,14 @@ export const Popover = ({
   ]);
 
   // Preserve trigger component's ref
-  const ref = useMergeRefs([refs.setReference, trigger ? getElementRef(trigger) : undefined]);
-  useEffect(() => {
-    // Find the closest parent with the data-floating-root attribute
-    const floatingRoot = (refs.domReference.current ?? anchorElement)?.closest(
-      '[data-floating-root]',
-    ) as HTMLElement;
-    if (!disabled && floatingRoot) {
-      portalRef.current = floatingRoot;
-    }
-  }, [refs, anchorElement, disabled]);
+  const ref = useMergeRefs([setReference, trigger ? getElementRef(trigger) : undefined]);
 
   useLayoutEffect(() => {
     // Separate events reference and the positioning reference
-    refs.setPositionReference(anchor ?? refs.domReference.current);
-  }, [refs, anchor]);
+    if (anchor || domReference) {
+      setPositionReference(anchor ?? domReference);
+    }
+  }, [setPositionReference, anchor, domReference]);
 
   if (disabled) {
     return trigger ?? null;
@@ -120,11 +119,11 @@ export const Popover = ({
     <>
       {trigger && React.cloneElement(trigger, getReferenceProps({ ...trigger.props, ref }))}
       {open && (
-        <FloatingPortal root={portalRef}>
+        <FloatingPortal root={portalRoot}>
           <FloatingFocusManager context={context} modal={modal} visuallyHiddenDismiss={modal}>
             <div
               {...getFloatingProps(props)}
-              ref={refs.setFloating}
+              ref={setFloating}
               data-popover={placement}
               className={cn(styles.popover, className)}
               style={{ ...floatingStyles, minWidth, maxWidth }}

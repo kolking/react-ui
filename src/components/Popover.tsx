@@ -68,7 +68,7 @@ export const PopoverDemo = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
 
-  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setValue(e.currentTarget['popover-text'].value);
     setOpen(false);

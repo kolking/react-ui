@@ -114,6 +114,22 @@ describe('Popover', () => {
     expect(floatingRoot.tagName).toBe('DIV');
   });
 
+  it('renders an initially open portal inside closest data-floating-root', async () => {
+    render(
+      <section data-floating-root>
+        <div data-floating-root>
+          <Popover open trigger={<button>Open</button>}>
+            <div>Initially open content</div>
+          </Popover>
+        </div>
+      </section>,
+    );
+
+    const content = await screen.findByText('Initially open content');
+    const floatingRoot = content.closest('[data-floating-root]')!;
+    expect(floatingRoot.tagName).toBe('DIV');
+  });
+
   it('uses anchor element as position reference', async () => {
     const user = userEvent.setup();
     const anchor = document.createElement('a');
@@ -161,6 +177,18 @@ describe('Popover', () => {
 
     expect(screen.getByText('Content').closest('[data-floating-root]')).toBe(floatingRoot);
     floatingRoot.remove();
+  });
+
+  it('renders a triggerless popover with a virtual anchor in document.body', () => {
+    render(
+      <Popover open anchor={{ getBoundingClientRect: () => new DOMRect(10, 20, 30, 40) }}>
+        <div>Content</div>
+      </Popover>,
+    );
+
+    expect(screen.getByText('Content').closest('[data-floating-ui-portal]')?.parentElement).toBe(
+      document.body,
+    );
   });
 
   it('updates a virtual anchor when its context scrolls', async () => {
