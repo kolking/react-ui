@@ -94,6 +94,23 @@ describe('Menu', () => {
     });
   });
 
+  it('renders an initially mounted menu inside closest data-floating-root', async () => {
+    render(
+      <section data-floating-root>
+        <div data-floating-root>
+          <Menu unmount={false} trigger={<button>Open</button>}>
+            <div>content</div>
+          </Menu>
+        </div>
+      </section>,
+    );
+
+    await waitFor(() => {
+      const floatingRoot = screen.getByRole('menu').closest('[data-floating-root]')!;
+      expect(floatingRoot.tagName).toBe('DIV');
+    });
+  });
+
   it('calls onSelect when MenuItem child is clicked', async () => {
     const onSelect = vi.fn();
     render(
