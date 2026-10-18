@@ -68,6 +68,20 @@ export function getElementRef(element: React.JSX.Element) {
   return null;
 }
 
+// Use the nearest floating root for a DOM reference, or document.body if none exists.
+// With no reference, let FloatingPortal wait for the trigger by returning null.
+// A triggerless virtual anchor may have no contextElement; fallbackOnNull places its
+// portal in document.body instead (or returns null during SSR).
+export function getFloatingRoot(reference: Element | null, fallbackOnNull?: boolean) {
+  const fallback = typeof document === 'undefined' ? null : document.body;
+
+  if (reference) {
+    return reference.closest<HTMLElement>('[data-floating-root]') ?? fallback;
+  }
+
+  return fallbackOnNull ? fallback : null;
+}
+
 export function getErrorMessage(error: unknown) {
   if (error instanceof Error && error.message) {
     return error.message;

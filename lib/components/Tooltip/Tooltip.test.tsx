@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Tooltip } from './Tooltip';
@@ -92,6 +92,34 @@ describe('Tooltip', () => {
 
     await user.hover(screen.getByText('Trigger'));
     expect(screen.getByText('Hello')).toBeInTheDocument();
+  });
+
+  it('returns to the trigger when anchor is removed', async () => {
+    const user = userEvent.setup();
+    const anchor = document.createElement('a');
+    const anchorRect = new DOMRect(100, 100, 20, 20);
+    const triggerRect = new DOMRect(10, 10, 20, 20);
+    vi.spyOn(anchor, 'getBoundingClientRect').mockReturnValue(anchorRect);
+
+    const { rerender } = render(
+      <Tooltip anchor={anchor} content="Hello">
+        <button>Trigger</button>
+      </Tooltip>,
+    );
+
+    vi.spyOn(screen.getByText('Trigger'), 'getBoundingClientRect').mockReturnValue(triggerRect);
+    await user.hover(screen.getByText('Trigger'));
+
+    const tooltip = screen.getByRole('tooltip');
+    await waitFor(() => expect(tooltip.style.transform).toBe('translate(5px, 92px)'));
+
+    rerender(
+      <Tooltip anchor={null} content="Hello">
+        <button>Trigger</button>
+      </Tooltip>,
+    );
+
+    await waitFor(() => expect(tooltip.style.transform).toBe('translate(5px, 2px)'));
   });
 
   it('renders arrow when tooltip is open (smoke test for arrow middleware)', async () => {

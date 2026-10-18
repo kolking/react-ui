@@ -1,13 +1,14 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { act, render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import { DialogOptions, useDialog } from './useDialog';
+import { afterTransition } from '../../utils/helpers';
 
 vi.mock('../../utils/helpers', async () => {
   const actual = await vi.importActual('../../utils/helpers');
   return {
     ...actual,
-    afterTransition: (_el: HTMLElement | null, cb: () => void) => cb(),
+    afterTransition: vi.fn((_el: HTMLElement | null, cb: () => void) => cb()),
   };
 });
 
@@ -19,25 +20,65 @@ const TestComponent = ({
   onConfirm,
   onCancel,
 }: DialogOptions<Data, string>) => {
-  const dialog = useDialog<Data, string>({ defaultOpen, onShow, onConfirm, onCancel });
+  const {
+    props: { ref, open },
+    data,
+    show,
+    confirm,
+    cancel,
+  } = useDialog<Data, string>({ defaultOpen, onShow, onConfirm, onCancel });
 
   return (
     <div>
-      <button onClick={() => dialog.show({ name: 'Alice' })}>show</button>
-      <button onClick={() => dialog.confirm('ok')}>confirm</button>
-      <button onClick={() => dialog.cancel()}>cancel</button>
+      <button onClick={() => show({ name: 'Alice' })}>show</button>
+      <button onClick={() => confirm('ok')}>confirm</button>
+      <button onClick={cancel}>cancel</button>
 
       {/* expose ref to observe attribute changes */}
-      <div ref={dialog.props.ref} data-testid="dialog" />
+      <div ref={ref} data-testid="dialog" />
 
       {/* render state */}
-      {dialog.props.open && <div data-testid="open">open</div>}
-      {dialog.data && <div data-testid="content">{dialog.data.name}</div>}
+      {open && <div data-testid="open">open</div>}
+      {data && <div data-testid="content">{data.name}</div>}
     </div>
   );
 };
 
 describe('useDialog', () => {
+  it.each(['show', 'confirm', 'cancel'] as const)(
+    'uses the latest callback when %s runs in a layout effect after props change',
+    (action) => {
+      const previous = { onShow: vi.fn(), onConfirm: vi.fn(), onCancel: vi.fn() };
+      const current = { onShow: vi.fn(), onConfirm: vi.fn(), onCancel: vi.fn() };
+
+      const Probe = ({
+        options,
+        action,
+      }: {
+        options: DialogOptions<number, string>;
+        action?: 'show' | 'confirm' | 'cancel';
+      }) => {
+        const { show, confirm, cancel } = useDialog<number, string>(options);
+
+        React.useLayoutEffect(() => {
+          if (action === 'show') show(1);
+          if (action === 'confirm') confirm('ok');
+          if (action === 'cancel') cancel();
+        }, [action, show, confirm, cancel]);
+
+        return null;
+      };
+
+      const { rerender } = render(<Probe options={previous} />);
+      rerender(<Probe options={current} action={action} />);
+
+      const callback =
+        action === 'show' ? 'onShow' : action === 'confirm' ? 'onConfirm' : 'onCancel';
+      expect(current[callback]).toHaveBeenCalledTimes(1);
+      expect(previous[callback]).not.toHaveBeenCalled();
+    },
+  );
+
   it('show sets open/data and calls onShow', () => {
     const onShow = vi.fn();
     render(<TestComponent onShow={onShow} />);
@@ -68,6 +109,29 @@ describe('useDialog', () => {
     expect(dialog.getAttribute('data-open')).toBe('false');
   });
 
+  it.each(['confirm', 'cancel'] as const)(
+    'uses the callback captured when a %s transition starts',
+    (action) => {
+      const previous = { onConfirm: vi.fn(), onCancel: vi.fn() };
+      const current = { onConfirm: vi.fn(), onCancel: vi.fn() };
+      let finishTransition = () => {};
+      vi.mocked(afterTransition).mockImplementationOnce((_element, callback) => {
+        finishTransition = callback;
+      });
+
+      const { rerender } = render(<TestComponent {...previous} />);
+      fireEvent.click(screen.getByRole('button', { name: 'show' }));
+      fireEvent.click(screen.getByRole('button', { name: action }));
+
+      rerender(<TestComponent {...current} />);
+      act(() => finishTransition());
+
+      const callback = action === 'confirm' ? 'onConfirm' : 'onCancel';
+      expect(previous[callback]).toHaveBeenCalledTimes(1);
+      expect(current[callback]).not.toHaveBeenCalled();
+    },
+  );
+
   it('calls onCancel and hides dialog', async () => {
     const onCancel = vi.fn();
     render(<TestComponent onCancel={onCancel} />);
@@ -89,27 +153,39 @@ describe('useDialog', () => {
 
   it('preventClose prevents closing while promise is pending', async () => {
     const Controlled = ({ onShow, onConfirm }: DialogOptions<Data, string>) => {
-      const dialog = useDialog<Data, string>({ onShow, onConfirm });
-      const resolverRef = React.useRef<() => void>(() => {});
-      const promise = new Promise<void>((res) => (resolverRef.current = res));
+      const {
+        props: { open },
+        show,
+        cancel,
+        confirm,
+        preventClose,
+      } = useDialog<Data, string>({ onShow, onConfirm });
+      const [deferred] = React.useState(() => {
+        let resolve = () => {};
+        const promise = new Promise<void>((res) => {
+          resolve = res;
+        });
+
+        return { promise, resolve };
+      });
       const [finished, setFinished] = React.useState(false);
 
       const handleConfirm = async () => {
-        await dialog.preventClose(promise);
+        await preventClose(deferred.promise);
 
         setFinished(true);
-        dialog.confirm('ok');
+        confirm('ok');
       };
 
       return (
         <div>
-          <button onClick={() => dialog.show({ name: 'Bob' })}>show</button>
-          <button onClick={() => dialog.cancel()}>cancel</button>
+          <button onClick={() => show({ name: 'Bob' })}>show</button>
+          <button onClick={cancel}>cancel</button>
           <button onClick={handleConfirm}>confirm</button>
-          <button onClick={() => resolverRef.current()}>resolve</button>
+          <button onClick={deferred.resolve}>resolve</button>
 
           {finished && <div data-testid="done">done</div>}
-          {dialog.props.open && <div data-testid="open">open</div>}
+          {open && <div data-testid="open">open</div>}
         </div>
       );
     };

@@ -27,7 +27,6 @@ export default tseslint.config(
         'error',
         { argsIgnorePattern: '^_', ignoreRestSiblings: true },
       ],
-      'react-hooks/refs': 'off',
       'react-refresh/only-export-components': ['error', { extraHOCs: ['withDialog'] }],
     },
   },

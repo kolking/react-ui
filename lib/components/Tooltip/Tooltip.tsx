@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import {
   arrow,
@@ -19,7 +19,7 @@ import {
   useRole,
 } from '@floating-ui/react';
 
-import { getElementRef } from '../../utils/helpers';
+import { getElementRef, getFloatingRoot } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
 type Trigger =
@@ -51,11 +51,15 @@ export const Tooltip = ({
   ...props
 }: TooltipProps) => {
   const arrowRef = useRef<SVGSVGElement | null>(null);
-  const portalRef = useRef<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
   const [staticOffset, setStaticOffset] = useState(false);
 
-  const { refs, context, floatingStyles } = useFloating({
+  const {
+    refs: { setReference, setPositionReference, setFloating },
+    elements: { domReference },
+    context,
+    floatingStyles,
+  } = useFloating({
     open,
     placement,
     onOpenChange: setOpen,
@@ -83,22 +87,17 @@ export const Tooltip = ({
   ]);
 
   // Preserve child component's ref
-  const ref = useMergeRefs([refs.setReference, getElementRef(children)]);
+  const ref = useMergeRefs([setReference, getElementRef(children)]);
 
-  useEffect(() => {
-    // Find the closest parent with the data-floating-root attribute
-    const floatingRoot = refs.domReference.current?.closest('[data-floating-root]') as HTMLElement;
-    if (!disabled && floatingRoot) {
-      portalRef.current = floatingRoot;
-    }
-  }, [refs, disabled]);
+  // Find the closest parent with the [data-floating-root] attribute
+  const portalRoot = getFloatingRoot(domReference);
 
   useLayoutEffect(() => {
     // Separate events reference and the positioning reference
-    if (anchor) {
-      refs.setPositionReference(anchor);
+    if (anchor || domReference) {
+      setPositionReference(anchor ?? domReference);
     }
-  }, [refs, anchor]);
+  }, [anchor, domReference, setPositionReference]);
 
   if (disabled) {
     return children;
@@ -108,10 +107,10 @@ export const Tooltip = ({
     <>
       {React.cloneElement(children, getReferenceProps({ ...children.props, ref }))}
       {open && (
-        <FloatingPortal root={portalRef}>
+        <FloatingPortal root={portalRoot}>
           <div
             {...getFloatingProps(props)}
-            ref={refs.setFloating}
+            ref={setFloating}
             data-tooltip={placement}
             className={cn(styles.tooltip, className)}
             style={{ ...floatingStyles, minWidth, maxWidth }}

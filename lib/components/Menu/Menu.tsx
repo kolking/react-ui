@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import {
   useFloating,
@@ -21,7 +21,7 @@ import cn from 'classnames';
 
 import { MenuContext, MenuContextProps } from './MenuContext';
 import { MenuSeparator } from './MenuSeparator';
-import { cssProps, getElementRef } from '../../utils/helpers';
+import { cssProps, getElementRef, getFloatingRoot } from '../../utils/helpers';
 import styles from './styles.module.scss';
 
 export type MenuProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
@@ -58,9 +58,13 @@ export const Menu = ({
   const [active, setActive] = useState<number | null>(null);
   const [sizeBounds, setSizeBounds] = useState<React.CSSProperties>({});
   const listRef = useRef<Array<HTMLElement | null>>([]);
-  const portalRef = useRef<HTMLElement | null>(null);
 
-  const { refs, context, floatingStyles } = useFloating({
+  const {
+    refs: { setReference, setFloating },
+    elements: { domReference },
+    context,
+    floatingStyles,
+  } = useFloating({
     open,
     placement,
     onOpenChange: setOpen,
@@ -101,14 +105,11 @@ export const Menu = ({
     [active, getItemProps, onSelect],
   );
 
-  // Preserve trigger component's ref
-  const ref = useMergeRefs([refs.setReference, getElementRef(trigger)]);
+  // Find the closest parent with the [data-floating-root] attribute
+  const portalRoot = getFloatingRoot(domReference);
 
-  useEffect(() => {
-    // Find the closest parent with the data-floating-root attribute
-    const floatingRoot = refs.domReference.current?.closest('[data-floating-root]') as HTMLElement;
-    portalRef.current = floatingRoot ?? document.body;
-  }, [refs]);
+  // Preserve trigger component's ref
+  const ref = useMergeRefs([setReference, getElementRef(trigger)]);
 
   if (
     hideWhenEmpty &&
@@ -127,11 +128,11 @@ export const Menu = ({
       )}
       <MenuContext.Provider value={menuContext}>
         {(open || !unmount) && (
-          <FloatingPortal root={portalRef.current}>
+          <FloatingPortal root={portalRoot}>
             <FloatingFocusManager context={context} modal={false} initialFocus={-1}>
               <div
                 {...getFloatingProps(props)}
-                ref={refs.setFloating}
+                ref={setFloating}
                 data-open={open}
                 data-menu={placement}
                 className={cn(styles.menu, className)}
